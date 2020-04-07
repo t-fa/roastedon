@@ -1,8 +1,11 @@
 import React from 'react';
 
+import ZipCode from './ZipCode';
+
 function Home() {
   return (
     <div>
+      <ZipCode />
       <h3>Why Roasted On?</h3>
       <h4>We believe in the freshest coffee</h4>
       <p>

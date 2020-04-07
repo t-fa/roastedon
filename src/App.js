@@ -6,6 +6,7 @@ function App() {
       <Jumbotron />
       <ZipCode />
       <Info />
+      <CoffeeShopForm />
     </div>
   );
 }
@@ -23,14 +24,14 @@ class ZipCode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      zip: ''
+      zip: '',
     };
     this.getZip = this.getZip.bind(this);
   }
 
   getZip(event) {
     this.setState({
-      zip: event.target.value
+      zip: event.target.value,
     });
   }
 
@@ -77,6 +78,71 @@ function Info() {
       <p>Lorem ipsum dolor</p>
     </div>
   );
+}
+
+class CoffeeShopForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shopName: '',
+      shopAddress: '',
+      shopWebsite: '',
+    };
+  }
+  render() {
+    return (
+      <form>
+        <h2>Add a new coffee shop</h2>
+        <div class="form-group">
+          <label for="inputAddress">Coffee Shop Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id=""
+            placeholder="Coffee Shop Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            placeholder="1234 Main St"
+          />
+        </div>
+        <div class="form-group">
+          <label for="inputAddress2">Address 2</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress2"
+            placeholder="Apartment, studio, or floor"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity" />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    );
+  }
 }
 
 export default App;

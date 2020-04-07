@@ -10,7 +10,7 @@ function MainLayout() {
     <div class="container">
       <Header />
       <Switch>
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route path="/add" component={Add} />
       </Switch>
     </div>

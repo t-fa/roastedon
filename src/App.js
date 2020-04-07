@@ -5,6 +5,7 @@ import { BrowserRouter, Link } from 'react-router-dom';
 import Add from './components/Add';
 import Jumbotron from './components/Jumbotron';
 import ZipCode from './components/ZipCode';
+import Info from './components/Info';
 
 function App() {
   return (

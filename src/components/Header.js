@@ -1,14 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-// components
-import Add from './Add';
-import ZipCode from './ZipCode';
-import Info from './Info';
-
-function NavBar() {
+function Header() {
   return (
-    <Router>
+    <div class="jumbotron">
+      <h1>Roasted On</h1>
+      <p class="lead">Connecting coffee lovers to premium coffee shops</p>
+
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button
           class="navbar-toggler"
@@ -36,17 +34,8 @@ function NavBar() {
           </ul>
         </div>
       </nav>
-      <Switch>
-        <Route path="/">
-          <ZipCode />
-          <Info />
-        </Route>
-        <Route path="/add">
-          <Add />
-        </Route>
-      </Switch>
-    </Router>
+    </div>
   );
 }
 
-export default NavBar;
+export default Header;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Info() {
+function Home() {
   return (
     <div>
       <h3>Why Roasted On?</h3>
@@ -22,4 +22,4 @@ function Info() {
   );
 }
 
-export default Info;
+export default Home;

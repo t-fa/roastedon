@@ -3,7 +3,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 // components
 import MainLayout from './components/MainLayout';
-import Info from './components/Info';
 
 function App() {
   return (

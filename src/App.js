@@ -3,6 +3,8 @@ import { BrowserRouter, Link } from 'react-router-dom';
 
 // components
 import Add from './components/Add';
+import Jumbotron from './components/Jumbotron';
+import ZipCode from './components/ZipCode';
 
 function App() {
   return (
@@ -14,75 +16,6 @@ function App() {
         <Add />
       </div>
     </BrowserRouter>
-  );
-}
-
-function Jumbotron() {
-  return (
-    <div class="jumbotron">
-      <h1>Roasted On</h1>
-      <p class="lead">Connecting coffee lovers to premium coffee shops</p>
-    </div>
-  );
-}
-
-class ZipCode extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      zip: '',
-    };
-    this.getZip = this.getZip.bind(this);
-  }
-
-  getZip(event) {
-    this.setState({
-      zip: event.target.value,
-    });
-  }
-
-  render() {
-    return (
-      <form>
-        <h2>Find a premium coffee shop near you</h2>
-        <div class="form-group">
-          <label for="zipcode"></label>
-          <input
-            placeholder="Zip Code"
-            type="text"
-            class="form-control"
-            id="zipcode"
-            value={this.state.zip}
-            onChange={this.getZip}
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    );
-  }
-}
-
-function Info() {
-  return (
-    <div>
-      <h3>Why Roasted On?</h3>
-      <h4>We believe in the freshest coffee</h4>
-      <p>
-        Ordinary grocery store coffee comes with a "Best By" date, which we
-        consider an arbitrary date. Often the "Best By" date is months from when
-        the coffee is roasted. Many coffee enthusiasts would consider that
-        coffee to have gone bad. While the beans aren't expired in the
-        traditional sense, they're past the point where they offer the freshest
-        possible flavor. Roasters who us a "Roasted On" date believe in fresh
-        coffee. A "Roasted On" date tells you exactly the day the coffee was
-        roasted and allows you to enjoy the best possible cup.
-      </p>
-
-      <h3>More info</h3>
-      <p>Lorem ipsum dolor</p>
-    </div>
   );
 }
 

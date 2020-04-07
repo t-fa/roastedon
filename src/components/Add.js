@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CoffeeShopForm extends React.Component {
+class Add extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,4 +65,4 @@ class CoffeeShopForm extends React.Component {
   }
 }
 
-export default CoffeeShopForm;
+export default Add;

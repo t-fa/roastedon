@@ -6,7 +6,6 @@ import Add from './components/Add';
 import Jumbotron from './components/Jumbotron';
 import ZipCode from './components/ZipCode';
 import Info from './components/Info';
-import NavBar from './components/NavBar';
 
 function App() {
   return (

@@ -11,7 +11,7 @@ class Show extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/')
+      .get('http://localhost:3000/')
       .then((response) => {
         this.setState({ users: response.data });
       })

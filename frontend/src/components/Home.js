@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ZipCode from './ZipCode';
-import Show from './Show';
+// import Show from './Show';
 
 function Home() {
   return (

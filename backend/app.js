@@ -30,6 +30,34 @@ app.get('/users', (req, res) => {
   });
 });
 
+app.get('/shops', (req, res) => {
+  const context = {};
+  connection.query('SELECT * FROM shops', function (err, rows) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    context.results = JSON.stringify(rows);
+    res.send(context.results);
+  });
+});
+
+app.post('/shops', (req, res) => {
+  const context = {};
+  const zip = req.body.zipcode;
+  connection.query(`SELECT * FROM shops WHERE zipcode = ${zip}`, function (
+    err,
+    rows
+  ) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    context.results = JSON.stringify(rows);
+    res.send(context.results);
+  });
+});
+
 app.get('/createusers', (req, res) => {
   const sql = `
   CREATE TABLE users (

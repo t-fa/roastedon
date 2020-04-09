@@ -1,15 +1,23 @@
 const express = require('express'),
   app = express(),
-  port = 3000,
+  bodyParser = require('body-parser'),
   connection = require('./dbcon.js'),
-  bodyParser = require('body-parser');
+  cookieParser = require('cookie-parser'),
+  passport = require('passport'),
+  port = 3000,
+  session = require('express-session'),
+  ;
+
+app.use(bodyParser({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 connection.connect(function (err) {
   if (err) throw err;
   console.log('Connected!');
 });
 
-app.get('/', (req, res) => {
+app.get('/users', (req, res) => {
   const context = {};
   connection.query('SELECT * FROM users', function (err, rows) {
     if (err) {

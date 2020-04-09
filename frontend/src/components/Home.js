@@ -1,10 +1,12 @@
 import React from 'react';
 
 import ZipCode from './ZipCode';
+import Show from './Show';
 
 function Home() {
   return (
     <div>
+      <Show />
       <ZipCode />
       <h3>Why Roasted On?</h3>
       <h4>We believe in the freshest coffee</h4>

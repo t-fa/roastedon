@@ -19,18 +19,18 @@ class ZipCode extends React.Component {
     return (
       <form>
         <h2>Find a premium coffee shop near you</h2>
-        <div class="form-group">
-          <label for="zipcode"></label>
+        <div className="form-group">
+          <label htmlFor="zipcode"></label>
           <input
             placeholder="Zip Code"
             type="text"
-            class="form-control"
+            className="form-control"
             id="zipcode"
             value={this.state.zip}
             onChange={this.getZip}
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>

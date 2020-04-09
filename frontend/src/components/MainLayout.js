@@ -7,7 +7,7 @@ import Add from './Add';
 
 function MainLayout() {
   return (
-    <div class="container">
+    <div className="container">
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />

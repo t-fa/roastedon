@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <div class="jumbotron">
+    <div className="jumbotron">
       <h1>Roasted On</h1>
-      <p class="lead">Connecting coffee lovers to premium coffee shops</p>
+      <p className="lead">Connecting coffee lovers to premium coffee shops</p>
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <Link className="nav-link" to="/">
                 Home
               </Link>
             </li>
-            <li class="nav-item">
+            <li className="nav-item">
               <Link className="nav-link" to="/add">
                 Add A Coffee Shop
               </Link>

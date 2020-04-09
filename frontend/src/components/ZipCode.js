@@ -29,15 +29,21 @@ class ZipCode extends React.Component {
   }
 
   onSubmit() {
-    axios
-      .post('http://localhost:3001/shops')
-      .then((res) => console.log(res.data));
+    axios.post('http://localhost:3001/shops').then((response) => {
+      this.setState({ shops: response.data, zip: '' });
+    });
+    if (this.state.shops.length > 0) {
+      return `
+      ${this.state.shops[0]}
+      `;
+    }
   }
 
   render() {
     return (
       <form>
         <h2>Find a premium coffee shop near you</h2>
+        <h3>{this.state.shops}</h3>
         <div className="form-group">
           <label htmlFor="zipcode"></label>
           <input

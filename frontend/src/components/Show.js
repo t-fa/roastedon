@@ -7,11 +7,12 @@ class Show extends React.Component {
     this.state = {
       users: [],
     };
+    this.showUsers = this.showUsers.bind(this);
   }
 
   componentDidMount() {
     axios
-      .get('http://localhost:3000/')
+      .get('http://localhost:3001/users')
       .then((response) => {
         this.setState({ users: response.data });
       })
@@ -20,8 +21,22 @@ class Show extends React.Component {
       });
   }
 
+  showUsers() {
+    if (this.state.users.length > 0) {
+      return `
+      Username: ${this.state.users[0].username}
+      Password: ${this.state.users[0].password}
+      Email: ${this.state.users[0].email}
+      `;
+    }
+  }
+
   render() {
-    return <p>{this.state.users}</p>;
+    return (
+      <div>
+        <p>{this.showUsers()}</p>
+      </div>
+    );
   }
 }
 

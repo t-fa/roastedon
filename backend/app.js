@@ -5,7 +5,7 @@ const express = require('express'),
   cookieParser = require('cookie-parser'),
   cors = require('cors'),
   passport = require('passport'),
-  port = 3000,
+  port = 3001,
   session = require('express-session');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,7 +30,7 @@ app.get('/users', (req, res) => {
   });
 });
 
-app.get('/create', (req, res) => {
+app.get('/createusers', (req, res) => {
   const sql = `
   CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,7 +40,27 @@ app.get('/create', (req, res) => {
   )`;
   connection.query(sql, function (err, result) {
     if (err) throw err;
-    console.log('Table created!');
+    console.log('Table users created!');
+  });
+});
+
+app.get('/createcoffee', (req, res) => {
+  const sql = `
+  CREATE TABLE shops (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    address1 VARCHAR(255) NOT NULL,
+    address2 VARCHAR(255),
+    zipcode VARCHAR(255) NOT NULL,
+    city VARCHAR (255) NOT NULL,
+    state VARCHAR (255) NOT NULL,
+    phone VARCHAR (255),
+    hours VARCHAR (255),
+    image VARCHAR (255)
+  )`;
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log('Table shops created!');
   });
 });
 

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const connection = require('dbcon.js');
+const bodyParser = require('body-parser');
 
 connection.connect(function (err) {
   if (err) throw err;

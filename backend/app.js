@@ -1,26 +1,14 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const connection = require('dbcon.js');
 
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'dbuser',
-  password: 's3kreee7',
-  database: 'my_db',
-});
-
-connection.connect();
-
-connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
+connection.connect(function (err) {
   if (err) throw err;
-
-  console.log('The solution is: ', rows[0].solution);
+  console.log('Connected!');
 });
 
-connection.end();
-
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/search', (req, res) => res.send('Hello World!'));
 
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)

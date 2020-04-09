@@ -3,14 +3,15 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   connection = require('./dbcon.js'),
   cookieParser = require('cookie-parser'),
+  cors = require('cors'),
   passport = require('passport'),
   port = 3000,
-  session = require('express-session'),
-  ;
+  session = require('express-session');
 
-app.use(bodyParser({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors()); // FIX THIS BEFORE DEPLOYING! USE A WHITE LIST!!!!!!!!!
 
 connection.connect(function (err) {
   if (err) throw err;

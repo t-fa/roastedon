@@ -38,29 +38,29 @@ class AddShopForm extends React.Component {
           id="shopname"
           placeholder="Coffee Shop Name"
         />
-        <div className="form-group">
-          <label htmlFor="inputAddress">Address</label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputAddress"
-            placeholder="1234 Main St"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="inputAddress2">Address 2</label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputAddress2"
-            placeholder="Apartment, studio, or floor"
-          />
-        </div>
+        <TextInput
+          name="address"
+          label="inputaddress"
+          labeltext="Address"
+          id="shopaddress"
+          placeholder="1234 Main St"
+        />
+        <TextInput
+          name="address2"
+          label="inputaddress2"
+          labeltext="Address 2"
+          id="shopaddress2"
+          placeholder="Apartment, studio, or floor"
+        />
         <div className="form-row">
-          <div className="form-group col-md-6">
-            <label htmlFor="inputCity">City</label>
-            <input type="text" className="form-control" id="inputCity" />
-          </div>
+          <TextInput
+            divclass="col-md-6"
+            name="city"
+            label="inputcity"
+            labeltext="City"
+            id="shopcity"
+            placeholder="Pleasantville"
+          />
           <div className="form-group col-md-4">
             <label htmlFor="inputState">State</label>
             <select id="inputState" className="form-control">
@@ -68,10 +68,14 @@ class AddShopForm extends React.Component {
               <option>...</option>
             </select>
           </div>
-          <div className="form-group col-md-2">
-            <label htmlFor="inputZip">Zip</label>
-            <input type="text" className="form-control" id="inputZip" />
-          </div>
+          <TextInput
+            divclass="col-md-2"
+            name="zip"
+            label="inputzip"
+            labeltext="Zip"
+            id="shopzip"
+            placeholder="Zip"
+          />
         </div>
         <button type="submit" className="btn btn-primary">
           Submit

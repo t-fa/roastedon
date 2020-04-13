@@ -58,6 +58,28 @@ app.get('/shops', (req, res) => {
   });
 });
 
+app.post('/shops', (req, res) => {
+  const context = {};
+  const name = req.body.name;
+  const address = req.body.address;
+  const address2 = req.body.address2;
+  const zip = req.body.zipcode;
+  const city = req.body.city;
+  const state = req.body.state;
+  connection.query(
+    `INSERT INTO shops (name, address1, address2, zipcode, city, state) 
+  VALUES (${name}, ${address}, ${address2}, ${city}, ${state}, ${zip})`,
+    function (err) {
+      if (err) {
+        throw err;
+      } else {
+        context.results = 'Shop successfully added!';
+        res.send(context.results);
+      }
+    }
+  );
+});
+
 app.get('/createusers', (req, res) => {
   const sql = `
   CREATE TABLE users (

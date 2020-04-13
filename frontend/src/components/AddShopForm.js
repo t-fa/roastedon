@@ -28,14 +28,32 @@ class AddShopForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
+    const form = {
+      name: this.state.name,
+      address: this.state.address,
+      address2: this.state.address2,
+      city: this.state.city,
+      state: this.state.state,
+      zip: this.state.zip,
+    };
+
     axios
-      .post('http://localhost:3001/shops')
+      .post('http://localhost:3001/shops', { form })
       .then((response) => {
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
+
+    this.setState({
+      name: '',
+      address: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
+    });
   };
 
   render() {

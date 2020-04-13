@@ -8,57 +8,35 @@ class AddShopForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formControls: {
-        name: {
-          value: '',
-        },
-        address: {
-          value: '',
-        },
-        address2: {
-          value: '',
-        },
-        city: {
-          value: '',
-        },
-        state: {
-          value: '',
-        },
-        zip: {
-          value: '',
-        },
-      },
-      shopAdded: false,
+      name: '',
+      address: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
     };
-    // this.changeHandler = this.changeHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // changeHandler = (event) => {
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-
-  //   this.setState({
-  //     formControls: {
-  //       [name]: value,
-  //     },
-  //   });
-  // };
+  handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ [name]: value });
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
-  };
 
-  componentDidMount() {
     axios
       .post('http://localhost:3001/shops')
       .then((response) => {
-        this.setState({ shopAdded: true });
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
+  };
 
   render() {
     return (
@@ -70,8 +48,8 @@ class AddShopForm extends React.Component {
           labeltext="Coffee Shop Name"
           id="shopname"
           placeholder="Coffee Shop Name"
-          // value={this.state.formControls.name.value}
-          // onChange={this.changeHandler}
+          value={this.state.name}
+          onChange={this.handleChange}
         />
         <TextInput
           name="address"
@@ -79,7 +57,8 @@ class AddShopForm extends React.Component {
           labeltext="Address"
           id="shopaddress"
           placeholder="1234 Main St"
-          // value={this.state.formControls.address.value}
+          value={this.state.address}
+          onChange={this.handleChange}
         />
         <TextInput
           name="address2"
@@ -87,7 +66,8 @@ class AddShopForm extends React.Component {
           labeltext="Address 2"
           id="shopaddress2"
           placeholder="Apartment, studio, or floor"
-          // value={this.state.formControls.address2.value}
+          value={this.state.address2}
+          onChange={this.handleChange}
         />
         <div className="form-row">
           <TextInput
@@ -97,7 +77,8 @@ class AddShopForm extends React.Component {
             labeltext="City"
             id="shopcity"
             placeholder="Pleasantville"
-            // value={this.state.formControls.city.value}
+            value={this.state.city}
+            onChange={this.handleChange}
           />
           <StateDropDown />
           <TextInput
@@ -107,7 +88,8 @@ class AddShopForm extends React.Component {
             labeltext="Zip"
             id="shopzip"
             placeholder="Zip"
-            // value={this.state.formControls.zip.value}
+            value={this.state.zip}
+            onChange={this.handleChange}
           />
         </div>
         <button type="submit" className="btn btn-primary">

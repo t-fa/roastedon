@@ -26,6 +26,7 @@ class AddShopForm extends React.Component {
           value: '',
         },
       },
+      shopAdded: false,
     };
     // this.changeHandler = this.changeHandler.bind(this);
   }
@@ -45,7 +46,7 @@ class AddShopForm extends React.Component {
     axios
       .post('http://localhost:3001/shops')
       .then((response) => {
-        this.setState({ shops: response.data });
+        this.setState({ shopAdded: true });
       })
       .catch(function (error) {
         console.log(error);

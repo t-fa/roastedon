@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Header from './Header';
 import Home from './Home';
-import Add from './Add';
+import AddShopForm from './AddShopForm';
 
 function MainLayout() {
   return (
@@ -11,7 +11,7 @@ function MainLayout() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/add" component={Add} />
+        <Route path="/add" component={AddShopForm} />
       </Switch>
     </div>
   );

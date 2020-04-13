@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <div className="jumbotron">
-      <h1>Roasted On</h1>
-      <p className="lead">Connecting coffee lovers to premium coffee shops</p>
+    <>
+      <div className="jumbotron">
+        <h1>Roasted On</h1>
+        <p className="lead">Connecting coffee lovers to premium coffee shops</p>
+      </div>
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="collapse navbar-collapse" id="navbarNav">
@@ -23,7 +25,7 @@ function Header() {
           </ul>
         </div>
       </nav>
-    </div>
+    </>
   );
 }
 

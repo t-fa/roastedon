@@ -12,6 +12,6 @@ code {
     monospace;
 }
 
-/* .jumbotron {
-  background-color: #542903;
-} */
+.jumbotron {
+  margin: 0;
+}

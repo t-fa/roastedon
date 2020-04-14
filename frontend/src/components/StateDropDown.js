@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StateDropDown() {
+function StateDropDown(props) {
   return (
     <div className="form-group col-md-4">
       <label htmlFor="inputState">State</label>

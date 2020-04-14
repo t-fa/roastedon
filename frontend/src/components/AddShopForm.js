@@ -28,32 +28,37 @@ class AddShopForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const form = {
-      name: this.state.name,
-      address: this.state.address,
-      address2: this.state.address2,
-      city: this.state.city,
-      state: this.state.state,
-      zip: this.state.zip,
-    };
+    console.log(this.state);
+    const name = this.state.name;
+    const address = this.state.address;
+    const address2 = this.state.address2;
+    const city = this.state.city;
+    const state = this.state.state;
+    const zip = this.state.zip;
 
     axios
-      .post('http://localhost:3001/shops', { form })
+      .post('http://localhost:3001/shops', {
+        name,
+        address,
+        address2,
+        city,
+        state,
+        zip,
+      })
       .then((response) => {
         console.log(response);
+        this.setState({
+          name: '',
+          address: '',
+          address2: '',
+          city: '',
+          state: '',
+          zip: '',
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    this.setState({
-      name: '',
-      address: '',
-      address2: '',
-      city: '',
-      state: '',
-      zip: '',
-    });
   };
 
   render() {
@@ -98,7 +103,11 @@ class AddShopForm extends React.Component {
             value={this.state.city}
             onChange={this.handleChange}
           />
-          <StateDropDown />
+          <StateDropDown
+            value={this.state.state}
+            onChange={this.handleChange}
+          />
+          state: {this.state.state}
           <TextInput
             divclass="col-md-2"
             name="zip"

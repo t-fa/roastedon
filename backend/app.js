@@ -67,7 +67,7 @@ app.post('/shops', (req, res) => {
   const city = req.body.city;
   const state = req.body.state;
   connection.query(
-    `INSERT INTO shops (name, address1, address2, zipcode, city, state) VALUES (${name}, ${address}, ${address2}, ${city}, ${state}, ${zip})`,
+    `INSERT INTO shops (name, address1, address2, zipcode, city, state) VALUES (${name}, ${address}, ${address2}, ${zip}, ${city}, ${state})`,
     function (err) {
       if (err) {
         throw err;

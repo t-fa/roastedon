@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-class ZipCode extends React.Component {
+class SearchZipCode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,4 +64,4 @@ class ZipCode extends React.Component {
   }
 }
 
-export default ZipCode;
+export default SearchZipCode;

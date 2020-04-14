@@ -4,7 +4,12 @@ function StateDropDown(props) {
   return (
     <div className="form-group col-md-4">
       <label htmlFor="inputState">State</label>
-      <select id="inputState" className="form-control" name="state">
+      <select
+        id="inputState"
+        className="form-control"
+        name="state"
+        onChange={props.handleChange}
+      >
         <option defaultValue>Choose...</option>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>

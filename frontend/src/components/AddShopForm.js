@@ -32,7 +32,7 @@ class AddShopForm extends React.Component {
     const address2 = this.state.address2;
     const city = this.state.city;
     const state = this.state.state;
-    const zipcode = this.state.zip;
+    const zipcode = this.state.zipcode;
 
     axios
       .post('http://localhost:3001/shops', {
@@ -102,15 +102,14 @@ class AddShopForm extends React.Component {
             onChange={this.handleChange}
           />
           <StateDropDown handleChange={this.handleChange} />
-          state: {this.state.state}
           <TextInput
             divclass="col-md-2"
-            name="zip"
+            name="zipcode"
             label="inputzip"
             labeltext="Zip"
             id="shopzip"
             placeholder="Zip"
-            value={this.state.zip}
+            value={this.state.zipcode}
             onChange={this.handleChange}
           />
         </div>

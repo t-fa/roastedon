@@ -27,12 +27,6 @@ class ShopSearch extends React.Component {
     this.setState({ zip: event.target.value });
   };
 
-  getZip = (event) => {
-    this.setState({
-      zip: event.target.value,
-    });
-  };
-
   onSubmit(event) {
     event.preventDefault();
     axios

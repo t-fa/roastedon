@@ -15,3 +15,12 @@ code {
 .jumbotron {
   margin: 0;
 }
+
+.shopthumbnailview {
+  max-height: 300px;
+}
+
+.shopthumbnailimg {
+  width: auto;
+  height: 100%;
+}

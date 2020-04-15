@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class SearchZipCode extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class SearchZipCode extends React.Component {
 
   componentDidMount() {
     axios
-      .get('http://localhost:3001/shops')
+      .get('http://localhost:3001/')
       .then((response) => {
         this.setState({ shops: response.data });
       })

@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 
@@ -25,6 +24,10 @@ class SearchZipCode extends React.Component {
   //     });
   // }
 
+  handleChange = (event) => {
+    this.setState({ zip: event.target.value });
+  };
+
   getZip(event) {
     this.setState({
       zip: event.target.value,
@@ -45,7 +48,7 @@ class SearchZipCode extends React.Component {
   }
 
   render() {
-    return <SearchBar zip={this.state.zip} />;
+    return <SearchBar zip={this.state.zip} handleChange={this.handleChange} />;
   }
 }
 

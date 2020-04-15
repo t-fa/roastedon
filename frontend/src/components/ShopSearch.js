@@ -7,41 +7,38 @@ class ShopSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      zip: '',
+      zipcode: '',
       shops: [],
     };
   }
 
-  // componentDidMount() {
-  //   axios
-  //     .get('http://localhost:3001/')
-  //     .then((response) => {
-  //       this.setState({ shops: response.data });
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-
   handleChange = (event) => {
-    this.setState({ zip: event.target.value });
+    this.setState({ zipcode: event.target.value });
   };
 
-  onSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .get('http://localhost:3001/')
+      .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
       .then((response) => {
-        this.setState({ shops: response, zip: '' });
-        console.log(response);
+        this.setState({ shops: response.data, zipcode: '' });
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   render() {
-    return <SearchBar zip={this.state.zip} handleChange={this.handleChange} />;
+    return (
+      <>
+        <SearchBar
+          zipcode={this.state.zipcode}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+        {console.log(this.state.shops)}
+      </>
+    );
   }
 }
 

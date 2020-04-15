@@ -2,7 +2,7 @@ import React from 'react';
 
 function SearchBar(props) {
   return (
-    <form>
+    <form onSubmit={props.handleSubmit}>
       <h2>Find a premium coffee shop near you</h2>
       <div className="form-group">
         <label htmlFor="zipcode"></label>
@@ -12,7 +12,7 @@ function SearchBar(props) {
           className="form-control"
           id="zipcode"
           name="zipcode"
-          value={props.zip}
+          value={props.zipcode}
           onChange={props.handleChange}
         />
       </div>

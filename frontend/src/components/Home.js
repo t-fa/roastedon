@@ -1,11 +1,11 @@
 import React from 'react';
 
-import SearchZipCode from './SearchZipCode';
+import ShopSearch from './ShopSearch';
 
 function Home() {
   return (
     <div>
-      <SearchZipCode />
+      <ShopSearch />
       <h3>Why Roasted On?</h3>
       <h4>We believe in the freshest coffee</h4>
       <p>

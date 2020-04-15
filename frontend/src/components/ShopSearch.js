@@ -3,14 +3,13 @@ import axios from 'axios';
 
 import SearchBar from './SearchBar';
 
-class SearchZipCode extends React.Component {
+class ShopSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       zip: '',
       shops: [],
     };
-    this.getZip = this.getZip.bind(this);
   }
 
   // componentDidMount() {
@@ -28,11 +27,11 @@ class SearchZipCode extends React.Component {
     this.setState({ zip: event.target.value });
   };
 
-  getZip(event) {
+  getZip = (event) => {
     this.setState({
       zip: event.target.value,
     });
-  }
+  };
 
   onSubmit(event) {
     event.preventDefault();
@@ -52,4 +51,4 @@ class SearchZipCode extends React.Component {
   }
 }
 
-export default SearchZipCode;
+export default ShopSearch;

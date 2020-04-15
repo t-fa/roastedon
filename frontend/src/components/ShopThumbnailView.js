@@ -2,7 +2,7 @@ import React from 'react';
 
 function ShopThumbnailView(props) {
   return (
-    <div class="shopthumbnailview container border rounded-lg p-3">
+    <div className="shopthumbnailview container border rounded-lg p-3">
       {/* <img class="shopthumbnailimg" src={props.imgsrc} /> */}
       <h4>{props.shopname}</h4>
       <p>

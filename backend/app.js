@@ -46,18 +46,18 @@ app.get('/', (req, res) => {
   const context = {};
   const zipcode = req.query.zipcode;
   console.log(zipcode);
-  connection.query(`SELECT * FROM shops WHERE zipcode = ${zipcode}`, function (
-    err,
-    rows
-  ) {
-    if (err) {
-      console.log(err);
-      return;
+  connection.query(
+    `SELECT * FROM shops WHERE zipcode = '${zipcode}'`,
+    function (err, rows) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      context.results = JSON.stringify(rows);
+      console.log(context.results);
+      res.send(context.results);
     }
-    context.results = JSON.stringify(rows);
-    console.log(context.results);
-    res.send(context.results);
-  });
+  );
 });
 
 app.post('/shops', (req, res) => {

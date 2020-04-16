@@ -24,7 +24,6 @@ class ShopSearch extends React.Component {
       .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
       .then((response) => {
         this.setState({ shops: response.data, zipcode: '', shopsFound: true });
-        <Redirect to="/shops" />;
       })
       .catch((error) => {
         console.log(error);

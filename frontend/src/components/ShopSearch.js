@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 
@@ -9,6 +10,7 @@ class ShopSearch extends React.Component {
     this.state = {
       zipcode: '',
       shops: [],
+      shopsFound: false,
     };
   }
 
@@ -21,7 +23,8 @@ class ShopSearch extends React.Component {
     axios
       .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
       .then((response) => {
-        this.setState({ shops: response.data, zipcode: '' });
+        this.setState({ shops: response.data, zipcode: '', shopsFound: true });
+        <Redirect to="/shops" />;
       })
       .catch((error) => {
         console.log(error);
@@ -29,6 +32,9 @@ class ShopSearch extends React.Component {
   };
 
   render() {
+    if (this.state.shopsFound === true) {
+      return <Redirect to="/shops" />;
+    }
     return (
       <>
         <SearchBar

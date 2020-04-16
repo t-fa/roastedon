@@ -20,8 +20,8 @@ class MainLayout extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/add" component={AddShopForm} />
+          <Route path="/shops" component={ShopThumbnailView} />
         </Switch>
-        <ShopThumbnailView shopname="Lamplighter" />
       </div>
     );
   }

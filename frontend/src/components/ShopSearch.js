@@ -29,16 +29,27 @@ class ShopSearch extends Component {
   };
 
   render() {
-    if (this.state.shopsFound === true) {
-      return <Redirect to="/shops" />;
+    let renderShops = null;
+
+    if (this.state.shopsFound) {
+      renderShops = this.state.shops.map((shop) => {
+        return <ShopThumbnailView {...shop} key={shop.id} />;
+      });
     }
     return (
-      <p>Please delete me</p>
+      <>
+        <SearchBar
+          zipcode={this.state.zipcode}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+        {renderShops}
+      </>
       // <Switch>
       //   <Route
       //     exact
       //     path="/"
-      //     render={(props) => (
+      //     render={() => (
       //       <SearchBar
       //         zipcode={this.state.zipcode}
       //         handleChange={this.handleChange}
@@ -46,15 +57,8 @@ class ShopSearch extends Component {
       //       />
       //     )}
       //   />
-      //   <Route path="/shops" render={(props) => (ShopThumbnailView
-      //   this.state.shops.map(shop => <ShopThumbnailView shopName={shop.name}/>)
-      //     )} />
+      //   {renderShops}
       // </Switch>
-      // <SearchBar
-      //   zipcode={this.state.zipcode}
-      //   handleChange={this.handleChange}
-      //   handleSubmit={this.handleSubmit}
-      // />
     );
   }
 }

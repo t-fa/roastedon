@@ -1,11 +1,8 @@
 import React from 'react';
 
-import ShopSearch from './ShopSearch';
-
-const home = () => {
+const info = () => {
   return (
     <div>
-      <ShopSearch />
       <h3>Why Roasted On?</h3>
       <h4>We believe in the freshest coffee</h4>
       <p>
@@ -25,4 +22,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default info;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const shopThumbnailView = (props) => {
+const shopThumbnail = (props) => {
   return (
     <div className="shopthumbnailview container border rounded-lg p-3">
       <h4>{props.name}</h4>
@@ -15,4 +15,4 @@ const shopThumbnailView = (props) => {
   );
 };
 
-export default shopThumbnailView;
+export default shopThumbnail;

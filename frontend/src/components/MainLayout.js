@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './Header';
 import HomeLayout from './Home/HomeLayout';
 import AddShopForm from './Add/AddShopForm';
-import ShopThumbnailView from './ShopThumbnailView';
+import ShopSearch from './Shops/ShopSearch';
 
 class MainLayout extends Component {
   state = {
     zipcode: '',
     shops: [],
-    shopsFound: false,
   };
 
   handleChange = (event) => {
@@ -23,7 +22,8 @@ class MainLayout extends Component {
     axios
       .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
       .then((response) => {
-        this.setState({ shops: response.data, zipcode: '', shopsFound: true });
+        this.setState({ shops: response.data, zipcode: '' });
+        return <Redirect to="/shops" />;
       })
       .catch((error) => {
         console.log(error);
@@ -35,9 +35,22 @@ class MainLayout extends Component {
       <div className="container">
         <Header />
         <Switch>
-          <Route exact path="/" component={HomeLayout} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <HomeLayout
+                zipcode={this.state.zipcode}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+              />
+            )}
+          />
           <Route path="/add" component={AddShopForm} />
-          <Route path="/shops" component={ShopThumbnailView} />
+          <Route
+            path="/shops"
+            render={() => <ShopSearch shops={this.state.shops} />}
+          />
         </Switch>
       </div>
     );

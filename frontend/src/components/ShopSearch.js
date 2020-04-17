@@ -1,33 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Redirect, Route, Switch } from 'react-router-dom';
 
-import SearchBar from './SearchBar';
+import SearchBar from './Home/SearchBar';
 import ShopThumbnailView from './ShopThumbnailView';
 
 class ShopSearch extends Component {
-  state = {
-    zipcode: '',
-    shops: [],
-    shopsFound: false,
-  };
-
-  handleChange = (event) => {
-    this.setState({ zipcode: event.target.value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    axios
-      .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
-      .then((response) => {
-        this.setState({ shops: response.data, zipcode: '', shopsFound: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   render() {
     let renderShops = null;
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import Header from './Header';
-import Home from './Home';
-import AddShopForm from './AddShopForm';
+import HomeLayout from './Home/HomeLayout';
+import AddShopForm from './Add/AddShopForm';
 import ShopThumbnailView from './ShopThumbnailView';
 
 class MainLayout extends Component {
@@ -34,7 +35,7 @@ class MainLayout extends Component {
       <div className="container">
         <Header />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={HomeLayout} />
           <Route path="/add" component={AddShopForm} />
           <Route path="/shops" component={ShopThumbnailView} />
         </Switch>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Header() {
+const header = () => {
   return (
     <>
       <div className="jumbotron">
@@ -27,6 +27,6 @@ function Header() {
       </nav>
     </>
   );
-}
+};
 
-export default Header;
+export default header;

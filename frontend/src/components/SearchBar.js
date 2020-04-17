@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SearchBar(props) {
+const searchBar = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <h2>Find a premium coffee shop near you</h2>
@@ -21,6 +21,6 @@ function SearchBar(props) {
       </button>
     </form>
   );
-}
+};
 
-export default SearchBar;
+export default searchBar;

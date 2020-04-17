@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Header from './Header';
@@ -6,13 +6,10 @@ import Home from './Home';
 import AddShopForm from './AddShopForm';
 import ShopThumbnailView from './ShopThumbnailView';
 
-class MainLayout extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shops: [],
-    };
-  }
+class MainLayout extends Component {
+  state = {
+    shops: [],
+  };
   render() {
     return (
       <div className="container">

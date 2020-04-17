@@ -1,10 +1,10 @@
 import React from 'react';
 
-function ShopThumbnailView(props) {
+const shopThumbnailView = (props) => {
   return (
     <div className="shopthumbnailview container border rounded-lg p-3">
       {/* <img class="shopthumbnailimg" src={props.imgsrc} /> */}
-      <h4>{props.shopname}</h4>
+      <h4>{props.shopName}</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -16,6 +16,6 @@ function ShopThumbnailView(props) {
       </p>
     </div>
   );
-}
+};
 
-export default ShopThumbnailView;
+export default shopThumbnailView;

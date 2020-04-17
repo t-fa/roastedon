@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StateDropDown(props) {
+const stateDropDown = (props) => {
   return (
     <div className="form-group col-md-4">
       <label htmlFor="inputState">State</label>
@@ -65,6 +65,6 @@ function StateDropDown(props) {
       </select>
     </div>
   );
-}
+};
 
-export default StateDropDown;
+export default stateDropDown;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import ShopSearch from './ShopSearch';
 
-function Home() {
+const home = () => {
   return (
     <div>
       <ShopSearch />
@@ -23,6 +23,6 @@ function Home() {
       <p>Lorem ipsum dolor</p>
     </div>
   );
-}
+};
 
-export default Home;
+export default home;

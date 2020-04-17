@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 import StateDropDown from './StateDropDown.js';
 import TextInput from './TextInput';
 
-class AddShopForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      address: '',
-      address2: '',
-      city: '',
-      state: '',
-      zipcode: '',
-    };
-  }
+class AddShopForm extends Component {
+  state = {
+    name: '',
+    address: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  };
 
   handleChange = (event) => {
     const name = event.target.name;

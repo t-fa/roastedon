@@ -1,16 +1,15 @@
 import React from 'react';
 
-import ShopThumbnailView from './ShopThumbnail';
+import ShopThumbnail from './ShopThumbnail';
 
-const shopSearch = () => {
+const shopSearch = (props) => {
   let renderShops = null;
 
-  if (this.state.shopsFound) {
-    renderShops = this.state.shops.map((shop) => {
-      return <ShopThumbnailView {...shop} key={shop.id} />;
-    });
-  }
-  return { renderShops };
+  renderShops = props.shops.map((shop) => {
+    return <ShopThumbnail {...shop} key={shop.id} />;
+  });
+
+  return <div>{renderShops}</div>;
 };
 
 export default shopSearch;

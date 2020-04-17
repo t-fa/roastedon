@@ -11,6 +11,7 @@ class MainLayout extends Component {
   state = {
     zipcode: '',
     shops: [],
+    shopsFound: false,
   };
 
   handleChange = (event) => {
@@ -22,8 +23,7 @@ class MainLayout extends Component {
     axios
       .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
       .then((response) => {
-        this.setState({ shops: response.data, zipcode: '' });
-        return <Redirect to="/shops" />;
+        this.setState({ shops: response.data, zipcode: '', shopsFound: true });
       })
       .catch((error) => {
         console.log(error);
@@ -31,6 +31,10 @@ class MainLayout extends Component {
   };
 
   render() {
+    if (this.state.shopsFound) {
+      return <Redirect to="/shops" />;
+    }
+
     return (
       <div className="container">
         <Header />

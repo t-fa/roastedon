@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './Header';
@@ -24,6 +24,8 @@ class MainLayout extends Component {
       .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
       .then((response) => {
         this.setState({ shops: response.data, zipcode: '', shopsFound: true });
+
+        this.props.history.push('/shops');
       })
       .catch((error) => {
         console.log(error);
@@ -31,10 +33,6 @@ class MainLayout extends Component {
   };
 
   render() {
-    if (this.state.shopsFound) {
-      return <Redirect to="/shops" />;
-    }
-
     return (
       <div className="container">
         <Header />
@@ -61,4 +59,4 @@ class MainLayout extends Component {
   }
 }
 
-export default MainLayout;
+export default withRouter(MainLayout);

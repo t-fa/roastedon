@@ -42,7 +42,7 @@ app.get('/users', (req, res) => {
 //   });
 // });
 
-app.get('/', (req, res) => {
+app.get('/shops', (req, res) => {
   const context = {};
   const zipcode = req.query.zipcode;
   console.log(`Zipcode: ${zipcode}`);

@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-import ShopThumbnail from './ShopThumbnail';
+import Shops from './Shops';
 
 class ShopsContainer extends Component {
   state = {
-    shops: []
+    shops: [],
+  };
+
+  componentDidMount() {
+    const search = this.props.location.search;
+    const params = new URLSearchParams(search);
+    const zipcode = params.get('zipcode');
+
+    axios
+      .get(`http://localhost:3001/shops?zipcode=${zipcode}`)
+      .then((response) => {
+        this.setState({ shops: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-  if (props.shops.length > 0) {
-    props.shops.map((shop) => {
-      return <ShopThumbnail {...shop} key={shop.id} />;
-    });
-  } else {
-    return <p>Not found</p>;
+
+  render() {
+    return <Shops shops={this.state.shops} />;
   }
-};
+}
 
 export default ShopsContainer;

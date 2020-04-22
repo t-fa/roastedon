@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import axios from 'axios';
 
 import Header from './Header';
 import HomeLayout from './Home/HomeLayout';
 import AddShopForm from './Add/AddShopForm';
-import ShopSearch from './Shops/ShopSearch';
+import ShopsContainer from './Shops/ShopsContainer';
 
 class MainLayout extends Component {
   state = {
     zipcode: '',
-    shops: [],
-    shopsFound: false,
   };
 
   handleChange = (event) => {
@@ -20,16 +17,10 @@ class MainLayout extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    axios
-      .get(`http://localhost:3001/?zipcode=${this.state.zipcode}`)
-      .then((response) => {
-        this.setState({ shops: response.data, zipcode: '', shopsFound: true });
-
-        this.props.history.push('/shops');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.props.history.push({
+      pathname: '/shops',
+      search: `?zipcode=${this.state.zipcode}`,
+    });
   };
 
   render() {
@@ -49,10 +40,7 @@ class MainLayout extends Component {
             )}
           />
           <Route path="/add" component={AddShopForm} />
-          <Route
-            path="/shops"
-            render={() => <ShopSearch shops={this.state.shops} />}
-          />
+          <Route path="/shops" component={ShopsContainer} />} />
         </Switch>
       </div>
     );

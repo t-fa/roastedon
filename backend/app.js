@@ -30,18 +30,6 @@ app.get('/users', (req, res) => {
   });
 });
 
-// app.get('/shops', (req, res) => {
-//   const context = {};
-//   connection.query('SELECT * FROM shops', function (err, rows) {
-//     if (err) {
-//       console.log(err);
-//       return;
-//     }
-//     context.results = JSON.stringify(rows);
-//     res.send(context.results);
-//   });
-// });
-
 app.get('/shops', (req, res) => {
   const context = {};
   const zipcode = req.query.zipcode;
@@ -58,6 +46,24 @@ app.get('/shops', (req, res) => {
       res.send(context.results);
     }
   );
+});
+
+app.get('/shops/:id', (req, res) => {
+  const context = {};
+  const id = req.params.id;
+  console.log(`Zipcode: ${zipcode}`);
+  connection.query(`SELECT * FROM shops WHERE id = '${id}'`, function (
+    err,
+    rows
+  ) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    context.results = JSON.stringify(rows);
+    console.log(context.results);
+    res.send(context.results);
+  });
 });
 
 app.post('/shops', (req, res) => {

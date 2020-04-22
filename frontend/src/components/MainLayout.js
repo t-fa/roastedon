@@ -5,6 +5,7 @@ import Header from './Header';
 import HomeLayout from './Home/HomeLayout';
 import AddShopForm from './Add/AddShopForm';
 import ShopsContainer from './Shops/ShopsContainer';
+import Shop from './Shops/Shop';
 
 class MainLayout extends Component {
   state = {
@@ -17,6 +18,7 @@ class MainLayout extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({ zipcode: '' });
     this.props.history.push({
       pathname: '/shops',
       search: `?zipcode=${this.state.zipcode}`,
@@ -40,7 +42,8 @@ class MainLayout extends Component {
             )}
           />
           <Route path="/add" component={AddShopForm} />
-          <Route path="/shops" component={ShopsContainer} />} />
+          <Route exact path="/shops" component={ShopsContainer} />
+          <Route path="/shops/:id" component={Shop} />
         </Switch>
       </div>
     );

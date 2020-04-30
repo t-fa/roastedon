@@ -1,15 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, withRouter, Switch } from 'react-router-dom';
 
 import ShopThumbnail from './ShopThumbnail';
+import Shop from './Shop';
 
 const shops = (props) => {
   if (props.shops.length > 0) {
     return props.shops.map((shop) => {
       return (
-        <Link to={'/shops/' + shop.id}>
-          <ShopThumbnail {...shop} key={shop.id} />
-        </Link>
+        <Switch>
+          <Route
+            path={props.match.url + '/:id'}
+            render={() => <Shop {...shop} />}
+          />
+          <Link to={props.match.url + '/' + shop.id}>
+            <ShopThumbnail {...shop} key={shop.id} />
+          </Link>
+        </Switch>
       );
     });
   } else {
@@ -17,4 +24,4 @@ const shops = (props) => {
   }
 };
 
-export default shops;
+export default withRouter(shops);

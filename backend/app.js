@@ -51,7 +51,6 @@ app.get('/shops', (req, res) => {
 app.get('/shops/:id', (req, res) => {
   const context = {};
   const id = req.params.id;
-  console.log(`Zipcode: ${zipcode}`);
   connection.query(`SELECT * FROM shops WHERE id = '${id}'`, function (
     err,
     rows

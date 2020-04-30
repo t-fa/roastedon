@@ -20,17 +20,17 @@ class Shop extends Component {
   render() {
     if (this.state.shop.length > 0) {
       return (
-        <div class="card">
-          <div class="card-body">
-            <h1 class="card-title">{this.state.shop[0].name} Name</h1>
+        <div className="card">
+          <div className="card-body">
+            <h1 className="card-title">{this.state.shop[0].name} Name</h1>
             <p>{this.state.shop[0].address1} Shop View!</p>
           </div>
         </div>
       );
     } else {
       return (
-        <div class="card">
-          <div class="card-body">
+        <div className="card">
+          <div className="card-body">
             <p>An error occurred.</p>
           </div>
         </div>

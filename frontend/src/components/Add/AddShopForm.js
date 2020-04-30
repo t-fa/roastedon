@@ -2,16 +2,61 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import StateDropDown from './StateDropDown.js';
-import TextInput from './TextInput';
+// import TextInput from './TextInput';
+import Input from '../UI/Input';
 
 class AddShopForm extends Component {
   state = {
-    name: '',
-    address: '',
-    address2: '',
-    city: '',
-    state: '',
-    zipcode: '',
+    addForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Coffee Shop Name',
+        },
+        value: '',
+      },
+      address: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: '1234 Main St',
+        },
+        value: '',
+      },
+      address2: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Apartment, studio, or floor',
+        },
+        value: '',
+      },
+      city: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'City',
+        },
+        value: '',
+      },
+      state: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'State',
+        },
+        value: '',
+      },
+      zipcode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Zip',
+        },
+        value: '',
+      },
+    },
   };
 
   handleChange = (event) => {
@@ -57,63 +102,34 @@ class AddShopForm extends Component {
   };
 
   render() {
-    return (
+    const formElementsArray = [];
+    for (let key in this.state.addForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.addForm[key],
+      });
+    }
+    let form = (
       <form onSubmit={this.handleSubmit}>
-        <h2>Add a new coffee shop</h2>
-        <TextInput
-          name="name"
-          label="inputname"
-          labeltext="Coffee Shop Name"
-          id="shopname"
-          placeholder="Coffee Shop Name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <TextInput
-          name="address"
-          label="inputaddress"
-          labeltext="Address"
-          id="shopaddress"
-          placeholder="1234 Main St"
-          value={this.state.address}
-          onChange={this.handleChange}
-        />
-        <TextInput
-          name="address2"
-          label="inputaddress2"
-          labeltext="Address 2"
-          id="shopaddress2"
-          placeholder="Apartment, studio, or floor"
-          value={this.state.address2}
-          onChange={this.handleChange}
-        />
-        <div className="form-row">
-          <TextInput
-            divclass="col-md-6"
-            name="city"
-            label="inputcity"
-            labeltext="City"
-            id="shopcity"
-            placeholder="Pleasantville"
-            value={this.state.city}
-            onChange={this.handleChange}
+        {formElementsArray.map((formElement) => (
+          <Input
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
           />
-          <StateDropDown handleChange={this.handleChange} />
-          <TextInput
-            divclass="col-md-2"
-            name="zipcode"
-            label="inputzip"
-            labeltext="Zip"
-            id="shopzip"
-            placeholder="Zip"
-            value={this.state.zipcode}
-            onChange={this.handleChange}
-          />
-        </div>
+        ))}
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
+    );
+
+    return (
+      <div>
+        <h2>Add a new coffee shop</h2>
+        {form}
+      </div>
     );
   }
 }

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import StateDropDown from './StateDropDown.js';
-// import TextInput from './TextInput';
 import Input from '../UI/Input';
 
 class AddShopForm extends Component {
@@ -16,7 +14,7 @@ class AddShopForm extends Component {
         },
         value: '',
       },
-      address: {
+      address1: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
@@ -80,18 +78,17 @@ class AddShopForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(this.state);
-    const name = this.state.name;
-    const address = this.state.address;
-    const address2 = this.state.address2;
-    const city = this.state.city;
-    const state = this.state.state;
-    const zipcode = this.state.zipcode;
+    const name = this.state.addForm.name.value;
+    const address1 = this.state.addForm.address1.value;
+    const address2 = this.state.addForm.address2.value;
+    const city = this.state.addForm.city.value;
+    const state = this.state.addForm.state.value;
+    const zipcode = this.state.addForm.zipcode.value;
 
     axios
       .post('http://localhost:3001/shops', {
         name,
-        address,
+        address1,
         address2,
         city,
         state,
@@ -99,9 +96,10 @@ class AddShopForm extends Component {
       })
       .then((response) => {
         console.log(response);
+
         this.setState({
           name: '',
-          address: '',
+          address1: '',
           address2: '',
           city: '',
           state: '',
@@ -141,6 +139,7 @@ class AddShopForm extends Component {
     return (
       <div>
         <h2>Add a new coffee shop</h2>
+
         {form}
       </div>
     );

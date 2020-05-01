@@ -41,10 +41,12 @@ class AddShopForm extends Component {
         value: '',
       },
       state: {
-        elementType: 'input',
+        elementType: 'select',
         elementConfig: {
-          type: 'text',
-          placeholder: 'State',
+          options: [
+            { value: 'New York', displayValue: 'New York' },
+            { value: 'Virginia', displayValue: 'Virginia' },
+          ],
         },
         value: '',
       },

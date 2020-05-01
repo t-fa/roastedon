@@ -61,10 +61,20 @@ class AddShopForm extends Component {
     },
   };
 
-  handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({ [name]: value });
+  handleChange = (event, inputIdentifier) => {
+    // this will not create a deep copy of the nested objects
+    const updatedAddForm = {
+      ...this.state.addForm,
+    };
+    // copies nested objects - works because we don't need to modify elementConfig
+    const updatedAddFormElement = {
+      ...updatedAddForm[inputIdentifier],
+    };
+    updatedAddFormElement.value = event.target.value;
+    updatedAddForm[inputIdentifier] = updatedAddFormElement;
+    this.setState({
+      addForm: updatedAddForm,
+    });
   };
 
   handleSubmit = (event) => {
@@ -116,6 +126,7 @@ class AddShopForm extends Component {
         {formElementsArray.map((formElement) => (
           <Input
             key={formElement.id}
+            changed={(event) => this.handleChange(event, formElement.id)}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}

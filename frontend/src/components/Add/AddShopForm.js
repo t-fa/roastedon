@@ -78,32 +78,26 @@ class AddShopForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const name = this.state.addForm.name.value;
-    const address1 = this.state.addForm.address1.value;
-    const address2 = this.state.addForm.address2.value;
-    const city = this.state.addForm.city.value;
-    const state = this.state.addForm.state.value;
-    const zipcode = this.state.addForm.zipcode.value;
+    // copy state value data into single object
+    const formData = {};
+    for (let formElement in this.state.addForm) {
+      formData[formElement] = this.state.addForm[formElement].value;
+    }
+
+    const updatedAddForm = { ...this.state.addForm };
 
     axios
-      .post('http://localhost:3001/shops', {
-        name,
-        address1,
-        address2,
-        city,
-        state,
-        zipcode,
-      })
+      .post('http://localhost:3001/shops', formData)
       .then((response) => {
         console.log(response);
 
+        // clear updatedAddForm
+        for (let formElement in updatedAddForm) {
+          updatedAddForm[formElement].value = '';
+        }
+
         this.setState({
-          name: '',
-          address1: '',
-          address2: '',
-          city: '',
-          state: '',
-          zipcode: '',
+          addForm: updatedAddForm,
         });
       })
       .catch(function (error) {

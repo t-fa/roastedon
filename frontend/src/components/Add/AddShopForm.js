@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import Input from '../UI/Input';
+import Button from '../UI/Button';
 
 class AddShopForm extends Component {
   state = {
@@ -13,6 +14,11 @@ class AddShopForm extends Component {
           placeholder: 'Coffee Shop Name',
         },
         value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       address1: {
         elementType: 'input',
@@ -21,6 +27,11 @@ class AddShopForm extends Component {
           placeholder: '1234 Main St',
         },
         value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       address2: {
         elementType: 'input',
@@ -29,6 +40,11 @@ class AddShopForm extends Component {
           placeholder: 'Apartment, studio, or floor',
         },
         value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       city: {
         elementType: 'input',
@@ -37,6 +53,11 @@ class AddShopForm extends Component {
           placeholder: 'City',
         },
         value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
       state: {
         elementType: 'select',
@@ -47,6 +68,9 @@ class AddShopForm extends Component {
           ],
         },
         value: '',
+        validation: {
+          required: false,
+        },
       },
       zipcode: {
         elementType: 'input',
@@ -55,9 +79,35 @@ class AddShopForm extends Component {
           placeholder: 'Zip',
         },
         value: '',
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5,
+        },
+        valid: false,
+        touched: false,
       },
     },
+    formIsValid: false,
   };
+
+  checkValidity(value, rules) {
+    let isValid = true;
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    return isValid;
+  }
 
   handleChange = (event, inputIdentifier) => {
     // this will not create a deep copy of the nested objects
@@ -69,9 +119,21 @@ class AddShopForm extends Component {
       ...updatedAddForm[inputIdentifier],
     };
     updatedAddFormElement.value = event.target.value;
+    updatedAddFormElement.valid = this.checkValidity(
+      updatedAddFormElement.value,
+      updatedAddFormElement.validation
+    );
+    updatedAddFormElement.touched = true;
     updatedAddForm[inputIdentifier] = updatedAddFormElement;
+
+    let formIsValid = true;
+    for (let inputIdentifier in updatedAddForm) {
+      formIsValid = updatedAddForm[inputIdentifier].valid && formIsValid;
+    }
+
     this.setState({
       addForm: updatedAddForm,
+      formIsValid: formIsValid,
     });
   };
 
@@ -121,19 +183,19 @@ class AddShopForm extends Component {
             changed={(event) => this.handleChange(event, formElement.id)}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
+            invalid={!formElement.config.valid}
+            shouldValidate={formElement.config.validation.required}
+            touched={formElement.config.touched}
             value={formElement.config.value}
           />
         ))}
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <Button disabled={!this.state.formIsValid}>Submit</Button>
       </form>
     );
 
     return (
       <div>
         <h2>Add a new coffee shop</h2>
-
         {form}
       </div>
     );

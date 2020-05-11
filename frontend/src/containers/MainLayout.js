@@ -21,7 +21,6 @@ class MainLayout extends Component {
     this.setState({ zipcode: '' });
     this.props.history.push({
       pathname: '/shops',
-      search: `?zipcode=${this.state.zipcode}`,
     });
   };
 
@@ -42,7 +41,11 @@ class MainLayout extends Component {
             )}
           />
           <Route path="/add" component={AddShopForm} />
-          <Route exact path="/shops" component={ShopsContainer} />
+          <Route
+            exact
+            path="/shops"
+            render={() => <ShopsContainer zipcode={this.state.zipcode} />}
+          />
           <Route path="/shops/:id" component={Shop} />
         </Switch>
       </div>

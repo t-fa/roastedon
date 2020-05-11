@@ -9,12 +9,8 @@ class ShopsContainer extends Component {
   };
 
   componentDidMount() {
-    const search = this.props.location.search;
-    const params = new URLSearchParams(search);
-    const zipcode = params.get('zipcode');
-
     axios
-      .get(`http://localhost:3001/shops?zipcode=${zipcode}`)
+      .get(`http://localhost:3001/shops?zipcode=${this.props.zipcode}`)
       .then((response) => {
         this.setState({ shops: response.data });
       })

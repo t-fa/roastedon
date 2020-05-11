@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 // components
-import MainLayout from './components/MainLayout';
+import MainLayout from './containers/MainLayout';
 
 function App() {
   return (

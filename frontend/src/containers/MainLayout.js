@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
-import Header from './Header';
-import HomeLayout from './Home/HomeLayout';
-import AddShopForm from './Add/AddShopForm';
-import ShopsContainer from './Shops/ShopsContainer';
-import Shop from './Shops/Shop';
+import Header from '../components/Header';
+import HomeLayout from '../components/Home/HomeLayout';
+import AddShopForm from './AddShopForm';
+import ShopsContainer from './ShopsContainer';
+import Shop from './Shop';
 
 class MainLayout extends Component {
   state = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Route, withRouter, Switch } from 'react-router-dom';
 
 import ShopThumbnail from './ShopThumbnail';
-import Shop from './Shop';
+import Shop from '../../containers/Shop';
 
 const shops = (props) => {
   if (props.shops.length > 0) {

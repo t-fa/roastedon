@@ -11,6 +11,7 @@ const homeLayout = (props) => {
         handleChange={props.handleChange}
         handleSubmit={props.handleSubmit}
       />
+      Zip: {props.zipcode}
       <Info />
     </>
   );

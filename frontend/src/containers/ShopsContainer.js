@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Shops from './Shops';
+import Shops from '../components/Shops/Shops';
 
 class ShopsContainer extends Component {
   state = {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Input from '../UI/Input';
-import Button from '../UI/Button';
+import Input from '../components/UI/Input';
+import Button from '../components/UI/Button';
 
 class AddShopForm extends Component {
   state = {

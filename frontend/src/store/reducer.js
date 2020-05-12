@@ -9,7 +9,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.ADD_SHOPS:
       return {
         ...state,
-        shops: [],
+        shops: action.shops,
       };
     case actionTypes.CLEAR_SHOPS:
       return {

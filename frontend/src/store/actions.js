@@ -4,9 +4,10 @@ import axios from 'axios';
 export const ADD_SHOPS = 'ADD_SHOPS';
 export const CLEAR_SHOPS = 'CLEAR_SHOPS';
 
-export const saveShops = (zipcode) => {
+export const saveShops = (response) => {
   return {
     type: ADD_SHOPS,
+    shops: response,
   };
 };
 
@@ -15,7 +16,7 @@ export const addShops = (zipcode) => {
     axios
       .get(`${url}shops?zipcode=${zipcode}`)
       .then((response) => {
-        dispatch(saveShops(zipcode));
+        dispatch(saveShops(response.data));
       })
       .catch((error) => {
         console.log(error);

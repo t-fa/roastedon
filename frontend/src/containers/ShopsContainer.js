@@ -21,6 +21,8 @@ class ShopsContainer extends Component {
   // }
   componentDidMount() {
     this.props.onAddedShops(this.props.zipcode);
+    console.log(`Zip: ${this.props.zipcode}`);
+    console.log(`Shops: ${this.props.shops}`);
   }
 
   render() {
@@ -36,8 +38,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddedShops: (zipcode) =>
-      dispatch({ type: actionTypes.ADD_SHOPS, zipcode: zipcode }),
+    onAddedShops: (zipcode) => dispatch(actionTypes.addShops(zipcode)),
     onClearShops: () => dispatch({ type: actionTypes.CLEAR_SHOPS }),
   };
 };

@@ -1,18 +1,24 @@
 import * as actionTypes from './actions';
 
 const initialState = {
-  zipcode: '',
+  shops: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_INPUT:
+    case actionTypes.ADD_SHOPS:
       return {
         ...state,
-        zipcode: action.zipcode,
+        shops: [],
       };
+    case actionTypes.CLEAR_SHOPS:
+      return {
+        ...state,
+        shops: [],
+      };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default reducer;

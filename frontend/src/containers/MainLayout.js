@@ -18,7 +18,6 @@ class MainLayout extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({ zipcode: '' });
     this.props.history.push({
       pathname: '/shops',
     });

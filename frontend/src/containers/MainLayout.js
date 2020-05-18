@@ -6,6 +6,7 @@ import HomeLayout from '../components/Home/HomeLayout';
 import AddShopForm from './AddShopForm';
 import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
+import Auth from './Auth';
 
 class MainLayout extends Component {
   state = {
@@ -40,6 +41,7 @@ class MainLayout extends Component {
             )}
           />
           <Route path="/add" component={AddShopForm} />
+          <Route path="/auth" component={Auth} />
           <Route
             exact
             path="/shops"

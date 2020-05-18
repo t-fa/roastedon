@@ -22,6 +22,11 @@ const header = () => {
                 Add A Coffee Shop
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/auth">
+                Log In
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

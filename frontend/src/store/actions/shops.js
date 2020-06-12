@@ -1,12 +1,10 @@
-import url from '../url';
+import url from '../../url';
 import axios from 'axios';
-
-export const ADD_SHOPS = 'ADD_SHOPS';
-export const CLEAR_SHOPS = 'CLEAR_SHOPS';
+import * as actionTypes from './actionTypes';
 
 export const saveShops = (response) => {
   return {
-    type: ADD_SHOPS,
+    type: actionTypes.ADD_SHOPS,
     shops: response,
   };
 };
@@ -26,6 +24,6 @@ export const addShops = (zipcode) => {
 
 export const clearShops = () => {
   return {
-    type: CLEAR_SHOPS,
+    type: actionTypes.CLEAR_SHOPS,
   };
 };

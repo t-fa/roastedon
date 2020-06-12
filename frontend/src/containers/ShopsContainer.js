@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/actions';
+import * as actionTypes from '../store/actions/shops';
 
 import Shops from '../components/Shops/Shops';
 
@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddedShops: (zipcode) => dispatch(actionTypes.addShops(zipcode)),
-    onClearShops: () => dispatch({ type: actionTypes.CLEAR_SHOPS }),
+    onClearShops: () => dispatch({ type: actionTypes.clearShops() }),
   };
 };
 

@@ -2,15 +2,12 @@ const express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
   connection = require('./dbcon.js'),
-  cookieParser = require('cookie-parser'),
   cors = require('cors'),
   passport = require('passport'),
-  port = 3001,
-  session = require('express-session');
+  port = 3001;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cookieParser());
 app.use(cors()); // FIX THIS BEFORE DEPLOYING! USE A WHITE LIST!!!!!!!!!
 
 connection.connect(function (err) {
@@ -20,7 +17,7 @@ connection.connect(function (err) {
 
 app.get('/users', (req, res) => {
   const context = {};
-  connection.query('SELECT * FROM users', function (err, rows) {
+  connection.query('SELECT * FROM users', (err, rows) => {
     if (err) {
       console.log(err);
       return;

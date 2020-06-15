@@ -4,16 +4,24 @@ const express = require('express'),
   connection = require('./dbcon.js'),
   cors = require('cors'),
   passport = require('passport'),
-  port = 3001;
+  port = 3001,
+  shopsRouter = require('./routes/shopsRouter');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // FIX THIS BEFORE DEPLOYING! USE A WHITE LIST!!!!!!!!!
+app.use(passport.initialize());
+app.use(passport.session());
 
 connection.connect(function (err) {
   if (err) throw err;
   console.log('Connected!');
 });
+
+/*
+ * Routes
+ */
+app.use('/shops', shopsRouter);
 
 app.get('/users', (req, res) => {
   const context = {};
@@ -25,62 +33,6 @@ app.get('/users', (req, res) => {
     context.results = JSON.stringify(rows);
     res.send(context.results);
   });
-});
-
-app.get('/shops', (req, res) => {
-  const context = {};
-  const zipcode = req.query.zipcode;
-  console.log(`Zipcode: ${zipcode}`);
-  connection.query(
-    `SELECT * FROM shops WHERE zipcode = '${zipcode}'`,
-    function (err, rows) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      context.results = JSON.stringify(rows);
-      console.log(context.results);
-      res.send(context.results);
-    }
-  );
-});
-
-app.get('/shops/:id', (req, res) => {
-  const context = {};
-  const id = req.params.id;
-  connection.query(`SELECT * FROM shops WHERE id = '${id}'`, function (
-    err,
-    rows
-  ) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    context.results = JSON.stringify(rows);
-    console.log(context.results);
-    res.send(context.results);
-  });
-});
-
-app.post('/shops', (req, res) => {
-  const context = {};
-  const name = req.body.name;
-  const address = req.body.address;
-  const address2 = req.body.address2;
-  const zipcode = req.body.zipcode;
-  const city = req.body.city;
-  const state = req.body.state;
-  connection.query(
-    `INSERT INTO shops (name, address1, address2, zipcode, city, state) VALUES ('${name}', '${address}', '${address2}', '${zipcode}', '${city}', '${state}')`,
-    function (err) {
-      if (err) {
-        throw err;
-      } else {
-        context.results = 'Shop successfully added!';
-        res.send(context.results);
-      }
-    }
-  );
 });
 
 app.get('/createusers', (req, res) => {

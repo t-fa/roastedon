@@ -1,3 +1,5 @@
+const usersRouter = require('./routes/usersRouter.js');
+
 const express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
@@ -6,8 +8,6 @@ const express = require('express'),
   passport = require('passport'),
   shopsRouter = require('./routes/shopsRouter');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 app.use(cors()); // FIX THIS BEFORE DEPLOYING! USE A WHITE LIST!!!!!!!!!
 app.use(passport.initialize());
 app.use(passport.session());
@@ -24,18 +24,7 @@ app.set('port', port);
  * Routes
  */
 app.use('/shops', shopsRouter);
-
-app.get('/users', (req, res) => {
-  const context = {};
-  connection.query('SELECT * FROM users', (err, rows) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    context.results = JSON.stringify(rows);
-    res.send(context.results);
-  });
-});
+app.use('/users', usersRouter);
 
 app.get('/createusers', (req, res) => {
   const sql = `

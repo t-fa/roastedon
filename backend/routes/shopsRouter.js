@@ -3,6 +3,8 @@ const bodyParser = require('body-parser'),
   express = require('express');
 
 const shopsRouter = express.Router();
+shopsRouter.use(bodyParser.urlencoded({ extended: true }));
+shopsRouter.use(bodyParser.json());
 
 shopsRouter
   .route('/')

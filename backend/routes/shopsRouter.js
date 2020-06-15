@@ -75,15 +75,15 @@ shopsRouter
   })
   .post((req, res) => {
     res.statusCode = 403;
-    res.end('POST operation not supported on /shops/:id');
+    res.end(`POST operation not supported on /shops/${req.params.id}`);
   })
   .put((req, res) => {
     res.statusCode = 403;
-    res.end('PUT operation not supported on /shops/:id');
+    res.end(`PUT operation not supported on /shops/${req.params.id}`);
   })
   .delete((req, res) => {
     res.statusCode = 403;
-    res.end('DELETE operation not supported on /shops/:id');
+    res.end(`DELETE operation not supported on /shops/${req.params.id}`);
   });
 
 module.exports = shopsRouter;

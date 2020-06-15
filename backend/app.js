@@ -4,7 +4,6 @@ const express = require('express'),
   connection = require('./dbcon.js'),
   cors = require('cors'),
   passport = require('passport'),
-  port = 3001,
   shopsRouter = require('./routes/shopsRouter');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,10 +12,13 @@ app.use(cors()); // FIX THIS BEFORE DEPLOYING! USE A WHITE LIST!!!!!!!!!
 app.use(passport.initialize());
 app.use(passport.session());
 
-connection.connect(function (err) {
+connection.connect((err) => {
   if (err) throw err;
   console.log('Connected!');
 });
+
+const port = 3001;
+app.set('port', port);
 
 /*
  * Routes
@@ -43,7 +45,7 @@ app.get('/createusers', (req, res) => {
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL
   )`;
-  connection.query(sql, function (err, result) {
+  connection.query(sql, (err, result) => {
     if (err) throw err;
     console.log('Table users created!');
   });
@@ -63,12 +65,12 @@ app.get('/createcoffee', (req, res) => {
     hours VARCHAR (255),
     image VARCHAR (255)
   )`;
-  connection.query(sql, function (err, result) {
+  connection.query(sql, (err, result) => {
     if (err) throw err;
     console.log('Table shops created!');
   });
 });
 
-app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
+app.listen(() =>
+  console.log(`Example app listening at http://localhost:${app.get('port')}`)
 );

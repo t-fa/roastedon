@@ -25,14 +25,6 @@ usersRouter
   })
   .post((req, res) => {
     passport.authenticate('local', { failureRedirect: '/users' });
-  })
-  .put((req, res) => {
-    res.statusCode = 403;
-    res.end('PUT operation not supported on /users');
-  })
-  .delete((req, res) => {
-    res.statusCode = 403;
-    res.end('DELETE operation not supported on /users');
   });
 
 module.exports = usersRouter;

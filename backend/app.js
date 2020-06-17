@@ -1,12 +1,10 @@
-const usersRouter = require('./routes/usersRouter.js');
-
 const express = require('express'),
   app = express(),
-  bodyParser = require('body-parser'),
   connection = require('./dbcon.js'),
   cors = require('cors'),
   passport = require('passport'),
-  shopsRouter = require('./routes/shopsRouter');
+  shopsRouter = require('./routes/shopsRouter'),
+  usersRouter = require('./routes/usersRouter.js');
 
 app.use(cors()); // FIX THIS BEFORE DEPLOYING! USE A WHITE LIST!!!!!!!!!
 app.use(passport.initialize());
@@ -18,7 +16,6 @@ connection.connect((err) => {
 });
 
 const port = 3001;
-app.set('port', port);
 
 /*
  * Routes
@@ -60,6 +57,4 @@ app.get('/createcoffee', (req, res) => {
   });
 });
 
-app.listen(() =>
-  console.log(`Example app listening at http://localhost:${app.get('port')}`)
-);
+app.listen(port, () => console.log(`Listening at http://localhost:${port}`));

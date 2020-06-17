@@ -17,10 +17,10 @@ shopsRouter
         if (err) {
           console.log(err);
           return next(err);
+        } else {
+          res.setHeader('Content-Type', 'application/json');
+          res.json(rows);
         }
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(rows);
       }
     );
   })

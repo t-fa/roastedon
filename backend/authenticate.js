@@ -14,28 +14,21 @@ exports.local = passport.use(
         }
         if (result.length > 0) {
           const first = result[0];
-          // bcrypt.compareSync(password, first.password, (err, res) => {
-          // *****TEMPORARY SOLUTION UNTIL WE USE BCRYPT TO HASH
-          if (password === first.password) {
-            return done(null, { id: first.id, username: first.username });
-            // if (err) {
-            //   return done(err, false);
-            // }
-            // // password matches
-            // if (res) {
-            //   return done(null, { id: first.id, username: first.username });
-            // }
-            // // password doesn't match
-            // else {
-            //   return done(null, false);
-            // }
-          } else {
-            // TEMPORARY - DELETE ONCE PROPER HASHING IS DONE
-            return done(null, false);
-          }
-        }
-        // no match
-        else {
+          bcrypt.compare(password, first.password, (err, res) => {
+            if (err) {
+              return done(err, false);
+            }
+            // password matches
+            if (res) {
+              return done(null, { id: first.id, username: first.username });
+            }
+            // password doesn't match
+            else {
+              return done(null, false);
+            }
+          });
+          // no match
+        } else {
           return done(null, false);
         }
       }

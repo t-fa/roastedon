@@ -1,7 +1,8 @@
-const bodyParser = require('body-parser'),
+const authenticate = require('../authenticate'),
+  bodyParser = require('body-parser'),
   connection = require('../dbcon.js'),
   express = require('express'),
-  passport = require('passport-local');
+  passport = require('passport');
 
 const usersRouter = express.Router();
 usersRouter.use(bodyParser.urlencoded({ extended: true }));
@@ -23,8 +24,8 @@ usersRouter
       }
     );
   })
-  .post((req, res) => {
-    passport.authenticate('local', { failureRedirect: '/users' });
+  .post(authenticate.verifyUser, (req, res) => {
+    res.send('ok!');
   });
 
 module.exports = usersRouter;

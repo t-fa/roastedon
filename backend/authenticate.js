@@ -1,28 +1,42 @@
-const db = require('./dbcon'),
-  bcrypt = require('bcrypt'),
+const bcrypt = require('bcrypt'),
+  connection = require('./dbcon'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
 
 exports.local = passport.use(
   new LocalStrategy((username, password, done) => {
-    db.query(
+    connection.query(
       `SELECT id, username, password FROM users WHERE username = '${username}'`,
-      (err, result, next) => {
+      (err, result) => {
         if (err) {
           console.log(err);
-          return next(err);
+          return done(err);
         }
-        if (result.rows.length > 0) {
-          const first = result.rows[0];
-          bcrypt.compare(password, first.password, (err, res) => {
-            if (res) {
-              done(null, { id: first.id, username: first.username });
-            } else {
-              done(null, false);
-            }
-          });
-        } else {
-          done(null, false);
+        if (result.length > 0) {
+          const first = result[0];
+          // bcrypt.compareSync(password, first.password, (err, res) => {
+          // *****TEMPORARY SOLUTION UNTIL WE USE BCRYPT TO HASH
+          if (password === first.password) {
+            return done(null, { id: first.id, username: first.username });
+            // if (err) {
+            //   return done(err, false);
+            // }
+            // // password matches
+            // if (res) {
+            //   return done(null, { id: first.id, username: first.username });
+            // }
+            // // password doesn't match
+            // else {
+            //   return done(null, false);
+            // }
+          } else {
+            // TEMPORARY - DELETE ONCE PROPER HASHING IS DONE
+            return done(null, false);
+          }
+        }
+        // no match
+        else {
+          return done(null, false);
         }
       }
     );
@@ -33,16 +47,17 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, cb) => {
-  db.query(
+passport.deserializeUser((id, done) => {
+  connection.query(
     `SELECT id, username FROM users WHERE id = '${id}'`,
     (err, results) => {
       if (err) {
         console.log('Error when selecting user on session deserialize', err);
-        return cb(err);
+        return done(err);
       }
-
-      cb(null, results.rows[0]);
+      done(null, results[0]);
     }
   );
 });
+
+exports.verifyUser = passport.authenticate('local');

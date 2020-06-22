@@ -149,7 +149,7 @@ class AddShopForm extends Component {
     const updatedAddForm = { ...this.state.addForm };
 
     axios
-      .post('http://localhost:3001/shops', formData)
+      .post('/shops', formData)
       .then((response) => {
         console.log(response);
 

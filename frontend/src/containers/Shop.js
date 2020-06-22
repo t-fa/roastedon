@@ -8,7 +8,7 @@ class Shop extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:3001/shops/${this.props.match.params.id}`)
+      .get(`/shops/${this.props.match.params.id}`)
       .then((response) => {
         this.setState({ shop: response.data });
       })

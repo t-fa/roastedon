@@ -8,6 +8,9 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import reducer from './store/reducers/reducer';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:3001/';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

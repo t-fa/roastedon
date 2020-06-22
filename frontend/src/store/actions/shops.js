@@ -1,4 +1,3 @@
-import url from '../../url';
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
@@ -12,7 +11,7 @@ export const saveShops = (response) => {
 export const addShops = (zipcode) => {
   return (dispatch) => {
     axios
-      .get(`${url}shops?zipcode=${zipcode}`)
+      .get(`/shops?zipcode=${zipcode}`)
       .then((response) => {
         dispatch(saveShops(response.data));
       })

@@ -8,16 +8,16 @@ import Button from '../components/UI/Button';
 class Auth extends Component {
   state = {
     controls: {
-      email: {
+      username: {
         elementType: 'input',
         elementConfig: {
-          type: 'email',
-          placeholder: 'Email',
+          type: 'type',
+          placeholder: 'Username',
         },
         value: '',
         validation: {
           required: true,
-          isEmail: true,
+          isEmail: false,
         },
         valid: false,
         touched: false,
@@ -31,7 +31,7 @@ class Auth extends Component {
         value: '',
         validation: {
           required: true,
-          minLength: 7,
+          minLength: 5,
         },
         valid: false,
         touched: false,
@@ -88,7 +88,7 @@ class Auth extends Component {
   submitHandler = (event) => {
     event.preventDefault();
     this.props.onAuth(
-      this.state.controls.email.value,
+      this.state.controls.username.value,
       this.state.controls.password.value
     );
   };
@@ -128,7 +128,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password) => dispatch(auth()),
+    onAuth: (username, password) => dispatch(auth(username, password)),
   };
 };
 

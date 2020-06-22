@@ -1,6 +1,10 @@
 const bcrypt = require('bcrypt'),
+  config = require('./config'),
   connection = require('./dbcon'),
+  ExtractJwt = require('passport-jwt').ExtractJwt,
   passport = require('passport'),
+  jwt = require('jsonwebtoken'),
+  JwtStrategy = require('passport-jwt').Strategy,
   LocalStrategy = require('passport-local').Strategy;
 
 exports.local = passport.use(
@@ -53,4 +57,31 @@ passport.deserializeUser((id, done) => {
   );
 });
 
-exports.verifyUser = passport.authenticate('local');
+exports.getToken = (user) => {
+  return jwt.sign(user, config.secretKey, { expiresIn: '7 days' });
+};
+
+const opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = config.secretKey;
+
+exports.jwtPassport = passport.use(
+  new JwtStrategy(opts, (jwt_payload, done) => {
+    console.log('JWT payload:', jwt_payload);
+    connection.query(
+      `SELECT id FROM users WHERE id = '${jwt_payload.id}'`,
+      (err, user) => {
+        if (err) {
+          console.log(err);
+          return done(err, false);
+        } else if (user) {
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      }
+    );
+  })
+);
+
+exports.verifyUser = passport.authenticate('jwt', { session: false });

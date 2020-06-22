@@ -2,7 +2,8 @@ const authenticate = require('../authenticate'),
   bcrypt = require('bcrypt'),
   bodyParser = require('body-parser'),
   connection = require('../dbcon.js'),
-  express = require('express');
+  express = require('express'),
+  passport = require('passport');
 
 const usersRouter = express.Router();
 usersRouter.use(bodyParser.urlencoded({ extended: true }));
@@ -24,8 +25,14 @@ usersRouter
       }
     );
   })
-  .post(authenticate.verifyUser, (req, res) => {
-    res.send('ok!');
+  .post(passport.authenticate('local'), (req, res) => {
+    const token = authenticate.getToken({ id: req.user.id });
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({
+      token: token,
+      status: 'Success!',
+    });
   });
 
 usersRouter.route('/register').post((req, res, next) => {

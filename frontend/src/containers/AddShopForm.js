@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
@@ -175,23 +176,28 @@ class AddShopForm extends Component {
         config: this.state.addForm[key],
       });
     }
-    let form = (
-      <form onSubmit={this.handleSubmit}>
-        {formElementsArray.map((formElement) => (
-          <Input
-            key={formElement.id}
-            changed={(event) => this.handleChange(event, formElement.id)}
-            elementType={formElement.config.elementType}
-            elementConfig={formElement.config.elementConfig}
-            invalid={!formElement.config.valid}
-            shouldValidate={formElement.config.validation.required}
-            touched={formElement.config.touched}
-            value={formElement.config.value}
-          />
-        ))}
-        <Button disabled={!this.state.formIsValid}>Submit</Button>
-      </form>
-    );
+    let form;
+    if (this.props.token) {
+      form = (
+        <form onSubmit={this.handleSubmit}>
+          {formElementsArray.map((formElement) => (
+            <Input
+              key={formElement.id}
+              changed={(event) => this.handleChange(event, formElement.id)}
+              elementType={formElement.config.elementType}
+              elementConfig={formElement.config.elementConfig}
+              invalid={!formElement.config.valid}
+              shouldValidate={formElement.config.validation.required}
+              touched={formElement.config.touched}
+              value={formElement.config.value}
+            />
+          ))}
+          <Button disabled={!this.state.formIsValid}>Submit</Button>
+        </form>
+      );
+    } else {
+      form = 'You must log in to view this page!';
+    }
 
     return (
       <div>
@@ -202,4 +208,10 @@ class AddShopForm extends Component {
   }
 }
 
-export default AddShopForm;
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+  };
+};
+
+export default connect(mapStateToProps)(AddShopForm);

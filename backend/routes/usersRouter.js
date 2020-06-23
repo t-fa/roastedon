@@ -31,6 +31,7 @@ usersRouter
     res.setHeader('Content-Type', 'application/json');
     res.json({
       token: token,
+      id: req.user.id,
       status: 'Success!',
     });
   });

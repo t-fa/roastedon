@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { auth } from '../store/actions/auth';
+import { Redirect } from 'react-router-dom';
 
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
@@ -115,8 +116,14 @@ class Auth extends Component {
       />
     ));
 
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      return (authRedirect = <Redirect to="/" />);
+    }
+
     return (
       <div>
+        {authRedirect}
         <form onSubmit={this.submitHandler}>
           {form}
           <Button disabled={!this.state.formIsValid}>Log In</Button>
@@ -126,10 +133,16 @@ class Auth extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (username, password) => dispatch(auth(username, password)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

@@ -63,7 +63,7 @@ usersRouter.route('/register').post((req, res, next) => {
     .catch((err) => next(err));
 });
 
-usersRouter.route('/logout').get((req, res) => {
+usersRouter.route('/logout').get((req, res, next) => {
   if (req.session) {
     req.session.destroy();
     res.clearCookie('session-id');

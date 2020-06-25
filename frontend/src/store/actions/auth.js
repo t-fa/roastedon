@@ -39,6 +39,18 @@ export const logout = () => {
   };
 };
 
+export const authCheckState = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      dispatch(logout());
+    } else {
+      const userId = localStorage.getItem('userId');
+      dispatch(authSuccess(token, userId));
+    }
+  };
+};
+
 export const auth = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
@@ -50,6 +62,8 @@ export const auth = (username, password) => {
       .post('/users/login', authData)
       .then((response) => {
         console.log(response);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userId', response.data.id);
         dispatch(authSuccess(response.data.token, response.data.id));
       })
       .catch((err) => {

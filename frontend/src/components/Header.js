@@ -28,7 +28,7 @@ const header = (props) => {
             </li>
             <li className="nav-item">
               {loggedIn ? (
-                <Link className="nav-link" to="/auth" onClick={props.logout}>
+                <Link className="nav-link" to="/logout">
                   Log Out
                 </Link>
               ) : (
@@ -51,10 +51,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logout: () => dispatch({ type: actionTypes.AUTH_LOGOUT }),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(header);
+export default connect(mapStateToProps)(header);

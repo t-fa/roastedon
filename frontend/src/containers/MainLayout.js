@@ -7,6 +7,7 @@ import AddShopForm from './AddShopForm';
 import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
 import Auth from './Auth';
+import Logout from '../components/Auth/Logout';
 
 class MainLayout extends Component {
   state = {
@@ -47,6 +48,7 @@ class MainLayout extends Component {
             path="/shops"
             render={() => <ShopsContainer zipcode={this.state.zipcode} />}
           />
+          <Route path="/logout" component={Logout} />
           <Route path="/shops/:id" component={Shop} />
         </Switch>
       </div>

@@ -22,6 +22,23 @@ export const authFail = (error) => {
   };
 };
 
+export const logoutStart = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  };
+};
+
+export const logout = () => {
+  return (dispatch) => {
+    axios
+      .get('/users/logout')
+      .then((response) => {
+        dispatch(logoutStart());
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
 export const auth = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());

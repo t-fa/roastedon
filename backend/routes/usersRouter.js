@@ -27,6 +27,8 @@ usersRouter
   })
   .post(passport.authenticate('local'), (req, res) => {
     const token = authenticate.getToken({ id: req.user.id });
+    console.log(token);
+    console.log(req.user);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json({
@@ -61,6 +63,15 @@ usersRouter.route('/register').post((req, res, next) => {
     .catch((err) => next(err));
 });
 
-usersRouter.route('/logout').get((req, res) => {});
+usersRouter.route('/logout').get((req, res) => {
+  if (req.session) {
+    req.session.destroy();
+    res.clearCookie('session-id');
+  } else {
+    const err = new Error('You are not logged in!');
+    err.status = 401;
+    return next(err);
+  }
+});
 
 module.exports = usersRouter;

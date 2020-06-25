@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as actionTypes from '../store/actions/actionTypes';
 
-const header = () => {
+const header = (props) => {
+  let loggedIn;
+  props.token && props.userId ? (loggedIn = true) : (loggedIn = false);
   return (
     <>
       <div className="jumbotron">
@@ -23,9 +27,15 @@ const header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/auth">
-                Log In
-              </Link>
+              {loggedIn ? (
+                <Link className="nav-link" to="/auth" onClick={props.logout}>
+                  Log Out
+                </Link>
+              ) : (
+                <Link className="nav-link" to="/auth">
+                  Log In
+                </Link>
+              )}
             </li>
           </ul>
         </div>
@@ -34,4 +44,17 @@ const header = () => {
   );
 };
 
-export default header;
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+    userId: state.auth.userId,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch({ type: actionTypes.AUTH_LOGOUT }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(header);

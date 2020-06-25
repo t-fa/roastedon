@@ -21,11 +21,13 @@ const header = (props) => {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/add">
-                Add A Coffee Shop
-              </Link>
-            </li>
+            {loggedIn ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/add">
+                  Add A Coffee Shop
+                </Link>
+              </li>
+            ) : null}
             <li className="nav-item">
               {loggedIn ? (
                 <Link className="nav-link" to="/logout">

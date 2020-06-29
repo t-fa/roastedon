@@ -1,42 +1,38 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-class Shop extends Component {
-  state = {
-    shop: [],
-  };
+const Shop = (props) => {
+  const [shop, setShop] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
     axios
-      .get(`/shops/${this.props.match.params.id}`)
+      .get(`/shops/${props.match.params.id}`)
       .then((response) => {
-        this.setState({ shop: response.data });
+        setShop(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  }, [shop]);
 
-  render() {
-    if (this.state.shop.length > 0) {
-      return (
-        <div className="card">
-          <div className="card-body">
-            <h1 className="card-title">{this.state.shop[0].name} Name</h1>
-            <p>{this.state.shop[0].address1} Shop View!</p>
-          </div>
+  if (shop.length > 0) {
+    return (
+      <div className="card">
+        <div className="card-body">
+          <h1 className="card-title">{shop[0].name} Name</h1>
+          <p>{shop[0].address1} Shop View!</p>
         </div>
-      );
-    } else {
-      return (
-        <div className="card">
-          <div className="card-body">
-            <p>An error occurred.</p>
-          </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="card">
+        <div className="card-body">
+          <p>An error occurred.</p>
         </div>
-      );
-    }
+      </div>
+    );
   }
-}
+};
 
 export default Shop;

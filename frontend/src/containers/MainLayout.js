@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import Header from '../components/Header';
@@ -9,51 +9,43 @@ import Shop from './Shop';
 import Auth from './Auth';
 import Logout from '../components/Auth/Logout';
 
-class MainLayout extends Component {
-  state = {
-    zipcode: '',
-  };
+const MainLayout = (props) => {
+  const [zipCode, setZipCode] = useState('');
 
-  handleChange = (event) => {
-    this.setState({ zipcode: event.target.value });
-  };
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.props.history.push({
+    props.history.push({
       pathname: '/shops',
     });
   };
 
-  render() {
-    return (
-      <div className="container">
-        <Header />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <HomeLayout
-                zipcode={this.state.zipcode}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleSubmit}
-              />
-            )}
-          />
-          <Route path="/add" component={AddShopForm} />
-          <Route path="/auth" component={Auth} />
-          <Route
-            exact
-            path="/shops"
-            render={() => <ShopsContainer zipcode={this.state.zipcode} />}
-          />
-          <Route path="/logout" component={Logout} />
-          <Route path="/shops/:id" component={Shop} />
-        </Switch>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="container">
+      <Header />
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <HomeLayout
+              zipcode={zipCode}
+              onChange={(event) => setZipCode(event.target.value)}
+              handleSubmit={handleSubmit}
+            />
+          )}
+        />
+        <Route path="/add" component={AddShopForm} />
+        <Route path="/auth" component={Auth} />
+        <Route
+          exact
+          path="/shops"
+          render={() => <ShopsContainer zipcode={zipCode} />}
+        />
+        <Route path="/logout" component={Logout} />
+        <Route path="/shops/:id" component={Shop} />
+      </Switch>
+    </div>
+  );
+};
 
 export default withRouter(MainLayout);

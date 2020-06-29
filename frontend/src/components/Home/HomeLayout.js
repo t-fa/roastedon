@@ -8,7 +8,7 @@ const homeLayout = (props) => {
     <>
       <SearchBar
         zipcode={props.zipcode}
-        handleChange={props.handleChange}
+        onChange={props.onChange}
         handleSubmit={props.handleSubmit}
       />
       <Info />

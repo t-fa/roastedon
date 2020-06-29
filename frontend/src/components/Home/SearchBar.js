@@ -13,7 +13,7 @@ const searchBar = (props) => {
           id="zipcode"
           name="zipcode"
           value={props.zipcode}
-          onChange={props.handleChange}
+          onChange={props.onChange}
         />
       </div>
       <button type="submit" className="btn btn-primary">

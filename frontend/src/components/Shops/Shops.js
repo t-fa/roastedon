@@ -5,8 +5,8 @@ import ShopThumbnail from './ShopThumbnail';
 import Shop from '../../containers/Shop';
 
 const shops = (props) => {
-  if (props.shops.length > 0) {
-    return props.shops.map((shop) => {
+  if (props.shops.shops.length > 0) {
+    return props.shops.shops.map((shop) => {
       return (
         <Switch>
           <Route

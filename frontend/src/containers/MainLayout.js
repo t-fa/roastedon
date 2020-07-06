@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 
-import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 import HomeLayout from '../components/Home/HomeLayout';
 import AddShopForm from './AddShop';
 import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
-import Auth from './Auth';
+import Login from './Login';
 import Logout from '../components/Auth/Logout';
 
 const MainLayout = (props) => {
@@ -20,8 +21,8 @@ const MainLayout = (props) => {
   };
 
   return (
-    <div className="container">
-      <Header />
+    <Container>
+      <Navbar />
       <Switch>
         <Route
           exact
@@ -35,7 +36,7 @@ const MainLayout = (props) => {
           )}
         />
         <Route path="/add" component={AddShopForm} />
-        <Route path="/auth" component={Auth} />
+        <Route path="/auth" component={Login} />
         <Route
           exact
           path="/shops"
@@ -44,7 +45,7 @@ const MainLayout = (props) => {
         <Route path="/logout" component={Logout} />
         <Route path="/shops/:id" component={Shop} />
       </Switch>
-    </div>
+    </Container>
   );
 };
 

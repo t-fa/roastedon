@@ -47,6 +47,7 @@ app.get('/createcoffee', (req, res) => {
     zipcode VARCHAR(255) NOT NULL,
     city VARCHAR (255) NOT NULL,
     state VARCHAR (255) NOT NULL,
+    country VARCHAR (255) NOT NULL,
     phone VARCHAR (255),
     hours VARCHAR (255),
     image VARCHAR (255)

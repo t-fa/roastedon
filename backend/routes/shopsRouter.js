@@ -31,10 +31,11 @@ shopsRouter
     const zipcode = req.body.zipcode;
     const city = req.body.city;
     const state = req.body.state;
+    const country = req.body.country;
     connection.query(
-      `INSERT INTO shops (name, address1, address2, zipcode, city, state) 
+      `INSERT INTO shops (name, address1, address2, zipcode, city, state, country) 
       VALUES ('${name}', '${address}', '${address2}', '${zipcode}', '${city}', 
-      '${state}')`,
+      '${state}', '${country}')`,
       (err, results) => {
         if (err) {
           console.log(err);

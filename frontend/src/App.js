@@ -7,9 +7,11 @@ import * as actions from './store/actions/auth';
 import MainLayout from './containers/MainLayout';
 
 const App = (props) => {
+  const { onTryAutoSignup } = props;
+
   useEffect(() => {
-    props.onTryAutoSignup();
-  }, [props.onTryAutoSignup]);
+    onTryAutoSignup();
+  }, [onTryAutoSignup]);
 
   return (
     <BrowserRouter>

@@ -5,8 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const AddShopForm = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <React.Fragment>
+    <form onSubmit={handleSubmit}>
       <Typography variant="h6" gutterBottom>
         Add A New Coffee Shop
       </Typography>
@@ -79,12 +83,12 @@ const AddShopForm = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary">
             Submit
           </Button>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </form>
   );
 };
 

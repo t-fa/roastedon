@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/auth';
@@ -6,21 +6,19 @@ import * as actions from './store/actions/auth';
 // components
 import MainLayout from './containers/MainLayout';
 
-class App extends Component {
-  componentDidMount = () => {
-    this.props.onTryAutoSignup();
-  };
+const App = (props) => {
+  useEffect(() => {
+    props.onTryAutoSignup();
+  }, [props.onTryAutoSignup]);
 
-  render() {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <MainLayout />
-        </div>
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <MainLayout />
+      </div>
+    </BrowserRouter>
+  );
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

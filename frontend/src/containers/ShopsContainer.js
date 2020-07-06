@@ -5,9 +5,11 @@ import * as actionTypes from '../store/actions/shops';
 import Shops from '../components/Shops/Shops';
 
 const ShopsContainer = (props) => {
+  const { zipcode, onAddedShops } = props;
+
   useEffect(() => {
-    props.onAddedShops(props.zipcode);
-  }, [props.zipcode]);
+    onAddedShops(zipcode);
+  }, [zipcode, onAddedShops]);
 
   return <Shops shops={props.shops} />;
 };

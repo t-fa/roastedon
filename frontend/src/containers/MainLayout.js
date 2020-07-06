@@ -3,7 +3,7 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 
 import Header from '../components/Header';
 import HomeLayout from '../components/Home/HomeLayout';
-import AddShopForm from './AddShopForm';
+import AddShopForm from './AddShop';
 import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
 import Auth from './Auth';

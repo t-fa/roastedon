@@ -13,7 +13,7 @@ const Shop = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [shop]);
+  }, [shop, props.match.params.id]);
 
   if (shop.length > 0) {
     return (

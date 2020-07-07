@@ -1,47 +1,59 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Ul = styled.ul`
+  background-color: #333;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+`;
+
+const Li = styled.li`
+  float: ${(props) => (props.right ? 'right' : 'left')};
+
+  & a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    ${(props) => props.brand && 'font-weight: 700'};
+  }
+
+  & a:hover {
+    background-color: #111;
+  }
+`;
 
 const navbar = (props) => {
   let loggedIn;
   props.token && props.userId ? (loggedIn = true) : (loggedIn = false);
   return (
-    <>
-      <div className="jumbotron">
-        <h1>Roasted On</h1>
-        <p className="lead">Connecting coffee lovers to premium coffee shops</p>
-      </div>
-
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
-            </li>
-            {loggedIn ? (
-              <li className="nav-item">
-                <Link className="nav-link" to="/add">
-                  Add A Coffee Shop
-                </Link>
-              </li>
-            ) : null}
-            <li className="nav-item">
-              {loggedIn ? (
-                <Link className="nav-link" to="/logout">
-                  Log Out
-                </Link>
-              ) : (
-                <Link className="nav-link" to="/auth">
-                  Log In
-                </Link>
-              )}
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </>
+    <nav>
+      <Ul>
+        <Li brand>
+          <a href="/">Roasted On</a>
+        </Li>
+        <Li>
+          <Link to="/">Home</Link>
+        </Li>
+        {loggedIn ? (
+          <Li>
+            <Link to="/add">Add A Coffee Shop</Link>
+          </Li>
+        ) : null}
+        <Li right>
+          {loggedIn ? (
+            <Link to="/logout">Log Out</Link>
+          ) : (
+            <Link to="/auth">Log In</Link>
+          )}
+        </Li>
+      </Ul>
+    </nav>
   );
 };
 

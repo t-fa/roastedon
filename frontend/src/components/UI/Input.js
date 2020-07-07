@@ -1,68 +1,40 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Input = styled.input`
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  color: #495057;
+  font-size: 1rem;
+  font-weight: 400;
+  min-height: 1rem;
+  margin: 0.25rem 0rem;
+  padding: 0.375rem 0.75rem;
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+`;
+
+const Label = styled.label`
+  margin: 0.375rem 0.75rem;
+`;
 
 const input = (props) => {
-  let inputElement = null;
-  const inputClasses = ['form-control'];
+  let type;
 
-  if (props.invalid && props.shouldValidate && props.touched) {
-    inputClasses.push('is-invalid');
-  }
-  // else {
-  //   inputClasses.push('is-valid');
-  // }
-
-  switch (props.elementType) {
-    case 'input':
-      inputElement = (
-        <input
-          onChange={props.changed}
-          className={inputClasses.join(' ')}
-          {...props.elementConfig}
-          value={props.value}
-        />
-      );
-      break;
-    case 'textarea':
-      inputElement = (
-        <textarea
-          className={inputClasses.join(' ')}
-          onChange={props.changed}
-          {...props.elementConfig}
-          value={props.value}
-        />
-      );
-      break;
-    case 'select':
-      inputElement = (
-        <select
-          onChange={props.changed}
-          className={inputClasses.join(' ')}
-          value={props.value}
-        >
-          {props.elementConfig.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.displayValue}
-            </option>
-          ))}
-        </select>
-      );
-      break;
-    default:
-      inputElement = (
-        <input
-          onChange={props.changed}
-          {...props.elementConfig}
-          value={props.value}
-          className={inputClasses.join(' ')}
-        />
-      );
-  }
+  props.type ? (type = props.type) : (type = 'text');
 
   return (
-    <div className="form-group">
-      <label>{props.label}</label>
-      {inputElement}
-    </div>
+    <Label>
+      {props.label}
+      <Input
+        type={type}
+        placeholder={props.placeholder}
+        name={props.name}
+        value={props.value}
+        onChange={props.onChange}
+      />
+    </Label>
   );
 };
 

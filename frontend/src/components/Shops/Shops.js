@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link, Route, withRouter, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
 import ShopThumbnail from './ShopThumbnail';
 import Shop from '../../containers/Shop';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
 
 const shops = (props) => {
   if (props.shops.shops.length > 0) {
@@ -13,9 +19,9 @@ const shops = (props) => {
             path={props.match.url + '/:id'}
             render={() => <Shop {...shop} />}
           />
-          <Link to={props.match.url + '/' + shop.id}>
+          <StyledLink to={props.match.url + '/' + shop.id}>
             <ShopThumbnail {...shop} key={shop.id} />
-          </Link>
+          </StyledLink>
         </Switch>
       );
     });

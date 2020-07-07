@@ -2,7 +2,7 @@ import React from 'react';
 
 const info = () => {
   return (
-    <div className="mt-4">
+    <section>
       <h3>Why Roasted On?</h3>
       <h4>We believe in the freshest coffee</h4>
       <p>
@@ -18,7 +18,7 @@ const info = () => {
 
       <h3>More info</h3>
       <p>Lorem ipsum dolor</p>
-    </div>
+    </section>
   );
 };
 

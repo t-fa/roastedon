@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import Card from '../components/UI/Card';
+
 const Shop = (props) => {
   const [shop, setShop] = useState([]);
 
@@ -17,12 +19,10 @@ const Shop = (props) => {
 
   if (shop.length > 0) {
     return (
-      <div className="card">
-        <div className="card-body">
-          <h1 className="card-title">{shop[0].name} Name</h1>
-          <p>{shop[0].address1} Shop View!</p>
-        </div>
-      </div>
+      <Card>
+        <h1>{shop[0].name}</h1>
+        <p>{shop[0].address1}</p>
+      </Card>
     );
   } else {
     return (

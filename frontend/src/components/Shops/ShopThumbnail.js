@@ -1,17 +1,18 @@
 import React from 'react';
+import Card from '../UI/Card';
 
 const shopThumbnail = (props) => {
   return (
-    <div className="shopthumbnailview container border rounded-lg p-3">
-      <h4>{props.name}</h4>
-      <ul>
-        <li>Address: {props.address1}</li>
-        <li>Apt: {props.address2}</li>
-        <li>Zip: {props.zipcode}</li>
-        <li>City: {props.city}</li>
-        <li>State: {props.state}</li>
-      </ul>
-    </div>
+    <Card>
+      <h3>{props.name}</h3>
+      <p>
+        {props.address1} {props.address2}
+      </p>
+      <p>
+        {props.city}, {props.state} {props.zipcode}
+      </p>
+      <p>{props.phone}</p>
+    </Card>
   );
 };
 

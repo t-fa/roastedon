@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
 
 import Navbar from '../components/Navbar';
 import HomeLayout from '../components/Home/HomeLayout';
@@ -21,7 +20,7 @@ const MainLayout = (props) => {
   };
 
   return (
-    <Container>
+    <div>
       <Navbar />
       <Switch>
         <Route
@@ -45,7 +44,7 @@ const MainLayout = (props) => {
         <Route path="/logout" component={Logout} />
         <Route path="/shops/:id" component={Shop} />
       </Switch>
-    </Container>
+    </div>
   );
 };
 

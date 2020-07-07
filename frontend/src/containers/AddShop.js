@@ -1,95 +1,217 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 
-const AddShopForm = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+import Input from '../components/UI/Input';
+import Button from '../components/UI/Button';
+
+class AddShopForm extends Component {
+  state = {
+    addForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Coffee Shop Name',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      address1: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: '1234 Main St',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      address2: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Apartment, studio, or floor',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      city: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'City',
+        },
+        value: '',
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      state: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            { value: 'New York', displayValue: 'New York' },
+            { value: 'Virginia', displayValue: 'Virginia' },
+          ],
+        },
+        value: '',
+        validation: {
+          required: false,
+        },
+      },
+      zipcode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Zip',
+        },
+        value: '',
+        validation: {
+          required: true,
+          minLength: 5,
+          maxLength: 5,
+        },
+        valid: false,
+        touched: false,
+      },
+    },
+    formIsValid: false,
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <Typography variant="h6" gutterBottom>
-        Add A New Coffee Shop
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="firstName"
-            name="name"
-            label="Coffee Shop Name"
-            fullWidth
-            autoComplete="given-name"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
-  );
+  checkValidity(value, rules) {
+    let isValid = true;
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    return isValid;
+  }
+
+  handleChange = (event, inputIdentifier) => {
+    // this will not create a deep copy of the nested objects
+    const updatedAddForm = {
+      ...this.state.addForm,
+    };
+    // copies nested objects - works because we don't need to modify elementConfig
+    const updatedAddFormElement = {
+      ...updatedAddForm[inputIdentifier],
+    };
+    updatedAddFormElement.value = event.target.value;
+    updatedAddFormElement.valid = this.checkValidity(
+      updatedAddFormElement.value,
+      updatedAddFormElement.validation
+    );
+    updatedAddFormElement.touched = true;
+    updatedAddForm[inputIdentifier] = updatedAddFormElement;
+
+    let formIsValid = true;
+    for (let inputIdentifier in updatedAddForm) {
+      formIsValid = updatedAddForm[inputIdentifier].valid && formIsValid;
+    }
+
+    this.setState({
+      addForm: updatedAddForm,
+      formIsValid: formIsValid,
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    // copy state value data into single object
+    const formData = {};
+    for (let formElement in this.state.addForm) {
+      formData[formElement] = this.state.addForm[formElement].value;
+    }
+
+    const updatedAddForm = { ...this.state.addForm };
+
+    axios
+      .post('/shops', formData)
+      .then((response) => {
+        console.log(response);
+
+        // clear updatedAddForm
+        for (let formElement in updatedAddForm) {
+          updatedAddForm[formElement].value = '';
+        }
+
+        this.setState({
+          addForm: updatedAddForm,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  render() {
+    const formElementsArray = [];
+    for (let key in this.state.addForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.addForm[key],
+      });
+    }
+    let form;
+    if (this.props.token) {
+      form = (
+        <form onSubmit={this.handleSubmit}>
+          {formElementsArray.map((formElement) => (
+            <Input
+              key={formElement.id}
+              changed={(event) => this.handleChange(event, formElement.id)}
+              elementType={formElement.config.elementType}
+              elementConfig={formElement.config.elementConfig}
+              invalid={!formElement.config.valid}
+              shouldValidate={formElement.config.validation.required}
+              touched={formElement.config.touched}
+              value={formElement.config.value}
+            />
+          ))}
+          <Button disabled={!this.state.formIsValid}>Submit</Button>
+        </form>
+      );
+    } else {
+      form = 'You must log in to view this page!';
+    }
+
+    return (
+      <div>
+        <h2>Add a new coffee shop</h2>
+        {form}
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+  };
 };
 
-export default AddShopForm;
+export default connect(mapStateToProps)(AddShopForm);

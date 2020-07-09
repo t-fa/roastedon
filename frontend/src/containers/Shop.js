@@ -19,7 +19,7 @@ const Shop = (props) => {
 
   if (shop.length > 0) {
     return (
-      <Card>
+      <Card hover>
         <h1>{shop[0].name}</h1>
         <p>{shop[0].address1}</p>
       </Card>

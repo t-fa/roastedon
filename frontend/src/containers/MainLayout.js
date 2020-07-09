@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Navbar from '../components/Navbar';
 import HomeLayout from '../components/Home/HomeLayout';
-import AddShopForm from './AddShop';
+import AddShopForm from './AddShopForm';
 import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
 import Login from './Login';

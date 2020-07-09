@@ -4,7 +4,6 @@ import { auth } from '../store/actions/auth';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
@@ -37,8 +36,8 @@ const Text = styled.h1`
 `;
 
 const Auth = (props) => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const submitHandler = (event) => {
     event.preventDefault();

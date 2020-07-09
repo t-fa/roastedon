@@ -23,7 +23,7 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const Cirlce = styled.div`
+const Circle = styled.div`
   background: #9c6615;
   border-radius: 50%;
   margin: 1.5rem auto;
@@ -53,9 +53,9 @@ const Auth = (props) => {
   return (
     <Container>
       {authRedirect}
-      <Cirlce>
+      <Circle>
         <FontAwesomeIcon icon={['fas', 'lock']} style={lockStyle} />
-      </Cirlce>
+      </Circle>
 
       <form onSubmit={submitHandler}>
         <Text>Sign In</Text>

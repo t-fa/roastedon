@@ -6,8 +6,12 @@ import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 
 const AddShop = (props) => {
-    <Input></Input>
-  <Button type="submit">Submit</Button>;
+  return (
+    <form>
+      <Input />
+      <Button type="submit">Submit</Button>
+    </form>
+  );
 };
 
 const mapStateToProps = (state) => {

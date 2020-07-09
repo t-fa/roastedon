@@ -2,136 +2,83 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { auth } from '../store/actions/auth';
 import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 
-class Auth extends React.Component {
-  state = {
-    controls: {
-      username: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'type',
-          placeholder: 'Username',
-        },
-        value: '',
-        validation: {
-          required: true,
-          isEmail: false,
-        },
-        valid: false,
-        touched: false,
-      },
-      password: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'password',
-          placeholder: 'Password',
-        },
-        value: '',
-        validation: {
-          required: true,
-          minLength: 5,
-        },
-        valid: false,
-        touched: false,
-      },
-    },
-  };
+const lockStyle = {
+  display: 'inline-block',
+  color: 'white',
+  width: 'inherit',
+  height: 'inherit',
+  textAlign: 'center',
+  verticalAlign: 'bottom',
+};
 
-  checkValidity(value, rules) {
-    let isValid = true;
+const Container = styled.div`
+  width: 65%;
+  margin: 0 auto;
+`;
 
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
+const Cirlce = styled.div`
+  background: #9c6615;
+  border-radius: 50%;
+  margin: 1.5rem auto;
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 1rem;
+`;
 
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
+const Text = styled.h1`
+  text-align: center;
+`;
 
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
+const Auth = (props) => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
 
-    return isValid;
-  }
-
-  handleChange = (event, inputIdentifier) => {
-    // this will not create a deep copy of the nested objects
-    const updatedAuthForm = {
-      ...this.state.controls,
-    };
-    // copies nested objects - works because we don't need to modify elementConfig
-    const updatedAuthFormElement = {
-      ...updatedAuthForm[inputIdentifier],
-    };
-    updatedAuthFormElement.value = event.target.value;
-    updatedAuthFormElement.valid = this.checkValidity(
-      updatedAuthFormElement.value,
-      updatedAuthFormElement.validation
-    );
-    updatedAuthFormElement.touched = true;
-    updatedAuthForm[inputIdentifier] = updatedAuthFormElement;
-
-    let formIsValid = true;
-    for (let inputIdentifier in updatedAuthForm) {
-      formIsValid = updatedAuthForm[inputIdentifier].valid && formIsValid;
-    }
-
-    this.setState({
-      controls: updatedAuthForm,
-      formIsValid: formIsValid,
-    });
-  };
-
-  submitHandler = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault();
-    this.props.onAuth(
-      this.state.controls.username.value,
-      this.state.controls.password.value
-    );
+    props.onAuth(username, password);
   };
 
-  render() {
-    const formElementsArray = [];
-    for (let key in this.state.controls) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.controls[key],
-      });
-    }
-
-    const form = formElementsArray.map((formElement) => (
-      <Input
-        key={formElement.id}
-        changed={(event) => this.handleChange(event, formElement.id)}
-        elementType={formElement.config.elementType}
-        elementConfig={formElement.config.elementConfig}
-        invalid={!formElement.config.valid}
-        shouldValidate={formElement.config.validation.required}
-        touched={formElement.config.touched}
-        value={formElement.config.value}
-      />
-    ));
-
-    let authRedirect = null;
-    if (this.props.isAuthenticated) {
-      return (authRedirect = <Redirect to="/" />);
-    }
-
-    return (
-      <div>
-        {authRedirect}
-        <form onSubmit={this.submitHandler}>
-          {form}
-          <Button disabled={!this.state.formIsValid}>Log In</Button>
-        </form>
-      </div>
-    );
+  let authRedirect = null;
+  if (props.isAuthenticated) {
+    return (authRedirect = <Redirect to="/" />);
   }
-}
+
+  return (
+    <Container>
+      {authRedirect}
+      <Cirlce>
+        <FontAwesomeIcon icon={['fas', 'lock']} style={lockStyle} />
+      </Cirlce>
+
+      <form onSubmit={submitHandler}>
+        <Text>Sign In</Text>
+        <Input
+          label={'Username'}
+          placeholder={'Username'}
+          name={'username'}
+          onChange={(event) => setUsername(event.target.value)}
+          value={username}
+        />
+        <Input
+          type={'password'}
+          label={'Password'}
+          placeholder={'Password'}
+          name={'password'}
+          onChange={(event) => setPassword(event.target.value)}
+          value={password}
+        />
+        <Button type={'submit'}>Submit</Button>
+      </form>
+    </Container>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {

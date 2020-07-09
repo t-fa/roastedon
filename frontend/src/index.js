@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import shopsReducer from './store/reducers/shops';
 import authReducer from './store/reducers/auth';
+import './fontawesome';
 
 axios.defaults.baseURL = 'http://localhost:3001/';
 

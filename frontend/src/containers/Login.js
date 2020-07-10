@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { auth } from '../store/actions/auth';
-import { Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -34,6 +34,13 @@ const Circle = styled.div`
 
 const Text = styled.h1`
   text-align: center;
+`;
+
+const Caption = styled(NavLink)`
+  text-align: center;
+  text-decoration: none;
+  color: ${colors.warning};
+  float: ${(props) => (props.right ? 'right' : 'left')};
 `;
 
 const Auth = (props) => {
@@ -74,8 +81,12 @@ const Auth = (props) => {
           onChange={(event) => setPassword(event.target.value)}
           value={password}
         />
-        <Button type={'submit'}>Submit</Button>
+        <Button type="submit">Submit</Button>
       </form>
+      <Caption to="/reset">Forgot password?</Caption>
+      <Caption right="true" to="/register">
+        Don't have an account? Sign up.
+      </Caption>
     </Container>
   );
 };

@@ -9,6 +9,7 @@ import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
 import Login from './Login';
 import Logout from '../components/Auth/Logout';
+import Register from './Register';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -42,7 +43,8 @@ const MainLayout = (props) => {
             )}
           />
           <Route path="/add" component={AddShopForm} />
-          <Route path="/auth" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           <Route
             exact
             path="/shops"

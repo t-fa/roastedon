@@ -37,6 +37,7 @@ const Text = styled.h1`
 `;
 
 const Auth = (props) => {
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -56,9 +57,15 @@ const Auth = (props) => {
       <Circle>
         <FontAwesomeIcon icon={['fas', 'lock']} style={lockStyle} />
       </Circle>
-
       <form onSubmit={submitHandler}>
-        <Text>Sign In</Text>
+        <Text>Sign Up</Text>
+        <Input
+          label={'Email'}
+          placeholder={'Email'}
+          name={'email'}
+          onChange={(event) => setEmail(event.target.value)}
+          value={email}
+        />
         <Input
           label={'Username'}
           placeholder={'Username'}
@@ -74,7 +81,7 @@ const Auth = (props) => {
           onChange={(event) => setPassword(event.target.value)}
           value={password}
         />
-        <Button type={'submit'}>Submit</Button>
+        <Button type="submit">One of us! One of us!</Button>
       </form>
     </Container>
   );

@@ -40,16 +40,14 @@ const navbar = (props) => {
         <Li>
           <Link to="/">Home</Link>
         </Li>
-        {loggedIn ? (
-          <Li>
-            <Link to="/add">Add A Coffee Shop</Link>
-          </Li>
-        ) : null}
+        <Li>
+          <Link to="/add">Add A Coffee Shop</Link>
+        </Li>
         <Li right>
           {loggedIn ? (
             <Link to="/logout">Log Out</Link>
           ) : (
-            <Link to="/auth">Log In</Link>
+            <Link to="/login">Log In</Link>
           )}
         </Li>
       </Ul>

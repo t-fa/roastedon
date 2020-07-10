@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Input from '../components/UI/Input';
 import Button from '../styles/Button';
@@ -30,7 +31,12 @@ const AddShopForm = (props) => {
   };
 
   if (!props.token) {
-    return 'You must be logged in to view this page.';
+    return (
+      <p>
+        You must be <Link to="/login">logged in</Link> to view this page. Don't
+        have an account? Click <Link to="/register">here</Link> to sign up.
+      </p>
+    );
   } else if (!confirm) {
     return (
       <form onSubmit={submitHandler}>

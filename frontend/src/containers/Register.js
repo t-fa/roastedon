@@ -24,7 +24,7 @@ const Container = styled.div`
 `;
 
 const Circle = styled.div`
-  background: ${colors.warning};
+  background: ${colors.secondary};
   border-radius: 50%;
   margin: 1.5rem auto;
   height: 1.5rem;

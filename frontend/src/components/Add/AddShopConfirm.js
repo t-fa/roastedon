@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Button from '../../styles/Button';
 import Card from '../../styles/Card';
+import * as colors from '../../styles/Colors';
 
 const H1 = styled.h1`
   text-align: center;
@@ -41,7 +42,7 @@ const addShopConfirm = (props) => {
         {props.city}, {props.province} {props.zipcode}
         <p>Does this look correct?</p>
         <Button onClick={confirmHandler}>Yes, Submit</Button>
-        <Button danger onClick={props.setConfirmFalse}>
+        <Button color={colors.danger} onClick={props.setConfirmFalse}>
           No, Go Back
         </Button>
       </Card>

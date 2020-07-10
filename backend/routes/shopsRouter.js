@@ -26,7 +26,7 @@ shopsRouter
   })
   .post((req, res, next) => {
     const name = req.body.name;
-    const address = req.body.address;
+    const address1 = req.body.address1;
     const address2 = req.body.address2;
     const zipcode = req.body.zipcode;
     const city = req.body.city;
@@ -34,7 +34,7 @@ shopsRouter
     const country = req.body.country;
     connection.query(
       `INSERT INTO shops (name, address1, address2, zipcode, city, state, country) 
-      VALUES ('${name}', '${address}', '${address2}', '${zipcode}', '${city}', 
+      VALUES ('${name}', '${address1}', '${address2}', '${zipcode}', '${city}', 
       '${state}', '${country}')`,
       (err, results) => {
         if (err) {

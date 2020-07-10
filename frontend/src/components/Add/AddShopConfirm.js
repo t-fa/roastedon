@@ -17,15 +17,15 @@ const addShopConfirm = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
     axios
-      .post(
-        '/shops',
-        props.name,
-        props.address1,
-        props.address2,
-        props.city,
-        props.province,
-        props.zipcode
-      )
+      .post('/shops', {
+        name: props.name,
+        address1: props.address1,
+        address2: props.address2,
+        city: props.city,
+        state: props.province,
+        zipcode: props.zipcode,
+        country: props.country,
+      })
       .then((response) => {
         console.log(response);
       });

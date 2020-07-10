@@ -40,7 +40,7 @@ app.get('/createusers', (req, res) => {
 app.get('/createcoffee', (req, res) => {
   const sql = `
   CREATE TABLE shops (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     address1 VARCHAR(255) NOT NULL,
     address2 VARCHAR(255),
@@ -50,7 +50,8 @@ app.get('/createcoffee', (req, res) => {
     country VARCHAR (255) NOT NULL,
     phone VARCHAR (255),
     hours VARCHAR (255),
-    image VARCHAR (255)
+    image VARCHAR (255),
+    PRIMARY KEY (id)
   )`;
   connection.query(sql, (err, result) => {
     if (err) throw err;

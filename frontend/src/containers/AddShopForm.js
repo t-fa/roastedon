@@ -17,6 +17,7 @@ const AddShopForm = (props) => {
   const [city, setCity] = useState('');
   const [province, setProvince] = useState('');
   const [zipcode, setZipCode] = useState('');
+  const [country, setCountry] = useState('');
   const [confirm, setConfirm] = useState(false);
 
   const submitHandler = (event) => {
@@ -77,13 +78,13 @@ const AddShopForm = (props) => {
           value={zipcode}
           onChange={(event) => setZipCode(event.target.value)}
         />
-        {/* <Input
+        <Input
           label={'Country'}
           placeholder={'Country'}
           name={'country'}
           value={country}
           onChange={(event) => setCountry(event.target.value)}
-        /> */}
+        />
         <Button type="submit">Submit</Button>
       </form>
     );
@@ -96,6 +97,7 @@ const AddShopForm = (props) => {
         city={city}
         province={province}
         zipcode={zipcode}
+        country={country}
         setConfirmFalse={setConfirmFalse}
       />
     );

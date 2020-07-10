@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../UI/Button';
+import Button from '../../styles/Button';
 import Input from '../UI/Input';
 
 const searchBar = (props) => {

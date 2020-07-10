@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Input from '../components/UI/Input';
-import Button from '../components/UI/Button';
+import Button from '../styles/Button';
 
 const lockStyle = {
   display: 'inline-block',

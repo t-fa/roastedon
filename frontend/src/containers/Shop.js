@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Card from '../components/UI/Card';
+import Card from '../styles/Card';
 
 const Shop = (props) => {
   const [shop, setShop] = useState([]);

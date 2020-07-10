@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Input from '../components/UI/Input';
-import Button from '../components/UI/Button';
+import Button from '../styles/Button';
 import AddShopConfirm from '../components/Add/AddShopConfirm';
 
 const Text = styled.h1`

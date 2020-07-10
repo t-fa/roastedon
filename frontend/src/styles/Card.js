@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -8,12 +7,8 @@ const Card = styled.div`
   border-radius: 0.5rem;
 
   &:hover {
-    box-shadow: 0 0 5px grey;
+    box-shadow: ${(props) => (props.nohover ? 'none' : '0 0 5px grey')};
   }
 `;
 
-const card = (props) => {
-  return <Card>{props.children}</Card>;
-};
-
-export default card;
+export default Card;

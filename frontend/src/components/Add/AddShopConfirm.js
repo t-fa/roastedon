@@ -2,28 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import Button from '../../styles/Button';
+import Card from '../../styles/Card';
+
 const H1 = styled.h1`
   text-align: center;
 `;
 
 const H2 = styled.h2`
   text-align: center;
-`;
-
-const Button = styled.button`
-  background: ${(props) => (props.danger ? '#FFD791' : '#cdd1de')};
-  border-radius: 3px;
-  border: 2px solid ${(props) => (props.danger ? '#FFD791' : '#cdd1de')};
-  color: black;
-  margin: 0.5em 0.5em 0.5em;
-  padding: 0.25em 1em;
-`;
-
-const Card = styled.div`
-  border: 1px solid gainsboro;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 0.5rem;
 `;
 
 const addShopConfirm = (props) => {
@@ -47,7 +34,7 @@ const addShopConfirm = (props) => {
   return (
     <div>
       <H1>Add a new coffee shop</H1>
-      <Card>
+      <Card nohover>
         <H2>{props.name}</H2>
         {props.address1}
         {props.address2}

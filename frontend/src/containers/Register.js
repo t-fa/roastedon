@@ -50,7 +50,7 @@ const Auth = (props) => {
         email: email,
         password: password,
       })
-      .then((response) => console.log(response))
+      .then((response) => console.log('Ok!'))
       .catch((error) => console.log(error));
   };
 
@@ -68,24 +68,25 @@ const Auth = (props) => {
       <form onSubmit={submitHandler}>
         <Text>Sign Up</Text>
         <Input
-          label={'Email'}
-          placeholder={'Email'}
-          name={'email'}
+          label="Email"
+          type="email"
+          placeholder="Email"
+          name="email"
           onChange={(event) => setEmail(event.target.value)}
           value={email}
         />
         <Input
-          label={'Username'}
-          placeholder={'Username'}
-          name={'username'}
+          label="Username"
+          placeholder="Username"
+          name="username"
           onChange={(event) => setUsername(event.target.value)}
           value={username}
         />
         <Input
-          type={'password'}
-          label={'Password'}
-          placeholder={'Password'}
-          name={'password'}
+          type="password"
+          label="Password"
+          placeholder="Password"
+          name="password"
           onChange={(event) => setPassword(event.target.value)}
           value={password}
         />

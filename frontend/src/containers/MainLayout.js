@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Navbar from '../components/Navbar/Navbar';
+import Navbar from './Navbar';
 import HomeLayout from '../components/Home/HomeLayout';
 import AddShopForm from './AddShopForm';
 import ShopsContainer from './ShopsContainer';

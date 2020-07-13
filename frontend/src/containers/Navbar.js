@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import UserMenu from './UserMenu';
+import UserMenu from '../components/Navbar/UserMenu';
 
 const Ul = styled.ul`
   background-color: #333;
@@ -76,7 +76,7 @@ const Navbar = (props) => {
           )}
         </Li>
       </Ul>
-      {showMenu ? <UserMenu /> : null}
+      {showMenu && loggedIn ? <UserMenu /> : null}
     </nav>
   );
 };

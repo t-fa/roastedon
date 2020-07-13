@@ -4,6 +4,7 @@ import { auth } from '../store/actions/auth';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 import Input from '../components/UI/Input';
 import Button from '../styles/Button';
@@ -43,7 +44,14 @@ const Auth = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onAuth(username, password);
+    axios
+      .post('/users/register', {
+        username: username,
+        email: email,
+        password: password,
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   };
 
   let authRedirect = null;

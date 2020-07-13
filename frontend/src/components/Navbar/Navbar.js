@@ -62,21 +62,18 @@ const Navbar = (props) => {
         <Li>
           <Link to="/add">Add A Coffee Shop</Link>
         </Li>
-        {/* <Li right>
+        <Li right>
           {loggedIn ? (
-            <Link to="/logout">Log Out</Link>
+            <Button onClick={toggleMenu}>
+              <FontAwesomeIcon
+                icon={['fas', 'user-circle']}
+                style={userIconStyle}
+                size="2x"
+              />
+            </Button>
           ) : (
             <Link to="/login">Log In</Link>
           )}
-        </Li> */}
-        <Li right>
-          <Button onClick={toggleMenu}>
-            <FontAwesomeIcon
-              icon={['fas', 'user-circle']}
-              style={userIconStyle}
-              size="2x"
-            />
-          </Button>
         </Li>
       </Ul>
       {showMenu ? <UserMenu /> : null}

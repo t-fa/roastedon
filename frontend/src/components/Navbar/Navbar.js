@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import UserMenu from './UserMenu';
 
 const Ul = styled.ul`
   background-color: #333;
@@ -28,7 +31,23 @@ const Li = styled.li`
   }
 `;
 
-const navbar = (props) => {
+const Button = styled.button`
+  background-color: inherit;
+  border: none;
+`;
+
+const userIconStyle = {
+  color: 'white',
+  padding: '0.25em',
+};
+
+const Navbar = (props) => {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   let loggedIn;
   props.token && props.userId ? (loggedIn = true) : (loggedIn = false);
   return (
@@ -43,14 +62,24 @@ const navbar = (props) => {
         <Li>
           <Link to="/add">Add A Coffee Shop</Link>
         </Li>
-        <Li right>
+        {/* <Li right>
           {loggedIn ? (
             <Link to="/logout">Log Out</Link>
           ) : (
             <Link to="/login">Log In</Link>
           )}
+        </Li> */}
+        <Li right>
+          <Button onClick={toggleMenu}>
+            <FontAwesomeIcon
+              icon={['fas', 'user-circle']}
+              style={userIconStyle}
+              size="2x"
+            />
+          </Button>
         </Li>
       </Ul>
+      {showMenu ? <UserMenu /> : null}
     </nav>
   );
 };
@@ -62,4 +91,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(navbar);
+export default connect(mapStateToProps)(Navbar);

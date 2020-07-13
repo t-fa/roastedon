@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { auth } from '../store/actions/auth';
+import { auth } from '../../store/actions/auth';
 import { NavLink, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useForm } from 'react-hook-form';
 
-import Input from '../components/UI/Input';
-import Button from '../styles/Button';
-import * as colors from '../styles/Colors';
+import { Input, Label, Span } from '../../styles/Input';
+import Button from '../../styles/Button';
+import * as colors from '../../styles/Colors';
 
 const lockStyle = {
   display: 'inline-block',
@@ -44,12 +45,10 @@ const Caption = styled(NavLink)`
 `;
 
 const Auth = (props) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, errors } = useForm();
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-    props.onAuth(username, password);
+  const onSubmit = (data) => {
+    props.onAuth(data.username, data.password);
   };
 
   let authRedirect = null;
@@ -64,23 +63,27 @@ const Auth = (props) => {
         <FontAwesomeIcon icon={['fas', 'lock']} style={lockStyle} />
       </Circle>
 
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Text>Sign In</Text>
-        <Input
-          label={'Username'}
-          placeholder={'Username'}
-          name={'username'}
-          onChange={(event) => setUsername(event.target.value)}
-          value={username}
-        />
-        <Input
-          type={'password'}
-          label={'Password'}
-          placeholder={'Password'}
-          name={'password'}
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-        />
+        <Label>
+          Username
+          <Input
+            placeholder="Username"
+            name="username"
+            ref={register({ required: true })}
+          />
+        </Label>
+        {errors.username && <Span>This field is required.</Span>}
+        <Label>
+          Password
+          <Input
+            type="password"
+            placeholder="Password"
+            name={'password'}
+            ref={register({ required: true })}
+          />
+        </Label>
+        {errors.password && <Span>This field is required.</Span>}
         <Button type="submit">Submit</Button>
       </form>
       <Caption to="/reset">Forgot password?</Caption>

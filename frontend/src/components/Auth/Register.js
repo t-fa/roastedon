@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { auth } from '../store/actions/auth';
+import { auth } from '../../store/actions/auth';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
-import Input from '../components/UI/Input';
-import Button from '../styles/Button';
-import * as colors from '../styles/Colors';
+import { Input, Label, Span } from '../../styles/Input';
+import Button from '../../styles/Button';
+import * as colors from '../../styles/Colors';
 
 const lockStyle = {
   display: 'inline-block',
@@ -38,19 +39,16 @@ const Text = styled.h1`
 `;
 
 const Auth = (props) => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, errors } = useForm();
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const onSubmit = (data) => {
     axios
       .post('/users/register', {
-        username: username,
-        email: email,
-        password: password,
+        username: data.username,
+        email: data.email,
+        password: data.password,
       })
-      .then((response) => console.log('Ok!'))
+      .then(props.onAuth(data.username, data.password))
       .catch((error) => console.log(error));
   };
 
@@ -65,31 +63,38 @@ const Auth = (props) => {
       <Circle>
         <FontAwesomeIcon icon={['fas', 'lock']} style={lockStyle} />
       </Circle>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Text>Sign Up</Text>
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Email"
-          name="email"
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
-        />
-        <Input
-          label="Username"
-          placeholder="Username"
-          name="username"
-          onChange={(event) => setUsername(event.target.value)}
-          value={username}
-        />
-        <Input
-          type="password"
-          label="Password"
-          placeholder="Password"
-          name="password"
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-        />
+        <Label>
+          Email
+          <Input
+            type="email"
+            placeholder="Email"
+            name="email"
+            ref={register({ required: true })}
+          />
+        </Label>
+        {errors.email && <Span>This field is required.</Span>}
+        <Label>
+          Username
+          <Input
+            placeholder="Username"
+            name="username"
+            ref={register({ required: true })}
+          />
+        </Label>
+        {errors.username && <Span>This field is required.</Span>}
+        <Label>
+          Password
+          <Input
+            type="password"
+            label="Password"
+            placeholder="Password"
+            name="password"
+            ref={register({ required: true })}
+          />
+        </Label>
+        {errors.password && <Span>This field is required.</Span>}
         <Button type="submit">One of us! One of us!</Button>
       </form>
     </Container>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 
 import ChangeEmail from './ChangeEmail';
 import ChangePass from './ChangePass';

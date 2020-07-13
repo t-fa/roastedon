@@ -7,9 +7,9 @@ import HomeLayout from '../components/Home/HomeLayout';
 import AddShopForm from './AddShopForm';
 import ShopsContainer from './ShopsContainer';
 import Shop from './Shop';
-import Login from './Login';
+import Login from '../components/Auth/Login';
 import Logout from '../components/Auth/Logout';
-import Register from './Register';
+import Register from '../components/Auth/Register';
 import Settings from '../components/Account/Settings';
 
 const Container = styled.div`

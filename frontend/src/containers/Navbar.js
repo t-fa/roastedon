@@ -5,6 +5,13 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import UserMenu from '../components/Navbar/UserMenu';
+import HamburgerMenu from '../components/Navbar/HamburgerMenu';
+
+const Container = styled.div`
+  @media screen and (max-width: 576px) {
+    display: none;
+  }
+`;
 
 const Ul = styled.ul`
   background-color: #333;
@@ -34,6 +41,12 @@ const Li = styled.li`
 const Button = styled.button`
   background-color: inherit;
   border: none;
+  display: ${(props) => (props.hamburger ? 'none' : 'inline-block')};
+  ${(props) =>
+    props.hamburger &&
+    `@media screen and (max-width: 576px) {
+    display: inline-block;
+  }`}
 `;
 
 const userIconStyle = {
@@ -42,10 +55,15 @@ const userIconStyle = {
 };
 
 const Navbar = (props) => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
+  const togglerHamburgerMenu = () => {
+    setShowHamburgerMenu(!showHamburgerMenu);
   };
 
   let loggedIn;
@@ -56,15 +74,26 @@ const Navbar = (props) => {
         <Li brand>
           <a href="/">Roasted On</a>
         </Li>
-        <Li>
-          <Link to="/">Home</Link>
-        </Li>
-        <Li>
-          <Link to="/add">Add A Coffee Shop</Link>
+        <Container>
+          <Li>
+            <Link to="/">Home</Link>
+          </Li>
+          <Li>
+            <Link to="/add">Add A Coffee Shop</Link>
+          </Li>
+        </Container>
+        <Li right>
+          <Button onClick={togglerHamburgerMenu} hamburger>
+            <FontAwesomeIcon
+              icon={['fas', 'bars']}
+              style={userIconStyle}
+              size="2x"
+            />
+          </Button>
         </Li>
         <Li right>
           {loggedIn ? (
-            <Button onClick={toggleMenu}>
+            <Button onClick={toggleUserMenu}>
               <FontAwesomeIcon
                 icon={['fas', 'user-circle']}
                 style={userIconStyle}
@@ -76,7 +105,8 @@ const Navbar = (props) => {
           )}
         </Li>
       </Ul>
-      {showMenu && loggedIn ? <UserMenu /> : null}
+      {showUserMenu && loggedIn ? <UserMenu /> : null}
+      {showHamburgerMenu ? <HamburgerMenu /> : null}
     </nav>
   );
 };

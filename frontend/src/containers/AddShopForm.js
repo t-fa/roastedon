@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import Input from '../components/UI/Input';
+import { Input, Label } from '../styles/Input';
 import Button from '../styles/Button';
 import AddShopConfirm from '../components/Add/AddShopConfirm';
 
@@ -42,55 +42,69 @@ const AddShopForm = (props) => {
       <form onSubmit={submitHandler}>
         <Text>Add a new coffee shop</Text>
         {confirm}
-        <Input
-          label={'Coffee Shop Name'}
-          placeholder={'Coffee Shop Name'}
-          name={'name'}
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-        <Input
-          label={'Address Line 1'}
-          placeholder={'1234 Main St'}
-          name={'address1'}
-          value={address1}
-          onChange={(event) => setAddress1(event.target.value)}
-        />
-        <Input
-          label={'Address Line 2'}
-          placeholder={'Apartment, studio, or floor'}
-          name={'address2'}
-          value={address2}
-          onChange={(event) => setAddress2(event.target.value)}
-        />
-        <Input
-          label={'City'}
-          placeholder={'City'}
-          name={'city'}
-          value={city}
-          onChange={(event) => setCity(event.target.value)}
-        />
-        <Input
-          label={'State or Province'}
-          placeholder={'State or Province'}
-          name={'state'}
-          value={province}
-          onChange={(event) => setProvince(event.target.value)}
-        />
-        <Input
-          label={'Zip Code'}
-          placeholder={'Zip'}
-          name={'zipcode'}
-          value={zipcode}
-          onChange={(event) => setZipCode(event.target.value)}
-        />
-        <Input
-          label={'Country'}
-          placeholder={'Country'}
-          name={'country'}
-          value={country}
-          onChange={(event) => setCountry(event.target.value)}
-        />
+        <Label>
+          Coffee Shop Name
+          <Input
+            placeholder={'Coffee Shop Name'}
+            name={'name'}
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </Label>
+        <Label>
+          Address Line 1
+          <Input
+            placeholder={'1234 Main St'}
+            name={'address1'}
+            value={address1}
+            onChange={(event) => setAddress1(event.target.value)}
+          />
+        </Label>
+        <Label>
+          Address Line 2
+          <Input
+            placeholder={'Apartment, studio, or floor'}
+            name={'address2'}
+            value={address2}
+            onChange={(event) => setAddress2(event.target.value)}
+          />
+        </Label>
+        <Label>
+          City
+          <Input
+            placeholder={'City'}
+            name={'city'}
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+          />
+        </Label>
+        <Label>
+          State or Province
+          <Input
+            placeholder={'State or Province'}
+            name={'state'}
+            value={province}
+            onChange={(event) => setProvince(event.target.value)}
+          />
+        </Label>
+        <Label>
+          Zip Code
+          <Input
+            placeholder={'Zip'}
+            name={'zipcode'}
+            value={zipcode}
+            onChange={(event) => setZipCode(event.target.value)}
+          />
+        </Label>
+        <Label>
+          Country
+          <Input
+            placeholder={'Country'}
+            name={'country'}
+            value={country}
+            onChange={(event) => setCountry(event.target.value)}
+          />
+        </Label>
         <Button type="submit">Submit</Button>
       </form>
     );

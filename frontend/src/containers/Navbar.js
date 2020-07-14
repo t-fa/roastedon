@@ -60,10 +60,12 @@ const Navbar = (props) => {
 
   const toggleUserMenu = () => {
     setShowUserMenu(!showUserMenu);
+    setShowHamburgerMenu(false);
   };
 
   const togglerHamburgerMenu = () => {
     setShowHamburgerMenu(!showHamburgerMenu);
+    setShowUserMenu(false);
   };
 
   let loggedIn;

@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
 
 import Card from '../styles/Card';
+import Button from '../styles/Button';
+import * as colors from '../styles/Colors';
+
+const Shadow = styled(Button)`
+  &:hover: {
+    text-decoration: underline;
+    box-shadow: 0 0 5px grey;
+  }
+`;
 
 const ShopView = (props) => {
   const [shop, setShop] = useState([]);
+
+  const addFavorite = () => {};
 
   useEffect(() => {
     axios
@@ -19,9 +32,12 @@ const ShopView = (props) => {
 
   if (shop.length > 0) {
     return (
-      <Card hover>
+      <Card nohover>
         <h1>{shop[0].name}</h1>
         <p>{shop[0].address1}</p>
+        <Shadow color={colors.warning}>
+          Add to Favorites <FontAwesomeIcon icon={['far', 'heart']} />
+        </Shadow>
       </Card>
     );
   } else {

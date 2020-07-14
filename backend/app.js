@@ -59,4 +59,19 @@ app.get('/createcoffee', (req, res) => {
   });
 });
 
+app.get('/createfavorites', (req, res) => {
+  const sql = `
+  CREATE TABLE favoriteShops (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    shopId INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users (id),
+    FOREIGN KEY (shopId) REFERENCES shops (id)
+  )`;
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('Table users created!');
+  });
+});
+
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));

@@ -3,7 +3,7 @@ import { Link, Route, withRouter, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ShopThumbnail from './ShopThumbnail';
-import Shop from '../../containers/Shop';
+import ShopView from '../../containers/ShopView';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -17,7 +17,7 @@ const shops = (props) => {
         <Switch>
           <Route
             path={props.match.url + '/:id'}
-            render={() => <Shop {...shop} />}
+            render={() => <ShopView {...shop} />}
           />
           <StyledLink to={props.match.url + '/' + shop.id}>
             <ShopThumbnail {...shop} key={shop.id} />

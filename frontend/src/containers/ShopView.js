@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Card from '../styles/Card';
 
-const Shop = (props) => {
+const ShopView = (props) => {
   const [shop, setShop] = useState([]);
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const Shop = (props) => {
   }
 };
 
-export default Shop;
+export default ShopView;

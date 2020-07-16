@@ -36,7 +36,12 @@ const userMenu = (props) => {
     <Container>
       <Ul>
         <Li>
-          <Link to={`/account/${props.userId}`}>Settings</Link>
+          <Link to="/favorites">Favorites</Link>
+        </Li>
+        <Li>
+          <Link to="/account">Settings</Link>
+        </Li>
+        <Li>
           <Link to="/logout">Log Out</Link>
         </Li>
       </Ul>

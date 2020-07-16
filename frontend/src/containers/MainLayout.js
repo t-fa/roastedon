@@ -11,6 +11,7 @@ import Login from '../components/Auth/Login';
 import Logout from '../components/Auth/Logout';
 import Register from '../components/Auth/Register';
 import Settings from '../components/Account/Settings';
+import Favorites from '../components/Account/Favorites';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -53,7 +54,8 @@ const MainLayout = (props) => {
           />
           <Route path="/logout" component={Logout} />
           <Route path="/shops/:id" component={ShopView} />
-          <Route exact path="/account/:id" component={Settings} />
+          <Route exact path="/account" component={Settings} />
+          <Route exact path="/favorites" component={Favorites} />
         </Switch>
       </Container>
     </>

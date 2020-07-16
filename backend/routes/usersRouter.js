@@ -72,4 +72,52 @@ usersRouter.route('/logout').get((req, res, next) => {
   }
 });
 
+usersRouter.route('/favorites/:userId').get((req, res, next) => {
+  connection.query(
+    `SELECT id, userId, shopId FROM favoriteShops WHERE userId = ${req.params.userId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json(rows);
+    }
+  );
+});
+
+usersRouter
+  .route('/favorites/:userId/:shopId')
+  .get((req, res, next) => {
+    connection.query(
+      `SELECT id, userId, shopId FROM favoriteShops WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(rows);
+      }
+    );
+  })
+  .post((req, res, next) => {
+    connection.query(
+      `INSERT INTO favoriteShops (userId, shopId) VALUES ('${req.body.userId}', '${req.body.shopId}')`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(rows);
+        }
+      }
+    );
+  })
+  .delete((req, res, next) => {});
+
 module.exports = usersRouter;

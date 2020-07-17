@@ -9,8 +9,7 @@ import * as colors from '../styles/Colors';
 
 const ShopView = (props) => {
   const [shop, setShop] = useState([]);
-
-  let favoriteMessage;
+  const [displayFavBtn, setDisplayFavBtn] = useState([true]);
 
   const addFavorite = () => {
     axios
@@ -18,12 +17,22 @@ const ShopView = (props) => {
         userId: props.userId,
         shopId: props.match.params.id,
       })
-      .then((favoriteMessage = 'Success!'))
+      .then(setDisplayFavBtn(false))
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const deleteFavorite = () => {
+    axios
+      .delete(`/users/favorites/${props.userId}/${props.match.params.id}`)
+      .then(setDisplayFavBtn(true))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // display shop info
   useEffect(() => {
     axios
       .get(`/shops/${props.match.params.id}`)
@@ -33,21 +42,38 @@ const ShopView = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [shop, props.match.params.id]);
+  }, [props.match.params.id]);
+
+  // display favorite shop info
+  useEffect(() => {
+    if (props.userId) {
+      setDisplayFavBtn(true);
+      axios
+        .get(`/users/favorites/${props.userId}/${props.match.params.id}`)
+        .then((response) => {
+          // shopId is a number props.match.params.id is a string
+          if (response.data[0].shopId.toString() === props.match.params.id) {
+            setDisplayFavBtn(false);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [props.userId, props.match.params.id]);
 
   if (shop.length > 0) {
     return (
       <Card nohover>
         <h1>{shop[0].name}</h1>
         <p>{shop[0].address1}</p>
-        {props.token ? (
-          <>
-            <Button color={colors.secondary} onClick={addFavorite}>
-              Add to Favorites <FontAwesomeIcon icon={['far', 'heart']} />
-            </Button>
-            <span>{favoriteMessage}</span>
-          </>
-        ) : null}
+        {displayFavBtn ? (
+          <Button color={colors.secondary} onClick={addFavorite}>
+            Add to Favorites <FontAwesomeIcon icon={['far', 'heart']} />
+          </Button>
+        ) : (
+          <Button color={colors.success} onClick={deleteFavorite}>
+            Favorited <FontAwesomeIcon icon={['fas', 'heart']} color="pink" />
+          </Button>
+        )}
       </Card>
     );
   } else {

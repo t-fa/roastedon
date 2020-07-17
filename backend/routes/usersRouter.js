@@ -118,6 +118,20 @@ usersRouter
       }
     );
   })
-  .delete((req, res, next) => {});
+  .delete((req, res, next) => {
+    connection.query(
+      `DELETE FROM favoriteShops WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
+      (err) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json('Removed from favorites!');
+        }
+      }
+    );
+  });
 
 module.exports = usersRouter;

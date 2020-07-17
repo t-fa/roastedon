@@ -10,8 +10,25 @@ const Text = styled.h1`
   text-align: center;
 `;
 
+const X = styled.button`
+  float: right;
+`;
+
 const Favorites = (props) => {
   const [favorites, setFavorites] = useState([]);
+
+  const deleteFavorite = (shopId) => {
+    axios
+      .delete(`/users/favorites/${props.userId}/${shopId}`)
+      .then(() => {
+        let newFavShops = favorites;
+        newFavShops = newFavShops.filter((shop) => shop.id !== shopId);
+        setFavorites(newFavShops);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   let favoriteShopsArr;
 
@@ -37,11 +54,10 @@ const Favorites = (props) => {
   }, [props.userId]);
 
   favoriteShopsArr = favorites.map((favorite) => (
-    <Link to={`/shops/${favorite.id}`}>
-      <Card nohover key={favorite.id}>
-        {favorite.name}
-      </Card>
-    </Link>
+    <Card nohover key={favorite.id}>
+      <Link to={`/shops/${favorite.id}`}>{favorite.name}</Link>
+      <X onClick={() => deleteFavorite(favorite.id)}>x</X>
+    </Card>
   ));
 
   if (favorites.length > 0) {
@@ -53,7 +69,7 @@ const Favorites = (props) => {
     );
   } else {
     return (
-      <Card>
+      <Card nohover>
         <Text>You have no favorite shops :(</Text>
       </Card>
     );

@@ -2,14 +2,27 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import Card from '../styles/Card';
 import Button from '../styles/Button';
 import * as colors from '../styles/Colors';
 
+const Star = styled.button`
+  background-color: inherit;
+  border: none;
+`;
+
+const Caption = styled.p`
+  color: gray;
+  font-size: 0.75rem;
+`;
+
 const ShopView = (props) => {
   const [shop, setShop] = useState([]);
   const [displayFavBtn, setDisplayFavBtn] = useState([true]);
+  const [rating, setRating] = useState('');
+  const [avgRating, setAvgRating] = useState('');
 
   const addFavorite = () => {
     axios
@@ -62,6 +75,72 @@ const ShopView = (props) => {
     }
   }, [props.userId, props.match.params.id]);
 
+  const sendRating = (rating) => {
+    axios
+      .post(`/users/ratings/${props.match.params.id}/${props.userId}`, {
+        rating: rating,
+      })
+      .then(() => {
+        setRating(rating);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const updateRating = (rating) => {
+    axios
+      .put(`/users/ratings/${props.match.params.id}/${props.userId}`, {
+        rating: rating,
+      })
+      .then(() => {
+        setRating(rating);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // get avg rating
+  useEffect(() => {
+    axios
+      .get(`/users/ratings/${props.match.params.id}`)
+      .then((response) => {
+        setAvgRating(response.data[0]['AVG(rating)']);
+      })
+      .catch((error) => console.log(error));
+  }, [props.match.params.id]);
+
+  let avgNumStars = [];
+  for (let i = 0; i < 5; i++) {
+    if (i < avgRating) {
+      avgNumStars.push(
+        <Star onClick={() => sendRating(i + 1)}>
+          <FontAwesomeIcon icon={['fas', 'star']} size="lg" color={'yellow'} />
+        </Star>
+      );
+    } else {
+      avgNumStars.push(
+        <Star onClick={() => sendRating(i + 1)}>
+          <FontAwesomeIcon icon={['far', 'star']} size="lg" />
+        </Star>
+      );
+    }
+  }
+
+  let userRating = [];
+  for (let i = 0; i < 5; i++) {
+    if (i < rating) {
+      userRating.push(
+        <Star onClick={() => updateRating(i + 1)}>
+          <FontAwesomeIcon icon={['fas', 'star']} size="lg" color={'yellow'} />
+        </Star>
+      );
+    } else {
+      userRating.push(
+        <Star onClick={() => updateRating(i + 1)}>
+          <FontAwesomeIcon icon={['far', 'star']} size="lg" />
+        </Star>
+      );
+    }
+  }
+
   if (shop.length > 0) {
     return (
       <Card nohover>
@@ -76,6 +155,13 @@ const ShopView = (props) => {
             Favorited <FontAwesomeIcon icon={['fas', 'heart']} color="pink" />
           </Button>
         )}
+        <p>Average Rating</p>
+        <Caption>({avgRating} out of 5 stars)</Caption>
+        {avgNumStars}
+        <p>Your rating</p>
+        {userRating}
+        <p>Leave a comment</p>
+        <textarea placeholder="Write something"></textarea>
       </Card>
     );
   } else {

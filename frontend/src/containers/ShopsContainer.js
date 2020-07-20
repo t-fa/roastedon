@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { Link, Route, withRouter, Switch } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actions/shops';
 import styled from 'styled-components';
 
 import ShopThumbnail from '../components/Shops/ShopThumbnail';
-import ShopView from './ShopView';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -22,15 +21,9 @@ const ShopsContainer = (props) => {
   if (props.shops.shops.length > 0) {
     return props.shops.shops.map((shop) => {
       return (
-        <Switch>
-          <Route
-            path={props.match.url + '/:id'}
-            render={() => <ShopView {...shop} />}
-          />
-          <StyledLink to={props.match.url + '/' + shop.id}>
-            <ShopThumbnail {...shop} key={shop.id} />
-          </StyledLink>
-        </Switch>
+        <StyledLink key={shop.id} to={props.match.url + '/' + shop.id}>
+          <ShopThumbnail {...shop} />
+        </StyledLink>
       );
     });
   } else {

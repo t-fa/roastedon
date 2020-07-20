@@ -105,21 +105,34 @@ const ShopView = (props) => {
         setAvgRating(response.data[0]['AVG(rating)']);
       })
       .catch((error) => console.log(error));
-  }, [props.match.params.id]);
+  }, [rating, props.match.params.id]);
+
+  // get user rating
+  useEffect(() => {
+    axios
+      .get(`/users/ratings/${props.match.params.id}/${props.userId}`)
+      .then((response) => {
+        if (response.data[0]) {
+          setRating(response.data[0].rating);
+        }
+      })
+      .catch((error) => console.log(error));
+  }, [props.match.params.id, props.userId]);
 
   let avgNumStars = [];
   for (let i = 0; i < 5; i++) {
     if (i < avgRating) {
       avgNumStars.push(
-        <Star onClick={() => sendRating(i + 1)}>
-          <FontAwesomeIcon icon={['fas', 'star']} size="lg" color={'yellow'} />
-        </Star>
+        <FontAwesomeIcon
+          key={i}
+          icon={['fas', 'star']}
+          size="lg"
+          color={'yellow'}
+        />
       );
     } else {
       avgNumStars.push(
-        <Star onClick={() => sendRating(i + 1)}>
-          <FontAwesomeIcon icon={['far', 'star']} size="lg" />
-        </Star>
+        <FontAwesomeIcon key={i} icon={['far', 'star']} size="lg" />
       );
     }
   }
@@ -127,17 +140,41 @@ const ShopView = (props) => {
   let userRating = [];
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
-      userRating.push(
-        <Star onClick={() => updateRating(i + 1)}>
-          <FontAwesomeIcon icon={['fas', 'star']} size="lg" color={'yellow'} />
-        </Star>
-      );
+      if (rating) {
+        userRating.push(
+          <Star key={i} onClick={() => updateRating(i + 1)}>
+            <FontAwesomeIcon
+              icon={['fas', 'star']}
+              size="lg"
+              color={'yellow'}
+            />
+          </Star>
+        );
+      } else {
+        userRating.push(
+          <Star key={i} onClick={() => sendRating(i + 1)}>
+            <FontAwesomeIcon
+              icon={['fas', 'star']}
+              size="lg"
+              color={'yellow'}
+            />
+          </Star>
+        );
+      }
     } else {
-      userRating.push(
-        <Star onClick={() => updateRating(i + 1)}>
-          <FontAwesomeIcon icon={['far', 'star']} size="lg" />
-        </Star>
-      );
+      if (rating) {
+        userRating.push(
+          <Star key={i} onClick={() => updateRating(i + 1)}>
+            <FontAwesomeIcon icon={['far', 'star']} size="lg" />
+          </Star>
+        );
+      } else {
+        userRating.push(
+          <Star key={i} onClick={() => sendRating(i + 1)}>
+            <FontAwesomeIcon icon={['far', 'star']} size="lg" />
+          </Star>
+        );
+      }
     }
   }
 
@@ -145,6 +182,13 @@ const ShopView = (props) => {
     return (
       <Card nohover>
         <h1>{shop[0].name}</h1>
+        <p>Average Rating</p>
+        {avgRating ? (
+          <Caption>({avgRating} out of 5 stars)</Caption>
+        ) : (
+          <Caption>No reviews</Caption>
+        )}
+        {avgNumStars}
         <p>{shop[0].address1}</p>
         {displayFavBtn ? (
           <Button color={colors.secondary} onClick={addFavorite}>
@@ -155,9 +199,6 @@ const ShopView = (props) => {
             Favorited <FontAwesomeIcon icon={['fas', 'heart']} color="pink" />
           </Button>
         )}
-        <p>Average Rating</p>
-        <Caption>({avgRating} out of 5 stars)</Caption>
-        {avgNumStars}
         <p>Your rating</p>
         {userRating}
         <p>Leave a comment</p>

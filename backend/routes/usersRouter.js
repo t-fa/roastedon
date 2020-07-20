@@ -151,6 +151,21 @@ usersRouter.route('/ratings/:shopId').get((req, res, next) => {
 
 usersRouter
   .route('/ratings/:shopId/:userId')
+  .get((req, res, next) => {
+    connection.query(
+      `SELECT rating FROM shopRating WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(result);
+        }
+      }
+    );
+  })
   .post((req, res, next) => {
     connection.query(
       `INSERT INTO shopRating (userId, shopId, rating) VALUES ('${req.params.userId}', '${req.params.shopId}', '${req.body.rating}')`,
@@ -168,7 +183,7 @@ usersRouter
   })
   .put((req, res, next) => {
     connection.query(
-      `UPDATE shopRating SET rating = '${req.body.rating}') WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
+      `UPDATE shopRating SET rating = '${req.body.rating}' WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
       (err, result) => {
         if (err) {
           console.log(err);

@@ -52,8 +52,10 @@ const ShopView = (props) => {
         .get(`/users/favorites/${props.userId}/${props.match.params.id}`)
         .then((response) => {
           // shopId is a number props.match.params.id is a string
-          if (response.data[0].shopId.toString() === props.match.params.id) {
-            setDisplayFavBtn(false);
+          if (response.data[0]) {
+            if (response.data[0].shopId.toString() === props.match.params.id) {
+              setDisplayFavBtn(false);
+            }
           }
         })
         .catch((error) => console.log(error));

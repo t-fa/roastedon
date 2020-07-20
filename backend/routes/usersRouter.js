@@ -127,11 +127,42 @@ usersRouter
           return next(err);
         } else {
           res.statusCode = 200;
-          res.setHeader('Content-Type', 'application/json');
-          res.json('Removed from favorites!');
+          res.send('Removed from favorites!');
         }
       }
     );
   });
+
+usersRouter.route('/ratings/:shopId').get((req, res, next) => {
+  connection.query(
+    `SELECT AVG(rating) FROM shopRating WHERE shopId = '${req.params.shopId}'`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(result);
+      }
+    }
+  );
+});
+
+usersRouter.route('/ratings/:shopId/:userId').post((res, res, next) => {
+  connection.query(
+    `INSERT INTO shopRating (userId, shopId, rating) VALUES ('${req.params.userId}', '${req.params.shopId}', '${req.body.rating}')`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(result);
+      }
+    }
+  );
+});
 
 module.exports = usersRouter;

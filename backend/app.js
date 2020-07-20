@@ -74,4 +74,20 @@ app.get('/createfavorites', (req, res) => {
   });
 });
 
+app.get('/createrating', (req, res) => {
+  const sql = `
+  CREATE TABLE shopRating (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    shopId INT NOT NULL,
+    rating TINYINT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users (id),
+    FOREIGN KEY (shopId) REFERENCES shops (id)
+  )`;
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('Table users created!');
+  });
+});
+
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));

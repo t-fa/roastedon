@@ -90,4 +90,20 @@ app.get('/createrating', (req, res) => {
   });
 });
 
+app.get('/createrating', (req, res) => {
+  const sql = `
+  CREATE TABLE shopComments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    userId INT NOT NULL,
+    shopId INT NOT NULL,
+    comment VARCHAR(5000) NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users (id),
+    FOREIGN KEY (shopId) REFERENCES shops (id)
+  )`;
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log('Table users created!');
+  });
+});
+
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));

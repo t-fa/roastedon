@@ -8,6 +8,7 @@ import ShopRating from './ShopRating.js';
 import Card from '../styles/Card';
 import Button from '../styles/Button';
 import * as colors from '../styles/Colors';
+import ShopCommentForm from '../components/Shops/ShopCommentForm';
 
 const Star = styled.button`
   background-color: inherit;
@@ -26,6 +27,8 @@ const ShopView = (props) => {
   const [shop, setShop] = useState([]);
   const [displayFavBtn, setDisplayFavBtn] = useState([true]);
   const [rating, setRating] = useState('');
+  const [comments, setComments] = useState([]);
+  const [showCommentForm, setSetShowCommentForm] = useState([true]);
 
   const addFavorite = () => {
     axios
@@ -100,6 +103,49 @@ const ShopView = (props) => {
       .catch((error) => console.log(error));
   };
 
+  // show comments
+  useEffect(() => {
+    axios
+      .get(`/users/comments/${props.match.params.id}`)
+      .then((response) => {
+        if (response.data.length > 0) {
+          let commentsArray = [];
+          response.data.forEach((comment) => {
+            commentsArray.push(comment);
+            axios
+              .get(`/users/${comment.userId}`)
+              .then((response) => {
+                commentsArray[comment.id - 1].username =
+                  response.data[0].username;
+              })
+              .catch((error) => console.log(error));
+          });
+
+          setComments(commentsArray);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [props.match.params.id, showCommentForm]);
+
+  let commentCards;
+  if (comments.length > 0) {
+    commentCards = comments.map((comment) => {
+      console.log(comment);
+      return (
+        <Card key={comment.id} nohover>
+          <h1>{comment.username}</h1>
+          <p>{comment.comment}</p>
+        </Card>
+      );
+    });
+  }
+
+  const hideCommentForm = () => {
+    setSetShowCommentForm(false);
+  };
+
   // get user rating
   useEffect(() => {
     axios
@@ -113,6 +159,7 @@ const ShopView = (props) => {
   }, [props.match.params.id, props.userId]);
 
   let userRating = [];
+  userRating.push(<p key={'p'}>Your rating</p>);
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
       if (rating) {
@@ -140,13 +187,21 @@ const ShopView = (props) => {
       if (rating) {
         userRating.push(
           <Star key={i} onClick={() => updateRating(i + 1)}>
-            <FontAwesomeIcon icon={['far', 'star']} size="lg" />
+            <FontAwesomeIcon
+              icon={['far', 'star']}
+              size="lg"
+              style={starStyle}
+            />
           </Star>
         );
       } else {
         userRating.push(
           <Star key={i} onClick={() => sendRating(i + 1)}>
-            <FontAwesomeIcon icon={['far', 'star']} size="lg" />
+            <FontAwesomeIcon
+              icon={['far', 'star']}
+              size="lg"
+              style={starStyle}
+            />
           </Star>
         );
       }
@@ -157,7 +212,6 @@ const ShopView = (props) => {
     return (
       <Card nohover>
         <h1>{shop[0].name}</h1>
-        <p>Average Rating</p>
         <ShopRating rating={rating} id={props.match.params.id} />
         <p>{shop[0].address1}</p>
         {displayFavBtn ? (
@@ -169,10 +223,13 @@ const ShopView = (props) => {
             Favorited <FontAwesomeIcon icon={['fas', 'heart']} color="pink" />
           </Button>
         )}
-        <p>Your rating</p>
-        {userRating}
-        <p>Leave a comment</p>
-        <textarea placeholder="Write something"></textarea>
+        {commentCards}
+        {props.userId ? userRating : null}
+        {showCommentForm ? (
+          <ShopCommentForm id={props.match.params.id} show={hideCommentForm} />
+        ) : (
+          <p>Thanks for your thoughts.</p>
+        )}
       </Card>
     );
   } else {

@@ -9,6 +9,21 @@ const usersRouter = express.Router();
 usersRouter.use(bodyParser.urlencoded({ extended: true }));
 usersRouter.use(bodyParser.json());
 
+usersRouter.route('/:userId').get((req, res, next) => {
+  connection.query(
+    `SELECT id, username FROM users WHERE id = '${req.params.userId}'`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json(rows);
+    }
+  );
+});
+
 usersRouter
   .route('/login')
   .get((req, res, next) => {
@@ -196,5 +211,54 @@ usersRouter
       }
     );
   });
+
+usersRouter
+  .route('/comments/:shopId/')
+  .get((req, res, next) => {
+    connection.query(
+      `SELECT id, userId, shopId, comment FROM shopComments WHERE shopId = '${req.params.shopId}'`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(result);
+        }
+      }
+    );
+  })
+  .post((req, res, next) => {
+    connection.query(
+      `INSERT INTO shopComments (userId, shopId, comment) VALUES ('${req.body.userId}', '${req.params.shopId}', '${req.body.comment}')`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(result);
+        }
+      }
+    );
+  });
+
+usersRouter.route('/comments/:userId').get((req, res, next) => {
+  connection.query(
+    `SELECT comment FROM shopComments WHERE userId = '${req.params.userId}'`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(result);
+      }
+    }
+  );
+});
 
 module.exports = usersRouter;

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import ShopRating from './ShopRating.js';
 import Card from '../styles/Card';
 import Button from '../styles/Button';
 import * as colors from '../styles/Colors';
@@ -11,18 +12,20 @@ import * as colors from '../styles/Colors';
 const Star = styled.button`
   background-color: inherit;
   border: none;
+  padding: 0;
 `;
 
-const Caption = styled.p`
-  color: gray;
-  font-size: 0.75rem;
-`;
+const starStyle = {
+  color: 'gold',
+  stroke: 'darkgoldenrod',
+  strokeWidth: '10',
+  padding: '0 4px',
+};
 
 const ShopView = (props) => {
   const [shop, setShop] = useState([]);
   const [displayFavBtn, setDisplayFavBtn] = useState([true]);
   const [rating, setRating] = useState('');
-  const [avgRating, setAvgRating] = useState('');
 
   const addFavorite = () => {
     axios
@@ -97,16 +100,6 @@ const ShopView = (props) => {
       .catch((error) => console.log(error));
   };
 
-  // get avg rating
-  useEffect(() => {
-    axios
-      .get(`/users/ratings/${props.match.params.id}`)
-      .then((response) => {
-        setAvgRating(response.data[0]['AVG(rating)']);
-      })
-      .catch((error) => console.log(error));
-  }, [rating, props.match.params.id]);
-
   // get user rating
   useEffect(() => {
     axios
@@ -119,24 +112,6 @@ const ShopView = (props) => {
       .catch((error) => console.log(error));
   }, [props.match.params.id, props.userId]);
 
-  let avgNumStars = [];
-  for (let i = 0; i < 5; i++) {
-    if (i < avgRating) {
-      avgNumStars.push(
-        <FontAwesomeIcon
-          key={i}
-          icon={['fas', 'star']}
-          size="lg"
-          color={'yellow'}
-        />
-      );
-    } else {
-      avgNumStars.push(
-        <FontAwesomeIcon key={i} icon={['far', 'star']} size="lg" />
-      );
-    }
-  }
-
   let userRating = [];
   for (let i = 0; i < 5; i++) {
     if (i < rating) {
@@ -146,7 +121,7 @@ const ShopView = (props) => {
             <FontAwesomeIcon
               icon={['fas', 'star']}
               size="lg"
-              color={'yellow'}
+              style={starStyle}
             />
           </Star>
         );
@@ -156,7 +131,7 @@ const ShopView = (props) => {
             <FontAwesomeIcon
               icon={['fas', 'star']}
               size="lg"
-              color={'yellow'}
+              style={starStyle}
             />
           </Star>
         );
@@ -183,12 +158,7 @@ const ShopView = (props) => {
       <Card nohover>
         <h1>{shop[0].name}</h1>
         <p>Average Rating</p>
-        {avgRating ? (
-          <Caption>({avgRating} out of 5 stars)</Caption>
-        ) : (
-          <Caption>No reviews</Caption>
-        )}
-        {avgNumStars}
+        <ShopRating rating={rating} id={props.match.params.id} />
         <p>{shop[0].address1}</p>
         {displayFavBtn ? (
           <Button color={colors.secondary} onClick={addFavorite}>

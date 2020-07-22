@@ -135,8 +135,6 @@ const ShopView = (props) => {
   let commentCards;
   if (comments.length > 0) {
     commentCards = comments.map((comment) => {
-      console.log(comment.username);
-      console.log(comment);
       return (
         <Card key={comment.id} nohover>
           <p>{comment.username}</p>

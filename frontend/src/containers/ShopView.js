@@ -115,13 +115,16 @@ const ShopView = (props) => {
             axios
               .get(`/users/${comment.userId}`)
               .then((response) => {
-                commentsArray[comment.id - 1].username =
+                commentsArray[comment.id - 1]['username'] =
                   response.data[0].username;
+
+                setComments((oldComments) => [
+                  ...oldComments,
+                  commentsArray[comment.id - 1],
+                ]);
               })
               .catch((error) => console.log(error));
           });
-
-          setComments(commentsArray);
         }
       })
       .catch((error) => {
@@ -132,10 +135,11 @@ const ShopView = (props) => {
   let commentCards;
   if (comments.length > 0) {
     commentCards = comments.map((comment) => {
+      console.log(comment.username);
       console.log(comment);
       return (
         <Card key={comment.id} nohover>
-          <h1>{comment.username}</h1>
+          <p>{comment.username}</p>
           <p>{comment.comment}</p>
         </Card>
       );

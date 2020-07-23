@@ -245,6 +245,39 @@ usersRouter
     );
   });
 
+usersRouter
+  .route('/comments/:commentId')
+  .put((req, res, next) => {
+    connection.query(
+      `UPDATE shopComments SET comment = '${req.body.commentEdit}' WHERE id = '${req.body.id}'`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(result);
+        }
+      }
+    );
+  })
+  .delete((req, res, next) => {
+    connection.query(
+      `DELETE FROM shopComments WHERE id = '${req.params.commentId}'`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        } else {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.json(result);
+        }
+      }
+    );
+  });
+
 usersRouter.route('/comments/:userId').get((req, res, next) => {
   connection.query(
     `SELECT comment FROM shopComments WHERE userId = '${req.params.userId}'`,

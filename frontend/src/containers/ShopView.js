@@ -9,6 +9,7 @@ import Card from '../styles/Card';
 import Button from '../styles/Button';
 import * as colors from '../styles/Colors';
 import ShopCommentForm from '../components/Shops/ShopCommentForm';
+import ShopComments from './ShopComments';
 
 const Star = styled.button`
   background-color: inherit;
@@ -27,7 +28,6 @@ const ShopView = (props) => {
   const [shop, setShop] = useState([]);
   const [displayFavBtn, setDisplayFavBtn] = useState([true]);
   const [rating, setRating] = useState('');
-  const [comments, setComments] = useState([]);
   const [showCommentForm, setSetShowCommentForm] = useState([true]);
 
   const addFavorite = () => {
@@ -56,6 +56,7 @@ const ShopView = (props) => {
     axios
       .get(`/shops/${props.match.params.id}`)
       .then((response) => {
+        // console.log(response.data[0]);
         setShop(response.data);
       })
       .catch((error) => {
@@ -102,47 +103,6 @@ const ShopView = (props) => {
       })
       .catch((error) => console.log(error));
   };
-
-  // show comments
-  useEffect(() => {
-    axios
-      .get(`/users/comments/${props.match.params.id}`)
-      .then((response) => {
-        if (response.data.length > 0) {
-          let commentsArray = [];
-          response.data.forEach((comment) => {
-            commentsArray.push(comment);
-            axios
-              .get(`/users/${comment.userId}`)
-              .then((response) => {
-                commentsArray[comment.id - 1]['username'] =
-                  response.data[0].username;
-
-                setComments((oldComments) => [
-                  ...oldComments,
-                  commentsArray[comment.id - 1],
-                ]);
-              })
-              .catch((error) => console.log(error));
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [props.match.params.id, showCommentForm]);
-
-  let commentCards;
-  if (comments.length > 0) {
-    commentCards = comments.map((comment) => {
-      return (
-        <Card key={comment.id} nohover>
-          <p>{comment.username}</p>
-          <p>{comment.comment}</p>
-        </Card>
-      );
-    });
-  }
 
   const hideCommentForm = () => {
     setSetShowCommentForm(false);
@@ -225,7 +185,10 @@ const ShopView = (props) => {
             Favorited <FontAwesomeIcon icon={['fas', 'heart']} color="pink" />
           </Button>
         )}
-        {commentCards}
+        <ShopComments
+          shopId={props.match.params.id}
+          showCommentForm={showCommentForm}
+        />
         {props.userId ? userRating : null}
         {showCommentForm ? (
           <ShopCommentForm id={props.match.params.id} show={hideCommentForm} />

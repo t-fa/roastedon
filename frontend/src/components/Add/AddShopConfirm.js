@@ -38,7 +38,7 @@ const addShopConfirm = (props) => {
   return (
     <div>
       <H1>Add a new coffee shop</H1>
-      <Card nohover>
+      <Card>
         <H2>{props.name}</H2>
         {props.address1}
         {props.address2}

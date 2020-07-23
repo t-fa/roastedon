@@ -15,7 +15,7 @@ const ChangeEmail = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const onSubmit = (data) => console.log(data);
   return (
-    <Card nohover>
+    <Card>
       <Text>Change Email</Text>
       <form onClick={handleSubmit(onSubmit)}>
         <Label>

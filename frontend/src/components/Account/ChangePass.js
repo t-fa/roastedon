@@ -15,7 +15,7 @@ const ChangePass = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const onSubmit = (data) => console.log(data);
   return (
-    <Card nohover>
+    <Card>
       <Text>Change Password</Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Label>

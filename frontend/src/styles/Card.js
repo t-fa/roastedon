@@ -7,7 +7,7 @@ const Card = styled.div`
   border-radius: 0.5rem;
 
   &:hover {
-    box-shadow: ${(props) => (props.nohover ? 'none' : '0 0 5px grey')};
+    box-shadow: ${(props) => (props.hover ? '0 0 5px grey' : 'none')};
   }
 `;
 

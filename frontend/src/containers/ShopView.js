@@ -172,7 +172,7 @@ const ShopView = (props) => {
 
   if (shop.length > 0) {
     return (
-      <Card nohover>
+      <Card>
         <h1>{shop[0].name}</h1>
         <ShopRating rating={rating} id={props.match.params.id} />
         <p>{shop[0].address1}</p>

@@ -37,7 +37,7 @@ const ShopComments = (props) => {
   if (comments.length > 0) {
     return comments.map((comment) => {
       return (
-        <Card key={comment.id} nohover>
+        <Card key={comment.id}>
           <p>{comment.username}</p>
           <p>{comment.comment}</p>
         </Card>

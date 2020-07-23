@@ -4,7 +4,7 @@ import ShopRating from '../../containers/ShopRating';
 
 const shopThumbnail = (props) => {
   return (
-    <Card>
+    <Card hover>
       <h3>{props.name}</h3>
       <ShopRating id={props.id} />
       <p>

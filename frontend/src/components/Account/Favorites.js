@@ -54,7 +54,7 @@ const Favorites = (props) => {
   }, [props.userId]);
 
   favoriteShopsArr = favorites.map((favorite) => (
-    <Card nohover key={favorite.id}>
+    <Card key={favorite.id}>
       <Link to={`/shops/${favorite.id}`}>{favorite.name}</Link>
       <X onClick={() => deleteFavorite(favorite.id)}>x</X>
     </Card>
@@ -62,14 +62,14 @@ const Favorites = (props) => {
 
   if (favorites.length > 0) {
     return (
-      <Card nohover>
+      <Card>
         <Text>Favorite Shops</Text>
         {favoriteShopsArr}
       </Card>
     );
   } else {
     return (
-      <Card nohover>
+      <Card>
         <Text>You have no favorite shops :(</Text>
       </Card>
     );

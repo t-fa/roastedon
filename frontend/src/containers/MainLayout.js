@@ -12,6 +12,7 @@ import Logout from '../components/Auth/Logout';
 import Register from '../components/Auth/Register';
 import Settings from '../components/Account/Settings';
 import Favorites from '../components/Account/Favorites';
+import Error404 from '../components/Errors/404';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -56,6 +57,7 @@ const MainLayout = (props) => {
           <Route path="/shops/:id" component={ShopView} />
           <Route exact path="/account" component={Settings} />
           <Route exact path="/favorites" component={Favorites} />
+          <Route component={Error404} />
         </Switch>
       </Container>
     </>

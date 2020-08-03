@@ -62,7 +62,6 @@ export const auth = (username, password) => {
       .post('/users/login', authData)
       .then((response) => {
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userId', response.data.id);
         dispatch(authSuccess(response.data.token, response.data.id));
       })
       .catch((err) => {

@@ -32,7 +32,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_LOGOUT:
       // I have no idea why I had to put these here and it wouldn't work in the auth action
       localStorage.removeItem('token');
-      localStorage.removeItem('userId');
       return {
         ...state,
         token: null,

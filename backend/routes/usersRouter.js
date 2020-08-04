@@ -1,13 +1,16 @@
 const authenticate = require('../authenticate'),
   bcrypt = require('bcrypt'),
   bodyParser = require('body-parser'),
+  config = require('../config'),
   connection = require('../dbcon.js'),
+  cookieParser = require('cookie-parser'),
   express = require('express'),
   passport = require('passport');
 
 const usersRouter = express.Router();
 usersRouter.use(bodyParser.urlencoded({ extended: true }));
 usersRouter.use(bodyParser.json());
+usersRouter.use(cookieParser(config.secretKey));
 
 usersRouter.route('/:userId').get((req, res, next) => {
   connection.query(
@@ -24,32 +27,18 @@ usersRouter.route('/:userId').get((req, res, next) => {
   );
 });
 
-usersRouter
-  .route('/login')
-  .get((req, res, next) => {
-    connection.query(
-      'SELECT id, username, password FROM users',
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return next(err);
-        }
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(rows);
-      }
-    );
-  })
-  .post(passport.authenticate('local'), (req, res) => {
-    const token = authenticate.getToken({ id: req.user.id });
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json({
-      token: token,
-      id: req.user.id,
-      status: 'Success!',
-    });
+usersRouter.route('/login').post(passport.authenticate('local'), (req, res) => {
+  const token = authenticate.getToken({ id: req.user.id });
+  res.cookie('token', token);
+  res.cookie('id', req.user.id);
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
+  res.json({
+    token: token,
+    id: req.user.id,
+    status: 'Success!',
   });
+});
 
 usersRouter.route('/register').post((req, res, next) => {
   const username = req.body.username;

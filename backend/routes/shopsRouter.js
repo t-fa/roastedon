@@ -1,4 +1,5 @@
-const bodyParser = require('body-parser'),
+const authenticate = require('../authenticate'),
+  bodyParser = require('body-parser'),
   connection = require('../dbcon.js'),
   express = require('express');
 
@@ -24,7 +25,7 @@ shopsRouter
       }
     );
   })
-  .post((req, res, next) => {
+  .post(authenticate.verifyUser, (req, res, next) => {
     const name = req.body.name;
     const address1 = req.body.address1;
     const address2 = req.body.address2;

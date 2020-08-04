@@ -118,7 +118,7 @@ usersRouter
       }
     );
   })
-  .post((req, res, next) => {
+  .post(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `INSERT INTO favoriteShops (userId, shopId) VALUES ('${req.body.userId}', '${req.body.shopId}')`,
       (err, rows) => {
@@ -133,7 +133,7 @@ usersRouter
       }
     );
   })
-  .delete((req, res, next) => {
+  .delete(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `DELETE FROM favoriteShops WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
       (err) => {
@@ -181,7 +181,7 @@ usersRouter
       }
     );
   })
-  .post((req, res, next) => {
+  .post(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `INSERT INTO shopRating (userId, shopId, rating) VALUES ('${req.params.userId}', '${req.params.shopId}', '${req.body.rating}')`,
       (err, result) => {
@@ -196,7 +196,7 @@ usersRouter
       }
     );
   })
-  .put((req, res, next) => {
+  .put(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `UPDATE shopRating SET rating = '${req.body.rating}' WHERE userId = '${req.params.userId}' AND shopId = '${req.params.shopId}'`,
       (err, result) => {
@@ -229,7 +229,7 @@ usersRouter
       }
     );
   })
-  .post((req, res, next) => {
+  .post(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `INSERT INTO shopComments (userId, shopId, comment) VALUES ('${req.body.userId}', '${req.params.shopId}', '${req.body.comment}')`,
       (err, result) => {
@@ -247,7 +247,7 @@ usersRouter
 
 usersRouter
   .route('/comments/:commentId')
-  .put((req, res, next) => {
+  .put(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `UPDATE shopComments SET comment = '${req.body.commentEdit}' WHERE id = '${req.body.id}'`,
       (err, result) => {
@@ -262,7 +262,7 @@ usersRouter
       }
     );
   })
-  .delete((req, res, next) => {
+  .delete(authenticate.verifyUser, (req, res, next) => {
     connection.query(
       `DELETE FROM shopComments WHERE id = '${req.params.commentId}'`,
       (err, result) => {

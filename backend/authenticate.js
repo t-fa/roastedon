@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt'),
   config = require('./config'),
   connection = require('./dbcon'),
+  cookieParser = require('cookie-parser'),
   ExtractJwt = require('passport-jwt').ExtractJwt,
   passport = require('passport'),
   jwt = require('jsonwebtoken'),

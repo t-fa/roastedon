@@ -29,8 +29,8 @@ usersRouter.route('/:userId').get((req, res, next) => {
 
 usersRouter.route('/login').post(passport.authenticate('local'), (req, res) => {
   const token = authenticate.getToken({ id: req.user.id });
-  res.cookie('token', token);
-  res.cookie('id', req.user.id);
+  res.cookie('token', token, { httpOnly: true });
+  res.cookie('id', req.user.id, { httpOnly: true });
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
   res.json({

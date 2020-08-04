@@ -71,6 +71,8 @@ const ShopComments = (props) => {
 
   if (comments.length > 0) {
     return comments.map((comment) => {
+      console.log(comment);
+      console.log(props.userId);
       return (
         <Card key={comment.id}>
           <p>{comment.username}</p>

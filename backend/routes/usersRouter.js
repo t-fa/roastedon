@@ -57,6 +57,8 @@ usersRouter.route('/register').post((req, res, next) => {
           } else {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
+            res.cookie('token', token);
+            res.cookie('id', req.user.id);
             res.json(results);
           }
         }

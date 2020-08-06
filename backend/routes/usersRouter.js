@@ -12,7 +12,7 @@ usersRouter.use(bodyParser.urlencoded({ extended: true }));
 usersRouter.use(bodyParser.json());
 usersRouter.use(cookieParser(config.secretKey));
 
-usersRouter.route('/:userId').get((req, res, next) => {
+usersRouter.route('/profile/:userId').get((req, res, next) => {
   connection.query(
     `SELECT id, username FROM users WHERE id = '${req.params.userId}'`,
     (err, rows) => {
@@ -27,18 +27,27 @@ usersRouter.route('/:userId').get((req, res, next) => {
   );
 });
 
-usersRouter.route('/login').post(passport.authenticate('local'), (req, res) => {
-  const token = authenticate.getToken({ id: req.user.id });
-  res.cookie('token', token, { httpOnly: true });
-  res.cookie('id', req.user.id, { httpOnly: true });
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.json({
-    token: token,
-    id: req.user.id,
-    status: 'Success!',
+usersRouter
+  .route('/login')
+  .get((req, res, next) => {
+    if (req.signedCookies) {
+      res.send(req.signedCookies);
+    } else {
+      res.send('No cookie');
+    }
+  })
+  .post(passport.authenticate('local'), (req, res) => {
+    const token = authenticate.getToken({ id: req.user.id });
+    res.cookie('token', token, { httpOnly: true, signed: true });
+    res.cookie('id', req.user.id, { httpOnly: true, signed: true });
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({
+      token: token,
+      id: req.user.id,
+      status: 'Success!',
+    });
   });
-});
 
 usersRouter.route('/register').post((req, res, next) => {
   const username = req.body.username;
@@ -78,20 +87,22 @@ usersRouter.route('/logout').get((req, res, next) => {
   }
 });
 
-usersRouter.route('/favorites/:userId').get((req, res, next) => {
-  connection.query(
-    `SELECT id, userId, shopId FROM favoriteShops WHERE userId = ${req.params.userId}`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        return next(err);
+usersRouter
+  .route('/favorites/:userId')
+  .get(authenticate.verifyUser, (req, res, next) => {
+    connection.query(
+      `SELECT id, userId, shopId FROM favoriteShops WHERE userId = ${req.params.userId}`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json(rows);
       }
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json(rows);
-    }
-  );
-});
+    );
+  });
 
 usersRouter
   .route('/favorites/:userId/:shopId')

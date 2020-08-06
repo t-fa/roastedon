@@ -2,3 +2,4 @@
 /node_modules
 dbcon.js
 config.js
+db.js

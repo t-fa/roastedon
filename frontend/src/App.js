@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/auth';
-import { withCookies } from 'react-cookie';
 
 // components
 import MainLayout from './containers/MainLayout';
@@ -29,4 +28,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(withCookies(App));
+export default connect(null, mapDispatchToProps)(App);

@@ -41,13 +41,15 @@ export const logout = () => {
 
 export const authCheckState = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      dispatch(logout());
-    } else {
-      console.log('token: ', token);
-      dispatch(authSuccess(token));
-    }
+    axios
+      .get('/users/login')
+      .then((response) => {
+        dispatch(authSuccess(response.data.token, response.data.id));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(authFail(err));
+      });
   };
 };
 
@@ -61,7 +63,6 @@ export const auth = (username, password) => {
     axios
       .post('/users/login', authData)
       .then((response) => {
-        localStorage.setItem('token', response.data.token);
         dispatch(authSuccess(response.data.token, response.data.id));
       })
       .catch((err) => {

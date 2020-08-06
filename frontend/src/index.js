@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import shopsReducer from './store/reducers/shops';
 import authReducer from './store/reducers/auth';
 import './fontawesome';
-import { CookiesProvider } from 'react-cookie';
 
 // axios.defaults.baseURL = 'http://localhost:3001/';
 
@@ -28,11 +27,9 @@ const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
-    <CookiesProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </CookiesProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

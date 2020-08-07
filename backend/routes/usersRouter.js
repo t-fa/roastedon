@@ -77,9 +77,11 @@ usersRouter.route('/register').post((req, res, next) => {
 });
 
 usersRouter.route('/logout').get((req, res, next) => {
-  if (req.session) {
-    req.session.destroy();
-    res.clearCookie('session-id');
+  if (req.signedCookies) {
+    res.clearCookie('token');
+    res.clearCookie('id');
+    res.status(200);
+    res.json('You have logged out successfully!');
   } else {
     const err = new Error('You are not logged in!');
     err.status = 401;

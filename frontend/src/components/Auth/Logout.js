@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
+import { logout } from '../../store/actions/auth';
 
 const Logout = (props) => {
   const { logout } = props;
@@ -15,7 +15,7 @@ const Logout = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => dispatch({ type: actionTypes.AUTH_LOGOUT }),
+    logout: () => dispatch(logout()),
   };
 };
 

@@ -29,10 +29,12 @@ export const logoutStart = () => {
 };
 
 export const logout = () => {
+  console.log('logout');
   return (dispatch) => {
     axios
-      .get('/users/logout')
+      .get('/users/logout', {}, { withCredentials: true })
       .then((response) => {
+        console.log(response);
         dispatch(logoutStart());
       })
       .catch((err) => console.log(err));
@@ -42,7 +44,7 @@ export const logout = () => {
 export const authCheckState = () => {
   return (dispatch) => {
     axios
-      .get('/users/login')
+      .get('/users/login', {}, { withCredentials: true })
       .then((response) => {
         dispatch(authSuccess(response.data.token, response.data.id));
       })
@@ -61,7 +63,7 @@ export const auth = (username, password) => {
       password: password,
     };
     axios
-      .post('/users/login', authData)
+      .post('/users/login', authData, { withCredentials: true })
       .then((response) => {
         dispatch(authSuccess(response.data.token, response.data.id));
       })

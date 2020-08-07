@@ -18,7 +18,8 @@ const Ul = styled.ul`
   list-style-type: none;
   margin: 0;
   overflow: hidden;
-  padding: 0;
+  padding: 16px 0;
+  font-size: 1.2rem;
 `;
 
 const Li = styled.li`

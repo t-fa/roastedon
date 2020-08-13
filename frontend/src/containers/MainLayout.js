@@ -14,11 +14,6 @@ import Settings from '../components/Account/Settings';
 import Favorites from './Favorites';
 import Error404 from '../components/Errors/404';
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 95%;
-`;
-
 const MainLayout = (props) => {
   const [zipCode, setZipCode] = useState('');
 
@@ -32,34 +27,32 @@ const MainLayout = (props) => {
   return (
     <>
       <Navbar />
-      <Container>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <HomeLayout
-                zipcode={zipCode}
-                onChange={(event) => setZipCode(event.target.value)}
-                handleSubmit={handleSubmit}
-              />
-            )}
-          />
-          <Route path="/add" component={AddShopForm} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route
-            exact
-            path="/shops"
-            render={() => <ShopsContainer zipcode={zipCode} />}
-          />
-          <Route path="/logout" component={Logout} />
-          <Route path="/shops/:id" component={ShopView} />
-          <Route exact path="/account" component={Settings} />
-          <Route exact path="/favorites" component={Favorites} />
-          <Route component={Error404} />
-        </Switch>
-      </Container>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <HomeLayout
+              zipcode={zipCode}
+              onChange={(event) => setZipCode(event.target.value)}
+              handleSubmit={handleSubmit}
+            />
+          )}
+        />
+        <Route path="/add" component={AddShopForm} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route
+          exact
+          path="/shops"
+          render={() => <ShopsContainer zipcode={zipCode} />}
+        />
+        <Route path="/logout" component={Logout} />
+        <Route path="/shops/:id" component={ShopView} />
+        <Route exact path="/account" component={Settings} />
+        <Route exact path="/favorites" component={Favorites} />
+        <Route component={Error404} />
+      </Switch>
     </>
   );
 };

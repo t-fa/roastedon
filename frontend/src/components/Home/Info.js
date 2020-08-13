@@ -1,8 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  margin: 0 auto;
+  max-width: 95%;
+  color: white;
+`;
 
 const info = () => {
   return (
-    <section>
+    <Container>
       <h3>Why Roasted On?</h3>
       <h4>We believe in the freshest coffee</h4>
       <p>
@@ -22,7 +29,7 @@ const info = () => {
         high quality coffee. If you're just stopping in for a coffee, you're
         likely to enjoy a great cup.
       </p>
-    </section>
+    </Container>
   );
 };
 

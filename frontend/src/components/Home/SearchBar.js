@@ -7,6 +7,8 @@ import { Input, Label } from '../../styles/Input';
 const Div = styled.div`
   padding-top: 25px;
   height: 200px;
+  margin: 0 auto;
+  max-width: 95%;
 `;
 
 const searchBar = (props) => {

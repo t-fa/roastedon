@@ -11,6 +11,8 @@ const Container = styled.div`
   @media screen and (max-width: 576px) {
     display: none;
   }
+  margin: 0 auto;
+  max-width: 95%;
 `;
 
 const Ul = styled.ul`

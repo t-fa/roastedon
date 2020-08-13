@@ -1,11 +1,14 @@
 const bcrypt = require('bcrypt'),
   config = require('./config'),
   connection = require('./dbcon'),
-  ExtractJwt = require('passport-jwt').ExtractJwt,
+  cookieParser = require('cookie-parser'),
+  express = require('express'),
   passport = require('passport'),
   jwt = require('jsonwebtoken'),
   JwtStrategy = require('passport-jwt').Strategy,
   LocalStrategy = require('passport-local').Strategy;
+
+express().use(cookieParser(config.secretKey));
 
 exports.local = passport.use(
   new LocalStrategy((username, password, done) => {
@@ -61,8 +64,16 @@ exports.getToken = (user) => {
   return jwt.sign(user, config.secretKey, { expiresIn: '7 days' });
 };
 
+let cookieExtractor = function (req) {
+  let token = null;
+  if (req && req.signedCookies) {
+    token = req.signedCookies.token;
+  }
+  return token;
+};
+
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = config.secretKey;
 
 exports.jwtPassport = passport.use(

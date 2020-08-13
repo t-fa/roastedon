@@ -29,12 +29,10 @@ export const logoutStart = () => {
 };
 
 export const logout = () => {
-  console.log('logout');
   return (dispatch) => {
     axios
       .get('/users/logout', {}, { withCredentials: true })
       .then((response) => {
-        console.log(response);
         dispatch(logoutStart());
       })
       .catch((err) => console.log(err));

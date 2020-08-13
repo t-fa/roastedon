@@ -96,6 +96,7 @@ const Navbar = (props) => {
             />
           </Button>
         </Li>
+        <Li right>{!loggedIn && <Link to="/register">Register</Link>}</Li>
         <Li right>
           {loggedIn ? (
             <Button onClick={toggleUserMenu}>

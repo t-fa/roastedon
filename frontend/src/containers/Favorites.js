@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Card from '../../styles/Card';
+import Card from '../styles/Card';
 
 const Text = styled.h1`
   text-align: center;
@@ -34,7 +34,7 @@ const Favorites = (props) => {
 
   useEffect(() => {
     axios
-      .get(`/users/favorites/${props.userId}`)
+      .get(`/users/favorites/${props.userId}`, {}, { withCredentials: true })
       .then((response) => {
         let shopId = [];
         response.data.forEach((shop) => shopId.push(shop.shopId));

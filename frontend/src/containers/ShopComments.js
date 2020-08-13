@@ -29,7 +29,7 @@ const ShopComments = (props) => {
           for (let i = 0; i < response.data.length; i++) {
             commentsArray.push(response.data[i]);
             axios
-              .get(`/users/${response.data[i].userId}`)
+              .get(`/users/profile/${response.data[i].userId}`)
               .then((response) => {
                 commentsArray[i]['username'] = response.data[0].username;
 
@@ -71,8 +71,6 @@ const ShopComments = (props) => {
 
   if (comments.length > 0) {
     return comments.map((comment) => {
-      console.log(comment);
-      console.log(props.userId);
       return (
         <Card key={comment.id}>
           <p>{comment.username}</p>

@@ -11,7 +11,7 @@ import Login from '../components/Auth/Login';
 import Logout from '../components/Auth/Logout';
 import Register from '../components/Auth/Register';
 import Settings from '../components/Account/Settings';
-import Favorites from '../components/Account/Favorites';
+import Favorites from './Favorites';
 import Error404 from '../components/Errors/404';
 
 const Container = styled.div`

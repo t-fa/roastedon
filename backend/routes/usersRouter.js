@@ -5,6 +5,7 @@ const authenticate = require('../authenticate'),
   connection = require('../dbcon.js'),
   cookieParser = require('cookie-parser'),
   express = require('express'),
+  jwt = require('jsonwebtoken'),
   passport = require('passport');
 
 const usersRouter = express.Router();
@@ -43,8 +44,6 @@ usersRouter
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json({
-      token: token,
-      id: req.user.id,
       status: 'Success!',
     });
   });
@@ -64,17 +63,55 @@ usersRouter.route('/register').post((req, res, next) => {
             console.log(err);
             return next(err);
           } else {
-            const token = authenticate.getToken({ id: results.id });
+            const token = authenticate.getToken({ id: results.insertId });
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.cookie('token', token);
-            res.cookie('id', req.user.id);
+            res.cookie('id', results.insertId);
             res.json(results);
           }
         }
       );
     })
     .catch((err) => next(err));
+});
+
+usersRouter.route('/verify/:userId').get((req, res, next) => {
+  connection.query(
+    `SELECT id, password, verified FROM users WHERE id = ${req.params.userId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      if (rows[0].verified === 1) {
+        res.json('You have already verified your email.');
+      } else {
+        let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
+          expiresIn: '24h',
+        });
+        res.json(token);
+        // res.json('Please check your email for a verification link.');
+      }
+    }
+  );
+});
+
+usersRouter.route('/verify/:userId/:jwt').put((req, res, next) => {
+  connection.query(
+    `UPDATE users SET verified = 1 WHERE id = ${req.params.userId}`,
+    (err) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json('You have successfully verified your email. Thanks!');
+    }
+  );
 });
 
 usersRouter.route('/logout').get((req, res, next) => {

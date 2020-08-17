@@ -4,6 +4,7 @@ const authenticate = require('../authenticate'),
   config = require('../config'),
   connection = require('../dbcon.js'),
   cookieParser = require('cookie-parser'),
+  email = require('../email'),
   express = require('express'),
   jwt = require('jsonwebtoken'),
   passport = require('passport');
@@ -78,7 +79,7 @@ usersRouter.route('/register').post((req, res, next) => {
 
 usersRouter.route('/verify/:userId').get((req, res, next) => {
   connection.query(
-    `SELECT id, password, verified FROM users WHERE id = ${req.params.userId}`,
+    `SELECT id, email, password, verified FROM users WHERE id = ${req.params.userId}`,
     (err, rows) => {
       if (err) {
         console.log(err);
@@ -92,6 +93,7 @@ usersRouter.route('/verify/:userId').get((req, res, next) => {
         let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
           expiresIn: '24h',
         });
+        email.main(rows[0].email, rows[0].id, token);
         res.json(token);
         // res.json('Please check your email for a verification link.');
       }

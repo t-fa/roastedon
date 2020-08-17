@@ -77,44 +77,62 @@ usersRouter.route('/register').post((req, res, next) => {
     .catch((err) => next(err));
 });
 
-usersRouter.route('/verify/:userId').get((req, res, next) => {
-  connection.query(
-    `SELECT id, email, password, verified FROM users WHERE id = ${req.params.userId}`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        return next(err);
+usersRouter
+  .route('/verify/:userId')
+  .get(authenticate.verifyUser, (req, res, next) => {
+    connection.query(
+      `SELECT id, email, password, verified FROM users WHERE id = ${req.params.userId}`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        if (rows[0].verified === 1) {
+          res.json('You have already verified your email.');
+        } else {
+          let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
+            expiresIn: '24h',
+          });
+          email.main(rows[0].email, rows[0].id, token);
+          res.json('Please check your email for a verification link.');
+        }
       }
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      if (rows[0].verified === 1) {
-        res.json('You have already verified your email.');
-      } else {
-        let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
-          expiresIn: '24h',
-        });
-        email.main(rows[0].email, rows[0].id, token);
-        res.json(token);
-        // res.json('Please check your email for a verification link.');
-      }
-    }
-  );
-});
+    );
+  });
 
-usersRouter.route('/verify/:userId/:jwt').put((req, res, next) => {
-  connection.query(
-    `UPDATE users SET verified = 1 WHERE id = ${req.params.userId}`,
-    (err) => {
-      if (err) {
-        console.log(err);
-        return next(err);
+usersRouter
+  .route('/verify/:userId/:jwt')
+  .put(authenticate.verifyUser, (req, res, next) => {
+    connection.query(
+      `SELECT password FROM users WHERE id = ${req.params.userId}`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        jwt.verify(req.params.jwt, result[0].password, (err) => {
+          if (err) {
+            res.json(err);
+          } else {
+            connection.query(
+              `UPDATE users SET verified = 1 WHERE id = ${req.params.userId}`,
+              (err) => {
+                if (err) {
+                  console.log(err);
+                  return next(err);
+                }
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json('You have successfully verified your email. Thanks!');
+              }
+            );
+          }
+        });
       }
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json('You have successfully verified your email. Thanks!');
-    }
-  );
-});
+    );
+  });
 
 usersRouter.route('/logout').get((req, res, next) => {
   if (req.signedCookies) {

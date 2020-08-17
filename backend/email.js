@@ -22,8 +22,8 @@ async function main(receiver, userId, token) {
     to: `${receiver}`, // list of receivers
     subject: 'Please verify your E-Mail Address', // Subject line
     text: `Thank you for creating an account with RoastedOn! Please click the link below to confirm your email:
-        roastedon.co/${userId}/${token}`, // plain text body
-    html: `Thank you for creating an account with RoastedOn! Please click <a href='roastedon.co/${userId}/${token}'>here</a> to confirm your email.
+        roastedon.co/${userId}/${token} . This link will expire in 24 hours.`, // plain text body
+    html: `Thank you for creating an account with RoastedOn! Please click <a href='roastedon.co/${userId}/${token}'>here</a> to confirm your email. This link will expire in 24 hours.
     `, // html body
   });
 

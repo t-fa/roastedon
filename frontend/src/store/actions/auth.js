@@ -7,11 +7,12 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, userId, verified) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     idToken: token,
     userId: userId,
+    verified: verified,
   };
 };
 
@@ -44,7 +45,13 @@ export const authCheckState = () => {
     axios
       .get('/users/login', {}, { withCredentials: true })
       .then((response) => {
-        dispatch(authSuccess(response.data.token, response.data.id));
+        dispatch(
+          authSuccess(
+            response.data.token,
+            response.data.id,
+            response.data.verified
+          )
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -63,7 +70,13 @@ export const auth = (username, password) => {
     axios
       .post('/users/login', authData, { withCredentials: true })
       .then((response) => {
-        dispatch(authSuccess(response.data.token, response.data.id));
+        dispatch(
+          authSuccess(
+            response.data.token,
+            response.data.id,
+            response.data.verified
+          )
+        );
       })
       .catch((err) => {
         console.log(err);

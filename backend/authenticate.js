@@ -13,7 +13,7 @@ express().use(cookieParser(config.secretKey));
 exports.local = passport.use(
   new LocalStrategy((username, password, done) => {
     connection.query(
-      `SELECT id, username, password FROM users WHERE username = '${username}'`,
+      `SELECT id, username, password, verified FROM users WHERE username = '${username}'`,
       (err, result) => {
         if (err) {
           console.log(err);
@@ -27,7 +27,11 @@ exports.local = passport.use(
             }
             // password matches
             if (res) {
-              return done(null, { id: first.id, username: first.username });
+              return done(null, {
+                id: first.id,
+                username: first.username,
+                verified: first.verified,
+              });
             }
             // password doesn't match
             else {

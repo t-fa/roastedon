@@ -42,6 +42,7 @@ usersRouter
     const token = authenticate.getToken({ id: req.user.id });
     res.cookie('token', token, { httpOnly: true, signed: true });
     res.cookie('id', req.user.id, { httpOnly: true, signed: true });
+    res.cookie('verified', req.user.verified, { httpOnly: true, signed: true });
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.json({
@@ -125,6 +126,7 @@ usersRouter
                 }
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
+                res.cookie('verified', 1, { httpOnly: true, signed: true });
                 res.json('You have successfully verified your email. Thanks!');
               }
             );

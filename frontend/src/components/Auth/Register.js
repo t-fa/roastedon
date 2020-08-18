@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { auth } from '../../store/actions/auth';
+import { authCheckState } from '../../store/actions/auth';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,6 +40,7 @@ const Text = styled.h1`
 
 const Auth = (props) => {
   const { register, handleSubmit, errors } = useForm();
+  const [registered, setRegistered] = useState(false);
 
   const onSubmit = (data) => {
     axios
@@ -48,7 +49,10 @@ const Auth = (props) => {
         email: data.email,
         password: data.password,
       })
-      .then(props.onAuth(data.username, data.password))
+      .then(() => {
+        setRegistered(true);
+        props.onTryAutoSignup();
+      })
       .catch((error) => console.log(error));
   };
 
@@ -97,6 +101,8 @@ const Auth = (props) => {
         {errors.password && <Span>This field is required.</Span>}
         <Button type="submit">One of us! One of us!</Button>
       </form>
+      {registered &&
+        'Welcome to the club! Check your email to confirm your email address.'}
     </Container>
   );
 };
@@ -109,7 +115,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (username, password) => dispatch(auth(username, password)),
+    onTryAutoSignup: () => dispatch(authCheckState()),
   };
 };
 

@@ -11,6 +11,11 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
+const Container = styled.div`
+  margin: 0 auto;
+  max-width: 95%;
+`;
+
 const ShopsContainer = (props) => {
   const { zipcode, onAddedShops } = props;
 
@@ -27,7 +32,14 @@ const ShopsContainer = (props) => {
       );
     });
   } else {
-    return <p>Not found</p>;
+    return (
+      <Container>
+        <p>
+          Your search didn't return any shops with the zipcode: {zipcode}. Would
+          you like to <Link to="/add">add</Link> one?
+        </p>
+      </Container>
+    );
   }
 };
 

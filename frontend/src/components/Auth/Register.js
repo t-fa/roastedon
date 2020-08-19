@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 import { Input, Label, Span } from '../../styles/Input';
 import Button from '../../styles/Button';
@@ -42,28 +43,35 @@ const Text = styled.h1`
 const Auth = (props) => {
   const { register, handleSubmit, errors } = useForm();
   const [showModal, setShowModal] = useState(false);
+  const [emailAvail, setEmailAvail] = useState(true);
   const [usernameAvail, setUsernameAvail] = useState(true);
 
   const onSubmit = (data) => {
-    axios
-      .post('/users/checkusername', { username: data.username })
-      .then((response) => {
-        if (response.data) {
-          axios
-            .post('/users/register', {
-              username: data.username,
-              email: data.email,
-              password: data.password,
-            })
-            .then(() => {
-              setShowModal(true);
-            })
-            .catch((error) => console.log(error));
-        } else {
-          setUsernameAvail(false);
-        }
-      })
-      .catch((error) => console.log(error));
+    axios.post('/users/checkemail', { email: data.email }).then((response) => {
+      if (response.data) {
+        axios
+          .post('/users/checkusername', { username: data.username })
+          .then((response) => {
+            if (response.data) {
+              axios
+                .post('/users/register', {
+                  username: data.username,
+                  email: data.email,
+                  password: data.password,
+                })
+                .then(() => {
+                  setShowModal(true);
+                })
+                .catch((error) => console.log(error));
+            } else {
+              setUsernameAvail(false);
+            }
+          })
+          .catch((error) => console.log(error));
+      } else {
+        setEmailAvail(false);
+      }
+    });
   };
 
   let authRedirect = null;
@@ -88,6 +96,12 @@ const Auth = (props) => {
             ref={register({ required: true })}
           />
         </Label>
+        {!emailAvail && (
+          <Span>
+            That email address is already in use. Did you want to{' '}
+            <Link to="/reset">reset</Link> your password?
+          </Span>
+        )}
         {errors.email && <Span>This field is required.</Span>}
         <Label>
           Username

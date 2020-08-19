@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import { Input, Label } from '../styles/Input';
 import Button from '../styles/Button';
@@ -16,6 +17,14 @@ const Container = styled.div`
   max-width: 95%;
 `;
 
+const EmailButton = styled.button`
+  text-decoration: underline;
+  border: none;
+  background: inherit;
+  padding: 0;
+  font: inherit;
+`;
+
 const AddShopForm = (props) => {
   const [name, setName] = useState('');
   const [address1, setAddress1] = useState('');
@@ -25,6 +34,7 @@ const AddShopForm = (props) => {
   const [zipcode, setZipCode] = useState('');
   const [country, setCountry] = useState('');
   const [confirm, setConfirm] = useState(false);
+  const [emailMessage, setEmailMessage] = useState('');
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -33,6 +43,15 @@ const AddShopForm = (props) => {
 
   const setConfirmFalse = () => {
     setConfirm(false);
+  };
+
+  const requestEmail = () => {
+    axios
+      .get(`/users/verify/${props.userId}`)
+      .then((response) => {
+        setEmailMessage(response.data);
+      })
+      .catch((error) => console.log(error));
   };
 
   if (!props.token) {
@@ -45,10 +64,15 @@ const AddShopForm = (props) => {
         </p>
       </Container>
     );
-  } else if (props.verified === '0') {
+  } else if (props.verified !== '1') {
     return (
       <Container>
-        <p>Please confirm your email address before adding a new shop.</p>
+        <p>
+          Please confirm your email address before adding a new shop. If you did
+          not receive an email, you may request another email{' '}
+          <EmailButton onClick={requestEmail}>here.</EmailButton>
+        </p>
+        <p>{emailMessage}</p>
       </Container>
     );
   } else if (!confirm) {
@@ -145,6 +169,7 @@ const AddShopForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
+    userId: state.auth.userId,
     verified: state.auth.verified,
   };
 };

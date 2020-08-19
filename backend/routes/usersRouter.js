@@ -68,8 +68,15 @@ usersRouter.route('/register').post((req, res, next) => {
             const token = authenticate.getToken({ id: results.insertId });
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.cookie('token', token);
-            res.cookie('id', results.insertId);
+            res.cookie('token', token, { httpOnly: true, signed: true });
+            res.cookie('verified', 0, {
+              httpOnly: true,
+              signed: true,
+            });
+            res.cookie('id', results.insertId, {
+              httpOnly: true,
+              signed: true,
+            });
             res.json(results);
           }
         }
@@ -140,6 +147,7 @@ usersRouter.route('/logout').get((req, res, next) => {
   if (req.signedCookies) {
     res.clearCookie('token');
     res.clearCookie('id');
+    res.clearCookie('verified');
     res.status(200);
     res.json('You have logged out successfully!');
   } else {

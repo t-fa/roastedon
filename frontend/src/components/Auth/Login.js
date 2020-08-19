@@ -51,8 +51,6 @@ const Auth = (props) => {
     props.onAuth(data.username, data.password);
   };
 
-  console.log(props.isAuthenticated);
-
   let authRedirect = null;
   if (props.isAuthenticated) {
     return (authRedirect = <Redirect to="/" />);
@@ -97,7 +95,6 @@ const Auth = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.auth.token);
   return {
     isAuthenticated: state.auth.token ? true : false,
   };

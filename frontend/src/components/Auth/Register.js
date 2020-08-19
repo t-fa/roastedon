@@ -47,6 +47,8 @@ const Auth = (props) => {
   const [usernameAvail, setUsernameAvail] = useState(true);
 
   const onSubmit = (data) => {
+    setEmailAvail(true);
+    setUsernameAvail(true);
     axios.post('/users/checkemail', { email: data.email }).then((response) => {
       if (response.data) {
         axios

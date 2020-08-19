@@ -11,6 +11,7 @@ import Logout from '../components/Auth/Logout';
 import Register from '../components/Auth/Register';
 import Settings from '../components/Account/Settings';
 import Favorites from './Favorites';
+import ResetPass from '../components/Account/ResetPass';
 import Error404 from '../components/Errors/404';
 
 const MainLayout = (props) => {
@@ -48,8 +49,9 @@ const MainLayout = (props) => {
         />
         <Route path="/logout" component={Logout} />
         <Route path="/shops/:id" component={ShopView} />
-        <Route exact path="/account" component={Settings} />
-        <Route exact path="/favorites" component={Favorites} />
+        <Route path="/account" component={Settings} />
+        <Route path="/favorites" component={Favorites} />
+        <Route path="/reset" component={ResetPass} />
         <Route component={Error404} />
       </Switch>
     </>

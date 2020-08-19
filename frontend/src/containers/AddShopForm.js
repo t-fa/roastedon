@@ -17,14 +17,6 @@ const Container = styled.div`
   max-width: 95%;
 `;
 
-const EmailButton = styled.button`
-  text-decoration: underline;
-  border: none;
-  background: inherit;
-  padding: 0;
-  font: inherit;
-`;
-
 const AddShopForm = (props) => {
   const [name, setName] = useState('');
   const [address1, setAddress1] = useState('');
@@ -70,7 +62,7 @@ const AddShopForm = (props) => {
         <p>
           Please confirm your email address before adding a new shop. If you did
           not receive an email, you may request another email{' '}
-          <EmailButton onClick={requestEmail}>here.</EmailButton>
+          <Link onClick={requestEmail}>here.</Link>
         </p>
         <p>{emailMessage}</p>
       </Container>

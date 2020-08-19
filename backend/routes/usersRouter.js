@@ -83,45 +83,73 @@ usersRouter
     res.cookie('verified', req.user.verified, { httpOnly: true, signed: true });
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({
-      status: 'Success!',
-    });
+    res.json({ token: token, id: req.user.id, verified: req.user.verified });
   });
 
-usersRouter.route('/register').post((req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const email = req.body.email;
-  const saltRounds = 10;
-  bcrypt
-    .hash(password, saltRounds)
-    .then((hash) => {
-      connection.query(
-        `INSERT INTO users (username, password, email) VALUES ('${username}', '${hash}', '${email}')`,
-        (err, results) => {
-          if (err) {
-            console.log(err);
-            return next(err);
-          } else {
-            const token = authenticate.getToken({ id: results.insertId });
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.cookie('token', token, { httpOnly: true, signed: true });
-            res.cookie('verified', 0, {
-              httpOnly: true,
-              signed: true,
-            });
-            res.cookie('id', results.insertId, {
-              httpOnly: true,
-              signed: true,
-            });
-            res.json(results);
+usersRouter
+  .route('/register')
+  .post((req, res, next) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
+    const saltRounds = 10;
+    bcrypt
+      .hash(password, saltRounds)
+      .then((hash) => {
+        connection.query(
+          `INSERT INTO users (username, password, email) VALUES ('${username}', '${hash}', '${email}')`,
+          (err, results) => {
+            if (err) {
+              console.log(err);
+              return next(err);
+            } else {
+              const token = authenticate.getToken({ id: results.insertId });
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.cookie('token', token, { httpOnly: true, signed: true });
+              res.cookie('verified', 0, {
+                httpOnly: true,
+                signed: true,
+              });
+              res.cookie('id', results.insertId, {
+                httpOnly: true,
+                signed: true,
+              });
+              res.json(results);
+            }
           }
-        }
-      );
-    })
-    .catch((err) => next(err));
-});
+        );
+      })
+      .catch((err) => next(err));
+  })
+  .put((req, res, next) => {
+    // let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
+    //   expiresIn: '24h',
+    // });
+    // email.main(rows[0].email, rows[0].id, token);
+    // res.json('Please check your email for a verification link.');
+    const userId = req.body.id;
+    const password = req.body.password;
+    const saltRounds = 10;
+    bcrypt
+      .hash(password, saltRounds)
+      .then((hash) => {
+        connection.query(
+          `UPDATE users SET password = '${hash}' WHERE id = '${userId}'`,
+          (err) => {
+            if (err) {
+              console.log(err);
+              return next(err);
+            } else {
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json('You have successfully updated your password.');
+            }
+          }
+        );
+      })
+      .catch((err) => next(err));
+  });
 
 usersRouter
   .route('/verify/:userId')

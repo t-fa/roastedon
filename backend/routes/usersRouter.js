@@ -87,6 +87,27 @@ usersRouter
   });
 
 usersRouter
+  .route('/reset/:userId')
+  .get(authenticate.verifyUser, (req, res, next) => {
+    connection.query(
+      `SELECT id, email, password, verified FROM users WHERE id = ${req.params.userId}`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
+          expiresIn: '30 minutes',
+        });
+        email.resetPass(rows[0].email, rows[0].id, token);
+        res.json('Please check your email for a password reset link.');
+      }
+    );
+  });
+
+usersRouter
   .route('/register')
   .post((req, res, next) => {
     const username = req.body.username;
@@ -123,11 +144,7 @@ usersRouter
       .catch((err) => next(err));
   })
   .put((req, res, next) => {
-    // let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
-    //   expiresIn: '24h',
-    // });
-    // email.main(rows[0].email, rows[0].id, token);
-    // res.json('Please check your email for a verification link.');
+    // VERIFY TOKEN
     const userId = req.body.id;
     const password = req.body.password;
     const saltRounds = 10;
@@ -169,7 +186,7 @@ usersRouter
           let token = jwt.sign({ id: rows[0].id }, rows[0].password, {
             expiresIn: '24h',
           });
-          email.main(rows[0].email, rows[0].id, token);
+          email.verifyAccount(rows[0].email, rows[0].id, token);
           res.json('Please check your email for a verification link.');
         }
       }

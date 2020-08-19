@@ -42,16 +42,26 @@ const Text = styled.h1`
 const Auth = (props) => {
   const { register, handleSubmit, errors } = useForm();
   const [showModal, setShowModal] = useState(false);
+  const [usernameAvail, setUsernameAvail] = useState(true);
 
   const onSubmit = (data) => {
     axios
-      .post('/users/register', {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      })
-      .then(() => {
-        setShowModal(true);
+      .post('/users/checkusername', { username: data.username })
+      .then((response) => {
+        if (response.data) {
+          axios
+            .post('/users/register', {
+              username: data.username,
+              email: data.email,
+              password: data.password,
+            })
+            .then(() => {
+              setShowModal(true);
+            })
+            .catch((error) => console.log(error));
+        } else {
+          setUsernameAvail(false);
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -87,6 +97,7 @@ const Auth = (props) => {
             ref={register({ required: true })}
           />
         </Label>
+        {!usernameAvail && <Span>Sorry! That username is taken :(</Span>}
         {errors.username && <Span>This field is required.</Span>}
         <Label>
           Password

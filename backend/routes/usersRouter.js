@@ -29,6 +29,25 @@ usersRouter.route('/profile/:userId').get((req, res, next) => {
   );
 });
 
+usersRouter.route('/checkusername').post((req, res, next) => {
+  connection.query(
+    `SELECT username FROM users WHERE username = '${req.body.username}'`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      if (rows[0]) {
+        res.json(false);
+      } else {
+        res.json(true);
+      }
+    }
+  );
+});
+
 usersRouter
   .route('/login')
   .get((req, res, next) => {

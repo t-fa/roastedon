@@ -45,6 +45,12 @@ const AddShopForm = (props) => {
         </p>
       </Container>
     );
+  } else if (props.verified === '0') {
+    return (
+      <Container>
+        <p>Please confirm your email address before adding a new shop.</p>
+      </Container>
+    );
   } else if (!confirm) {
     return (
       <Container>
@@ -139,6 +145,7 @@ const AddShopForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
+    verified: state.auth.verified,
   };
 };
 

@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { Input, Label, Span } from '../../styles/Input';
 import Button from '../../styles/Button';
 import * as colors from '../../styles/Colors';
+import Modal from '../UI/Modal';
 
 const lockStyle = {
   display: 'inline-block',
@@ -40,7 +41,7 @@ const Text = styled.h1`
 
 const Auth = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const [registered, setRegistered] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const onSubmit = (data) => {
     axios
@@ -50,8 +51,7 @@ const Auth = (props) => {
         password: data.password,
       })
       .then(() => {
-        setRegistered(true);
-        props.onTryAutoSignup();
+        setShowModal(true);
       })
       .catch((error) => console.log(error));
   };
@@ -101,8 +101,12 @@ const Auth = (props) => {
         {errors.password && <Span>This field is required.</Span>}
         <Button type="submit">One of us! One of us!</Button>
       </form>
-      {registered &&
-        'Welcome to the club! Check your email to confirm your email address.'}
+      {showModal && (
+        <Modal
+          text="Welcome to the club! Check your email to confirm your email address. After you click the button below, you'll be redirected to the homepage."
+          click={props.onTryAutoSignup}
+        />
+      )}
     </Container>
   );
 };

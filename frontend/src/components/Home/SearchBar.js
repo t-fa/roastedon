@@ -25,14 +25,6 @@ const SearchBar = (props) => {
   const { register, handleSubmit, errors } = useForm();
   const history = useHistory();
 
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   handleSubmit(() => {
-
-  //   })
-  // }
-
   const onSubmit = (data) => {
     history.push({
       pathname: '/shops',

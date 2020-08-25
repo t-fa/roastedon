@@ -70,20 +70,69 @@ const Auth = (props) => {
           <Input
             placeholder="Username"
             name="username"
-            ref={register({ required: true })}
+            ref={register({
+              required: {
+                value: true,
+                message: <Span>This field is required.</Span>,
+              },
+              minLength: {
+                value: 5,
+                message: (
+                  <Span>Your username should be at least 5 characters.</Span>
+                ),
+              },
+              maxLength: {
+                value: 36,
+                message: (
+                  <Span>
+                    Your username should be no more than 36 characters.
+                  </Span>
+                ),
+              },
+              pattern: {
+                value: /^[a-zA-Z0-9_]*$/,
+                message: (
+                  <Span>
+                    Your username can only contain letters, numbers, and
+                    underscores. Sorry about that :(
+                  </Span>
+                ),
+              },
+            })}
           />
         </Label>
-        {errors.username && <Span>This field is required.</Span>}
+        {errors?.username?.message}
         <Label>
           Password
           <Input
             type="password"
             placeholder="Password"
             name={'password'}
-            ref={register({ required: true })}
+            ref={register({
+              required: {
+                value: true,
+                message: <Span>This field is required.</Span>,
+              },
+              minLength: {
+                value: 8,
+                message: (
+                  <Span>Your password should be at least 8 characters.</Span>
+                ),
+              },
+              pattern: {
+                value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                message: (
+                  <Span>
+                    Sorry to be such a bother, but your password should include
+                    at least one uppercase letter, one lowercase letter, one
+                    number, and one special character. Help me help you {'<'}3.
+                  </Span>
+                ),
+              },
+            })}
           />
         </Label>
-        {errors.password && <Span>This field is required.</Span>}
+        {errors?.password?.message}
         <Button type="submit">Submit</Button>
       </form>
       <Caption to="/reset">Forgot password?</Caption>

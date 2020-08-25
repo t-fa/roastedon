@@ -16,7 +16,7 @@ const ResetPass = () => {
   const onSubmit = (data) => console.log(data);
   return (
     <Card>
-      <Text>Change Password</Text>
+      <Text>Reset Your Password</Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Label>
           New Password

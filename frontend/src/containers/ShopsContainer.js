@@ -17,7 +17,10 @@ const Container = styled.div`
 `;
 
 const ShopsContainer = (props) => {
-  const { zipcode, onAddedShops } = props;
+  const { onAddedShops } = props;
+
+  const params = new URLSearchParams(props.location.search);
+  const zipcode = params.get('zipcode');
 
   useEffect(() => {
     onAddedShops(zipcode);

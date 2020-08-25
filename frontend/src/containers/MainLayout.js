@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import Navbar from './Navbar';
@@ -15,38 +15,15 @@ import ResetPass from '../components/Account/ResetPass';
 import Error404 from '../components/Errors/404';
 
 const MainLayout = (props) => {
-  const [zipCode, setZipCode] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    props.history.push({
-      pathname: '/shops',
-    });
-  };
-
   return (
     <>
       <Navbar />
       <Switch>
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <HomeLayout
-              zipcode={zipCode}
-              onChange={(event) => setZipCode(event.target.value)}
-              handleSubmit={handleSubmit}
-            />
-          )}
-        />
+        <Route exact path="/" render={() => <HomeLayout />} />
         <Route path="/add" component={AddShopForm} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route
-          exact
-          path="/shops"
-          render={() => <ShopsContainer zipcode={zipCode} />}
-        />
+        <Route exact path="/shops" render={() => <ShopsContainer />} />
         <Route path="/logout" component={Logout} />
         <Route path="/shops/:id" component={ShopView} />
         <Route path="/account" component={Settings} />

@@ -32,11 +32,7 @@ const homeLayout = (props) => {
       <MainSection>
         <H1>Find a premium coffee shop near you</H1>
       </MainSection>
-      <SearchBar
-        zipcode={props.zipcode}
-        onChange={props.onChange}
-        handleSubmit={props.handleSubmit}
-      />
+      <SearchBar />
       <SubSection>
         <Info />
       </SubSection>

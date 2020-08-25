@@ -56,13 +56,15 @@ const AddShopForm = (props) => {
         </p>
       </Container>
     );
-  } else if (props.verified !== '1') {
+  } else if (props.verified.toString() !== '1') {
     return (
       <Container>
         <p>
           Please confirm your email address before adding a new shop. If you did
           not receive an email, you may request another email{' '}
-          <Link onClick={requestEmail}>here.</Link>
+          <Link onClick={requestEmail} to="#">
+            here.
+          </Link>
         </p>
         <p>{emailMessage}</p>
       </Container>

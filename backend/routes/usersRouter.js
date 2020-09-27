@@ -181,6 +181,7 @@ usersRouter
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         if (rows[0].verified === 1) {
+          res.cookie('verified', 1, { httpOnly: true, signed: true });
           res.json('You have already verified your email.');
         } else {
           let token = jwt.sign({ id: rows[0].id }, rows[0].password, {

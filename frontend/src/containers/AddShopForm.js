@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Input, Label } from '../styles/Input';
+import { Input, Label, Span } from '../styles/Input';
 import Button from '../styles/Button';
 import AddShopConfirm from '../components/Add/AddShopConfirm';
 
@@ -62,7 +62,7 @@ const AddShopForm = (props) => {
         <p>
           Please confirm your email address before adding a new shop. If you did
           not receive an email, you may request another email{' '}
-          <Link onClick={requestEmail} to="#">
+          <Link onClick={requestEmail} to="">
             here.
           </Link>
         </p>
